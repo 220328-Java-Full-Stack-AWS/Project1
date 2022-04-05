@@ -1,0 +1,4 @@
+com\revature\services\UserServiceTest.class
+com\revature\util\ConnectionFactoryTest.class
+com\revature\services\AuthServiceTest.class
+com\revature\services\ReimbursementServiceTest.class
