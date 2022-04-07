@@ -42,7 +42,8 @@ public class Driver {
                     id = result.indexOf(true);
 
                     if( id != -1 ){
-                        System.out.println("Welcome " + Users.get(id).getFirstName() + " " + Users.get(id).getLastName());
+                        Account(id);
+                        //System.out.println("Welcome " + Users.get(id).getFirstName() + " " + Users.get(id).getLastName());
                     }else {
                         System.out.println("Account not found.");
                     }
@@ -104,5 +105,16 @@ public class Driver {
         Users.add(user);
     }
 
-    
+    public static void Account(int index){
+        int adminOption;
+        System.out.println("");
+        System.out.println("Welcome, " + Users.get(index).getFirstName() + " " + Users.get(index).getLastName());
+        System.out.println("Account Information");
+        System.out.println("-------------------");
+        System.out.println("Account Type: " + Users.get(index).getAccountType());
+        System.out.println("Email: " + Users.get(index).getEmail());
+
+    }
+
+
 }
