@@ -159,13 +159,14 @@ public class Driver {
     }
 
     public static void Account(int index){
-        int adminOption;
-        System.out.println("");
-        System.out.println("Welcome, " + Users.get(index).getFirstName() + " " + Users.get(index).getLastName());
-        System.out.println("Account Information");
-        System.out.println("-------------------");
-        System.out.println("Account Type: " + Users.get(index).getAccountType());
-        System.out.println("Email: " + Users.get(index).getEmail());
+        ReinbursementSystem userAccount = new ReinbursementSystem();
+        userAccount.Account(Users.get(index));
+//        System.out.println("");
+//        System.out.println("Welcome, " + Users.get(index).getFirstName() + " " + Users.get(index).getLastName());
+//        System.out.println("Account Information");
+//        System.out.println("-------------------");
+//        System.out.println("Account Type: " + Users.get(index).getAccountType());
+//        System.out.println("Email: " + Users.get(index).getEmail());
     }
 
 
