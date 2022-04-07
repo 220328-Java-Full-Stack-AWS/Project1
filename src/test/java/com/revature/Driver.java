@@ -7,7 +7,7 @@ public class Driver {
     public static int id = -1;
     public static int choice;
     public static Scanner scanner = new Scanner(System.in);
-    public static String loginEmail;
+    public static String loginUsername;
     public static String loginPassword;
 
     public static void main(String[] args){
@@ -32,7 +32,7 @@ public class Driver {
 
                     ArrayList<Boolean> result = new ArrayList<Boolean>();
                     for(User user : Users){
-                        if(user.getEmail().contains(loginEmail) && user.getPassword().contains(loginPassword)){
+                        if(user.getUsername().equals(loginUsername) && user.getPassword().equals(loginPassword)){
                             result.add(true);
                         }else{
                             result.add(false);
@@ -46,11 +46,13 @@ public class Driver {
                         //System.out.println("Welcome " + Users.get(id).getFirstName() + " " + Users.get(id).getLastName());
                     }else {
                         System.out.println("Account not found.");
+                        forgotPassword();
                     }
 
                     break;
                 case 2:
                     register();
+                    System.out.println("Account created!!");
                     break;
                 case 3:
                     System.out.println("Goodbye");
@@ -71,8 +73,8 @@ public class Driver {
 
         System.out.println("Login");
         System.out.println("-----");
-        System.out.println("Please enter your email");
-        loginEmail = scanner.next();
+        System.out.println("Please enter your username");
+        loginUsername = scanner.next();
         System.out.println("Please enter your password");
         loginPassword = scanner.next();
 
@@ -82,6 +84,7 @@ public class Driver {
         User user = new User();
         String firstName;
         String lastName;
+        String username;
         String email;
         String password;
 
@@ -91,6 +94,8 @@ public class Driver {
         firstName = scanner.next();
         System.out.println("Please enter your last name:");
         lastName = scanner.next();
+        System.out.println("Create an Username:");
+        username = scanner.next();
         System.out.println("Please enter a valid email:");
         email = scanner.next();
         System.out.println("Please enter a strong password:");
@@ -99,10 +104,58 @@ public class Driver {
 
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
 
         Users.add(user);
+    }
+
+    public static void forgotPassword(){
+        int forgotPasswordChoice;
+        String tempEmail;
+        String changePassword;
+
+        li : while (true) {
+            System.out.println("Forget your password?");
+            System.out.println("---1. Yes");
+            System.out.println("---2. No");
+            forgotPasswordChoice = scanner.nextInt();
+
+            switch(forgotPasswordChoice){
+                case 1:
+                    System.out.println("Enter the email linked to your account:");
+                    tempEmail = scanner.next();
+
+                    ArrayList<Boolean> emailResult = new ArrayList<Boolean>();
+                    int emailId = -1;
+                    for(User user : Users){
+                        if(user.getEmail().equals(tempEmail)){
+                            emailResult.add(true);
+                        }else{
+                            emailResult.add(false);
+                        }
+                    }
+                    emailId = emailResult.indexOf(true);
+
+                    if(emailId != -1){
+                        System.out.println("Your Username is " + Users.get(emailId).getUsername());
+                        System.out.println("Please change your password");
+                        changePassword = scanner.next();
+                        Users.get(emailId).setPassword(changePassword);
+                        System.out.println("Password changed successfully");
+                        break li;
+                    }else{
+                        System.out.println("Email not found, please register!");
+                        break li;
+                    }
+                case 2:
+                    break li;
+                default:
+                    System.out.println("Invalid Choice");
+            }
+        }
+
     }
 
     public static void Account(int index){
@@ -113,7 +166,6 @@ public class Driver {
         System.out.println("-------------------");
         System.out.println("Account Type: " + Users.get(index).getAccountType());
         System.out.println("Email: " + Users.get(index).getEmail());
-
     }
 
 
