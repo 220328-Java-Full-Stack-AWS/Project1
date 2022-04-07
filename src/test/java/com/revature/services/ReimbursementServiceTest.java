@@ -12,7 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.revature.models.Reimbursement;
-import com.revature.models.Role;
 import com.revature.models.Status;
 import com.revature.models.User;
 import com.revature.repositories.ReimbursementDAO;
