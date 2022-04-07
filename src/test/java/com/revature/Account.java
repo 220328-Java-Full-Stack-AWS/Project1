@@ -1,12 +1,12 @@
 package com.revature;
 
-import java.awt.*;
 import java.util.Scanner;
 
-public class ReinbursementSystem {
+public class Account {
 
     private static int menuChoice;
     private static Scanner input = new Scanner(System.in);
+
 
     public void Account(User user){
         System.out.println("");
@@ -25,10 +25,11 @@ public class ReinbursementSystem {
         lo : while (true) {
             System.out.println("");
             System.out.println("What would you like to do today?");
-            System.out.println("1. New Reimbursement Request");
-            System.out.println("2. View Reimbursement Request");
-            System.out.println("3. View Reimbursement History");
-            System.out.println("4. Logout");
+            System.out.println("-1. New Reimbursement Request");
+            System.out.println("-2. View Reimbursement Request");
+            System.out.println("-3. View Reimbursement History");
+            System.out.println("-4. Settings");
+            System.out.println("-5. Logout");
 
             menuChoice = input.nextInt();
 
@@ -43,6 +44,8 @@ public class ReinbursementSystem {
                     System.out.println("View Reimbursement History");
                     break;
                 case 4:
+                    System.out.println("Settings");
+                case 5:
                     break lo;
                 default:
                     System.out.println("Invalid choice");

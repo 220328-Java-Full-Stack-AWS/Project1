@@ -159,7 +159,7 @@ public class Driver {
     }
 
     public static void Account(int index){
-        ReinbursementSystem userAccount = new ReinbursementSystem();
+        Account userAccount = new Account();
         userAccount.Account(Users.get(index));
 //        System.out.println("");
 //        System.out.println("Welcome, " + Users.get(index).getFirstName() + " " + Users.get(index).getLastName());
