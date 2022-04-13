@@ -1,0 +1,7 @@
+.target/
+.idea/
+scripts/
+*.class
+*.iml
+*.properties
+node_modules/

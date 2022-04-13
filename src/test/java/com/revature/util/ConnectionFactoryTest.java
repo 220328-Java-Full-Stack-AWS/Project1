@@ -15,7 +15,7 @@ public class ConnectionFactoryTest {
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        connectionFactory = ConnectionFactory.getInstance();
+        connectionFactory = (ConnectionFactory) ConnectionFactory.getConnection();
     }
 
     @Test

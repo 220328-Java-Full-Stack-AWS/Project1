@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
+import com.revature.models.Role;
 import com.revature.repositories.UserDAO;
 import org.junit.Before;
 import org.junit.BeforeClass;
