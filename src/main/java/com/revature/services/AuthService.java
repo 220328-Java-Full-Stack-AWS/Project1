@@ -35,13 +35,15 @@ public class AuthService {
      */
     public User login(String username, String password) {
         User user = dao.getUser(username);
-        if(user.getId() == 0){
+        User invalid = new User();
+        if(user.getId() == 0) {
             System.out.println("Email not found");
-            return null;
+            return invalid;
         }else if(!(user.getPassword().equals(password))){
             System.out.println("Wrong password");
-            return null;
-        }else {
+            return invalid;
+        }
+        else {
             System.out.println("Login Successful");
             return user;
         }

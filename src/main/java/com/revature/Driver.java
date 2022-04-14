@@ -2,6 +2,7 @@ package com.revature;
 
 import com.revature.models.Role;
 import com.revature.models.User;
+import com.revature.repositories.UserDAO;
 import com.revature.services.AuthService;
 import java.util.Scanner;
 
@@ -17,6 +18,7 @@ public class Driver {
 
         System.out.println("Welcome to the Employee Reimbursement System");
         System.out.println("--------------------------------------------");
+
 
         lp : while (true) {
             AuthMenu();
@@ -62,7 +64,9 @@ public class Driver {
 
         user = authentication.login(username, password);
 
-
+        if(user.getId() != 0){
+            System.out.println(user);
+        }
 
     }
 
