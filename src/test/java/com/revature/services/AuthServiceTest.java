@@ -37,9 +37,9 @@ public class AuthServiceTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		EMPLOYEE_TO_REGISTER = new User(0, "genericEmployee1", "genericPassword", Role.EMPLOYEE);
-		GENERIC_EMPLOYEE_1 = new User(1, "genericEmployee1", "genericPassword", Role.EMPLOYEE);
-		GENERIC_FINANCE_MANAGER_1 = new User(1, "genericManager1", "genericPassword", Role.FINANCE_MANAGER);
+		EMPLOYEE_TO_REGISTER = new User(0, "genericEmployee1", "genericPassword", "genericFirstname", "genericLastname", "genericEmail", "genericPhone", Role.EMPLOYEE);
+		GENERIC_EMPLOYEE_1 = new User(1, "genericEmployee1", "genericPassword", "genericFirstname", "genericLastname", "genericEmail", "genericPhone", Role.EMPLOYEE);
+		GENERIC_FINANCE_MANAGER_1 = new User(1, "genericManager", "genericPassword", "genericFirstname", "genericLastname", "genericEmail", "genericPhone", Role.FINANCE_MANAGER);
 	}
 
 	@Test

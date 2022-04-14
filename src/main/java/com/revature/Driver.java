@@ -2,21 +2,52 @@ package com.revature;
 
 import com.revature.models.Role;
 import com.revature.models.User;
+import com.revature.repositories.UserDAO;
 import com.revature.util.ConnectionFactory;
 
 import java.sql.Connection;
+import java.util.List;
 import java.util.Scanner;
 
 public class Driver {
 
 
     public static void main(String[] args) {
+        UserDAO dao = new UserDAO();
+        User user = dao.read(7);
+        System.out.println("User: " + user.toString());
 
-        try{
-            Connection conn = ConnectionFactory.getConnection();
-        } catch(Exception e){
-            e.printStackTrace();
+        // Trying the create method
+//        User jose = new User(0,"JoZ003", "password","Jose","Barrientos","JoZ003@gmail.com","917-002-1010", Role.EMPLOYEE);
+//        //System.out.println(jose);
+//        dao.create(jose);
+
+//        User daniel = new User(0,"DamnDaniel", "youCANtCmE","Daniel","Cormier","danCormier@gmail.com","888-102-6522", Role.EMPLOYEE);
+//        dao.create(daniel);
+
+//        User kyle = new User(0,"kyle3000", "password","Kyle","Plummer","kylePlummer@gmail.com","516-666-0011", Role.FINANCE_MANAGER);
+//        dao.create(kyle);
+
+//        dao.deleteUser(6);
+
+        // Get all users from the ers_users table
+        List<User> list = dao.getAllUsers();
+        for(User temp : list){
+            System.out.println("User " + temp.getId() + ", " + temp.getUsername() + ", " + temp.getPassword());
         }
+
+        User me = dao.getByUsername("kyle3000");
+        System.out.println(me);
+
+        ConnectionFactory.close();
+
+
+        //        try{
+//            Connection conn = ConnectionFactory.getConnection();
+//        } catch(Exception e){
+//            e.printStackTrace();
+//        }
+
 //        Scanner input = new Scanner(System.in);
 //        int userChoice;
 //

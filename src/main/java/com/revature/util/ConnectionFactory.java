@@ -9,7 +9,7 @@ import java.util.Properties;
 
 /**
  * <p>This ConnectionFactory class follows the Singleton Design Pattern and facilitates obtaining a connection to a Database for the ERS application.</p>
- * <p>Following the Singleton Design Pattern, the provided Constructor is private, and you obtain an instance via the {@link ConnectionFactory#getInstance()} method.</p>
+ * <p>Following the Singleton Design Pattern, the provided Constructor is private, and you obtain an instance via the {@link ConnectionFactory#getConnection()} ()} method.</p>
  */
 public class ConnectionFactory {
 
@@ -23,6 +23,15 @@ public class ConnectionFactory {
             connection = connect();
         }
         return connection;
+    }
+
+    public static void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        connection = null;
     }
 
     private static Connection connect() {

@@ -37,8 +37,8 @@ public class ReimbursementServiceTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		GENERIC_EMPLOYEE_1 = new User(1, "genericEmployee1", "genericPassword", Role.EMPLOYEE);
-		GENERIC_FINANCE_MANAGER_1 = new User(1, "genericManager1", "genericPassword", Role.FINANCE_MANAGER);
+		GENERIC_EMPLOYEE_1 = new User(1, "genericEmployee1", "genericPassword", "genericFirstname", "genericLastname", "genericEmail", "genericPhone", Role.EMPLOYEE);
+		GENERIC_EMPLOYEE_1 = new User(1, "genericEmployee1", "genericPassword", "genericFirstname", "genericLastname", "genericEmail", "genericPhone", Role.FINANCE_MANAGER);
 		
 		REIMBURSEMENT_TO_PROCESS = new Reimbursement(2, Status.PENDING, GENERIC_EMPLOYEE_1, null, 150.00);
 		
