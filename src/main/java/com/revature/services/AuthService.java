@@ -1,8 +1,11 @@
 package com.revature.services;
 
+import com.revature.exceptions.LoginUnsuccessfulException;
+import com.revature.exceptions.UsernameNotUniqueException;
 import com.revature.models.User;
 import com.revature.repositories.UserDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +24,6 @@ import java.util.Optional;
 public class AuthService {
 
     UserDAO dao = new UserDAO();
-    User user = new User();
-    List<User> list = dao.getAllUsers();
     /**
      * <ul>
      *     <li>Needs to check for existing users with username/email provided.</li>
@@ -33,12 +34,16 @@ public class AuthService {
      * </ul>
      */
     public User login(String username, String password) {
-        boolean notValid = false;
-
-        if(!notValid){
-            return user;
-        }else{
+        User user = dao.getUser(username);
+        if(user.getId() == 0){
+            System.out.println("Email not found");
             return null;
+        }else if(!(user.getPassword().equals(password))){
+            System.out.println("Wrong password");
+            return null;
+        }else {
+            System.out.println("Login Successful");
+            return user;
         }
     }
 
@@ -55,8 +60,38 @@ public class AuthService {
      * Note: userToBeRegistered will have an id=0, additional fields may be null.
      * After registration, the id will be a positive integer.
      */
-    public User register(User userToBeRegistered) {
-        return null;
+    public User register(User user) {
+        // Get All Usernames
+        List<String> Usernames = new ArrayList<String>();
+        Usernames = dao.getAllUsernames();
+        // Get All Emails
+        List<String> Emails = new ArrayList<String>();
+        Emails = dao.getAllEmails();
+        // User Input
+        String username = user.getUsername();
+        String email = user.getEmail();
+        Boolean Successful = true;
+
+        if(Usernames.contains(username)){ // Test if username already taken
+            System.out.println("Username already taken");
+            Successful = false;
+        }else if(Emails.contains(email)){
+            User userWithEmail = dao.readByEmail(email);
+            System.out.println("Email is linked with Username: " + userWithEmail.getUsername());
+            Successful = false;
+        }else{
+            Successful = true;
+        }
+
+        if(Successful){
+            System.out.println("Registration in progress...");
+            dao.create(user);
+            System.out.println("Registration Successful");
+            return user;
+        }else{
+            System.out.println("Registration Failed.");
+            return null;
+        }
     }
 
     /**
@@ -64,7 +99,12 @@ public class AuthService {
      * It leverages the Optional type which is a useful interface to handle the
      * possibility of a user being unavailable.
      */
-    public Optional<User> exampleRetrieveCurrentUser() {
-        return Optional.empty();
+    public boolean retrieveCurrentUser(User user) {
+        User temp = login(user.getEmail(), user.getPassword());
+        if(temp != null){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

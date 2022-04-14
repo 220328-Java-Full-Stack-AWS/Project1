@@ -1,5 +1,6 @@
 package com.revature.repositories;
 
+import com.revature.exceptions.RegistrationUnsuccessfulException;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
@@ -8,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -17,38 +19,37 @@ public class UserDAO {
     /**
      * Should retrieve a User from the DB with the corresponding username or an empty optional if there is no match.
      */
-    public User getByUsername(String username) {
-        User user = new User();
-        Optional<User> foundUser = Optional.empty();
-        try {
-            String sql =  "SELECT * FROM ers_users WHERE ers_username = ?";
-            Connection conn = ConnectionFactory.getConnection();  // get the connection
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
-
-            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
-            while(rs.next()){
-                user.setId(rs.getInt("ers_users_id"));
-                user.setUsername(rs.getString("ers_username"));
-                user.setPassword(rs.getString("ers_password"));
-                user.setFirst_name(rs.getString("user_first_name"));
-                user.setLast_name(rs.getString("user_last_name"));
-                user.setEmail(rs.getString("user_email"));
-                user.setPhone(rs.getString("user_phone"));
-                int roleId = rs.getInt("user_role_id");
-                if(roleId == 1){
-                    user.setRole(Role.EMPLOYEE);
-                }else if (roleId == 2){
-                    user.setRole(Role.FINANCE_MANAGER);
-                }
-
-                foundUser = Optional.of(user);
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-          return user;
-    }
+//    public Optional<User> getByUsername(String username) {
+//        User user = new User();
+//        Optional<User> result = Optional.empty();
+//        try {
+//            String sql =  "SELECT * FROM ers_users WHERE ers_username = ?";
+//            Connection conn = ConnectionFactory.getConnection();  // get the connection
+//            PreparedStatement pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, username);
+//            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+//
+//            while(rs.next()){
+//                user.setId(rs.getInt("ers_users_id"));
+//                user.setUsername(rs.getString("ers_username"));
+//                user.setPassword(rs.getString("ers_password"));
+//                user.setFirst_name(rs.getString("user_first_name"));
+//                user.setLast_name(rs.getString("user_last_name"));
+//                user.setEmail(rs.getString("user_email"));
+//                user.setPhone(rs.getString("user_phone"));
+//                int roleId = rs.getInt("user_role_id");
+//                if(roleId == 1){
+//                    user.setRole(Role.EMPLOYEE);
+//                }else if (roleId == 2){
+//                    user.setRole(Role.FINANCE_MANAGER);
+//                }
+//            }
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        result = Optional.ofNullable(user);
+//        return result;
+//    }
 
     /**
      * <ul>
@@ -76,8 +77,16 @@ public class UserDAO {
             }
 
             pstmt.executeUpdate();
-        }catch(Exception e){
-            e.printStackTrace();
+
+            ResultSet keys = pstmt.getGeneratedKeys();
+            if(keys.next()){
+                int key = keys.getInt(1);
+                userToBeRegistered.setId(key);
+            }
+
+        }catch(SQLException e){
+            System.out.println("Error adding user " + e.getMessage() + " " + e.getErrorCode());
+            throw new RegistrationUnsuccessfulException("Registration Failed");
         }
         return userToBeRegistered;
     }
@@ -94,6 +103,80 @@ public class UserDAO {
             Connection conn = ConnectionFactory.getConnection();  // get the connection
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                user.setId(rs.getInt("ers_users_id"));
+                user.setUsername(rs.getString("ers_username"));
+                user.setPassword(rs.getString("ers_password"));
+                user.setFirst_name(rs.getString("user_first_name"));
+                user.setLast_name(rs.getString("user_last_name"));
+                user.setEmail(rs.getString("user_email"));
+                user.setPhone(rs.getString("user_phone"));
+
+                int userRoleId = rs.getInt("user_role_id");
+                if(userRoleId == 1){
+                    user.setRole(Role.EMPLOYEE);
+                }else{
+                    user.setRole(Role.FINANCE_MANAGER);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    /**
+     * This method returns the User connected with the username specified.
+     * @param username - search for a user by their username;
+     * @return The user with the username specified.
+     */
+    public User read(String username){
+        User user = new User();
+        try {
+            String sql = "SELECT * FROM ers_users WHERE user_email = ?";
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                user.setId(rs.getInt("ers_users_id"));
+                user.setUsername(rs.getString("ers_username"));
+                user.setPassword(rs.getString("ers_password"));
+                user.setFirst_name(rs.getString("user_first_name"));
+                user.setLast_name(rs.getString("user_last_name"));
+                user.setEmail(rs.getString("user_email"));
+                user.setPhone(rs.getString("user_phone"));
+
+                int userRoleId = rs.getInt("user_role_id");
+                if(userRoleId == 1){
+                    user.setRole(Role.EMPLOYEE);
+                }else{
+                    user.setRole(Role.FINANCE_MANAGER);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    /**
+     * This method returns the User connected with the email specified.
+     * @param email - search for a user by their email;
+     * @return The user with the email specified.
+     */
+    public User readByEmail(String email){
+        User user = new User();
+        try {
+            String sql = "SELECT * FROM ers_users WHERE user_email = ?";
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
 
             ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
             while(rs.next()){
@@ -209,21 +292,18 @@ public class UserDAO {
         }
     }
 
-    /**
-     *  This returns a list of all usernames and passwords in the database, this is
-     *  used in relation to the authentication service.
-     * @return - A list of all users in the database
-     */
-    public List<User> getAllUsers(){
-        List<User> list = new LinkedList<>();
-        try{
-            String sql = "SELECT * FROM ers_users";
+    public User getUser(String email){
+        User user = new User();
+        String sql = "SELECT * FROM ers_users WHERE user_email = ?";
+        try {
             Connection conn = ConnectionFactory.getConnection();  // get the connection
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
 
             ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
             while(rs.next()){
-                User user = new User();
                 user.setId(rs.getInt("ers_users_id"));
                 user.setUsername(rs.getString("ers_username"));
                 user.setPassword(rs.getString("ers_password"));
@@ -238,12 +318,51 @@ public class UserDAO {
                     user.setRole(Role.FINANCE_MANAGER);
                 }
 
-                list.add(user);
             }
-        } catch(Exception e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        return user;
+    }
+
+    public List<String> getAllUsernames(){
+        List<String> Usernames = new ArrayList<String>();
+        String sql = "SELECT ers_username FROM ers_users";
+
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                Usernames.add(rs.getString("ers_username"));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return Usernames;
+    }
+
+    public List<String> getAllEmails(){
+        List<String> Emails = new ArrayList<String>();
+        String sql = "SELECT user_email FROM ers_users";
+
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                Emails.add(rs.getString("user_email"));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return Emails;
     }
 
 }

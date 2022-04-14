@@ -2,85 +2,46 @@ package com.revature;
 
 import com.revature.models.Role;
 import com.revature.models.User;
-import com.revature.repositories.UserDAO;
-import com.revature.util.ConnectionFactory;
-
-import java.sql.Connection;
-import java.util.List;
+import com.revature.services.AuthService;
 import java.util.Scanner;
 
 public class Driver {
 
+    private static User user;
+    private static String userInput;
+    private static Scanner input = new Scanner(System.in);
+    private static   AuthService authentication = new AuthService();
 
     public static void main(String[] args) {
-        UserDAO dao = new UserDAO();
-        User user = dao.read(7);
-        System.out.println("User: " + user.toString());
+        int userChoice;
 
-        // Trying the create method
-//        User jose = new User(0,"JoZ003", "password","Jose","Barrientos","JoZ003@gmail.com","917-002-1010", Role.EMPLOYEE);
-//        //System.out.println(jose);
-//        dao.create(jose);
+        System.out.println("Welcome to the Employee Reimbursement System");
+        System.out.println("--------------------------------------------");
 
-//        User daniel = new User(0,"DamnDaniel", "youCANtCmE","Daniel","Cormier","danCormier@gmail.com","888-102-6522", Role.EMPLOYEE);
-//        dao.create(daniel);
+        lp : while (true) {
+            AuthMenu();
+            userChoice = input.nextInt();
 
-//        User kyle = new User(0,"kyle3000", "password","Kyle","Plummer","kylePlummer@gmail.com","516-666-0011", Role.FINANCE_MANAGER);
-//        dao.create(kyle);
+            switch (userChoice) {
+                case 1:
+                    LoginMenu();
+                    break;
+                case 2:
+                    RegisterMenu();
+                    break;
+                case 3:
+                    System.out.println("Goodbye");
+                    break lp;
+                default:
+                    System.out.println("Invalid Choice");
+            }
 
-//        dao.deleteUser(6);
-
-        // Get all users from the ers_users table
-        List<User> list = dao.getAllUsers();
-        for(User temp : list){
-            System.out.println("User " + temp.getId() + ", " + temp.getUsername() + ", " + temp.getPassword());
         }
 
-        User me = dao.getByUsername("kyle3000");
-        System.out.println(me);
-
-        ConnectionFactory.close();
-
-
-        //        try{
-//            Connection conn = ConnectionFactory.getConnection();
-//        } catch(Exception e){
-//            e.printStackTrace();
-//        }
-
-//        Scanner input = new Scanner(System.in);
-//        int userChoice;
-//
-//        // Random user to test MockDB
-//        User user1 = new User(1, "LeoBarrientos02", "password", Role.EMPLOYEE);
-//        User user2 = new User(2, "EthanTeach", "password", Role.FINANCE_MANAGER);
-//
-//
-//        System.out.println("Welcome to the Employee Reimbursement System");
-//        System.out.println("--------------------------------------------");
-//
-//        lp : while (true) {
-//            AuthMenu();
-//            userChoice = input.nextInt();
-//
-//            switch (userChoice) {
-//                case 1:
-//                    LoginMenu();
-//                    break;
-//                case 2:
-//                    RegisterMenu();
-//                    break;
-//                case 3:
-//                    System.out.println("Goodbye");
-//                    break lp;
-//                default:
-//                    System.out.println("Invalid Choice");
-//            }
-//
-//        }
     }
 
     private static void AuthMenu(){
+        System.out.println("");
         System.out.println("Choose an option:");
         System.out.println("1- Login");
         System.out.println("2- Register");
@@ -89,12 +50,72 @@ public class Driver {
 
     private static void LoginMenu(){
         System.out.println("Login");
-        System.out.println("Enter your username:");
+        System.out.println("-----");
+
+        // username
+        System.out.println("Enter your email:");
+        String username = input.next();
+
+        // password
         System.out.println("Enter your password");
+        String password = input.next();
+
+        user = authentication.login(username, password);
+
+
+
     }
 
     private static void RegisterMenu(){
         System.out.println("Register");
         System.out.println("--------");
+
+        User userToBeRegistered = new User();
+
+        //first name
+        System.out.println("Enter your first name:");
+        userInput = input.next();
+        userToBeRegistered.setFirst_name(userInput);
+
+        // last name
+        System.out.println("Enter your last name:");
+        userInput = input.next();
+        userToBeRegistered.setLast_name(userInput);
+
+        // email
+        System.out.println("Enter a valid email:");
+        userInput = input.next();
+        userToBeRegistered.setEmail(userInput);
+
+        // phone
+        System.out.println("Enter your phone number:");
+        userInput = input.next();
+        userToBeRegistered.setPhone(userInput);
+
+        // role
+        int role;
+        System.out.println("Choose your role:");
+        System.out.println("1: Employee");
+        System.out.println("2: Finance Manager");
+        role = input.nextInt();
+        if(role == 1){
+            userToBeRegistered.setRole(Role.EMPLOYEE);
+        }else if(role == 2){
+            userToBeRegistered.setRole(Role.FINANCE_MANAGER);
+        }else{
+            System.out.println("Wrong Input");
+        }
+
+        // username
+        System.out.println("Create a username:");
+        userInput = input.next();
+        userToBeRegistered.setUsername(userInput);
+
+        // password
+        System.out.println("Create a password:");
+        userInput = input.next();
+        userToBeRegistered.setPassword(userInput);
+
+        user = authentication.register(userToBeRegistered);
     }
 }
