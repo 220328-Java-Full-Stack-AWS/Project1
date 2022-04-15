@@ -78,12 +78,6 @@ public class UserDAO {
 
             pstmt.executeUpdate();
 
-            ResultSet keys = pstmt.getGeneratedKeys();
-            if(keys.next()){
-                int key = keys.getInt(1);
-                userToBeRegistered.setId(key);
-            }
-
         }catch(SQLException e){
             System.out.println("Error adding user " + e.getMessage() + " " + e.getErrorCode());
             throw new RegistrationUnsuccessfulException("Registration Failed");

@@ -8,6 +8,7 @@ import com.revature.util.ConnectionFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -20,9 +21,9 @@ public class ReimbursementDAO {
 
     // Structure of methods are in the CRUD format (Create, Read, Update, Delete)
     //Create
-    public Reimbursement create(Reimbursement model, String description, String reimbursement_type){
+    public Reimbursement create(Reimbursement model, String description, int reimbursement_type){
         Reimbursement reimbursement = new Reimbursement();
-        String sql = "INSERT INTO ers_reimbursement (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_resolver, reimb_status_id, reimb_type_id) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO ers_reimbursement (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_resolver, reimb_status_id, reimb_type_id) VALUES (?,?,?,?,?,?,?)";
         try {
             PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
 
@@ -30,10 +31,8 @@ public class ReimbursementDAO {
             pstmt.setDouble(1, model.getAmount());
 
             // Submitted
-            LocalDateTime myDateObj = LocalDateTime.now();
-            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            String formattedDate = myDateObj.format(myFormatObj);
-            pstmt.setString(2, formattedDate);
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            pstmt.setTimestamp(2, ts);
 
             // Description
             pstmt.setString(3, description);
@@ -42,14 +41,16 @@ public class ReimbursementDAO {
             pstmt.setInt(4, model.getAuthor().getId());
 
             // Resolver
-            pstmt.setInt(6, model.getResolver().getId());
+            pstmt.setInt(5, model.getResolver().getId());
 
             // Status
-            pstmt.setInt(5, 1); // ers_status_id = 1 is "Pending"
+            pstmt.setInt(6, 1); // ers_status_id = 1 is "Pending"
 
             // Type
-            pstmt.setString(6, reimbursement_type); // get the reimbursement through the parameter
+            pstmt.setInt(7, reimbursement_type); // get the reimbursement through the parameter
 
+            // Execute
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

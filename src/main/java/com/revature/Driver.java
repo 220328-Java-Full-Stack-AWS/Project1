@@ -1,12 +1,13 @@
 package com.revature;
 
+import com.revature.models.Reimbursement;
 import com.revature.models.Role;
+import com.revature.models.Status;
 import com.revature.models.User;
+import com.revature.repositories.ReimbursementDAO;
 import com.revature.repositories.UserDAO;
 import com.revature.services.AuthService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Driver {
@@ -14,7 +15,10 @@ public class Driver {
     private static User user;
     private static String userInput;
     private static Scanner input = new Scanner(System.in);
-    private static   AuthService authentication = new AuthService();
+    private static AuthService authentication = new AuthService();
+
+    private static ReimbursementDAO dao = new ReimbursementDAO();
+    private static UserDAO userdao = new UserDAO();
 
     public static void main(String[] args) {
         int userChoice;
@@ -69,6 +73,9 @@ public class Driver {
 
         if(user.getId() != 0){
             System.out.println(user);
+            User tempFinance = userdao.getUser("kylePlummer@gmail.com");
+            Reimbursement r1 = new Reimbursement(0, Status.PENDING, user, tempFinance, 50.00);
+            dao.create(r1, "I forgot to cancel my subscription, after the free-trial", 4);
         }
 
     }
@@ -125,4 +132,5 @@ public class Driver {
 
         user = authentication.register(userToBeRegistered);
     }
+
 }
