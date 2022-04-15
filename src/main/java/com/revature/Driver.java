@@ -72,10 +72,17 @@ public class Driver {
         user = authentication.login(username, password);
 
         if(user.getId() != 0){
-            System.out.println(user);
-            User tempFinance = userdao.getUser("kylePlummer@gmail.com");
-            Reimbursement r1 = new Reimbursement(0, Status.PENDING, user, tempFinance, 50.00);
-            dao.create(r1, "I forgot to cancel my subscription, after the free-trial", 4);
+            //System.out.println(user); prints the logged in user
+
+            //test 1
+//            User tempFinance = userdao.getUser("kylePlummer@gmail.com");
+//            Reimbursement r1 = new Reimbursement(0, Status.PENDING, user, tempFinance, 50.00);
+//            dao.create(r1, "I forgot to cancel my subscription, after the free-trial", 4);
+
+            //test 2
+            User tempFinance = userdao.getUser("johnDoe02@gmail.com");
+            Reimbursement r2 = new Reimbursement(0, Status.PENDING, user, tempFinance, 15.00);
+            dao.create(r2, "The store sold me spoiled milk", 2);
         }
 
     }
