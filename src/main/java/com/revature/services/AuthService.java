@@ -24,15 +24,7 @@ import java.util.Optional;
 public class AuthService {
 
     UserDAO dao = new UserDAO();
-    /**
-     * <ul>
-     *     <li>Needs to check for existing users with username/email provided.</li>
-     *     <li>Must throw exception if user does not exist.</li>
-     *     <li>Must compare password provided and stored password for that user.</li>
-     *     <li>Should throw exception if the passwords do not match.</li>
-     *     <li>Must return user object if the user logs in successfully.</li>
-     * </ul>
-     */
+
     public User login(String username, String password) {
         User user = dao.getUser(username);
         User invalid = new User();
@@ -48,20 +40,6 @@ public class AuthService {
             return user;
         }
     }
-
-    /**
-     * <ul>
-     *     <li>Should ensure that the username/email provided is unique.</li>
-     *     <li>Must throw exception if the username/email is not unique.</li>
-     *     <li>Should persist the user object upon successful registration.</li>
-     *     <li>Must throw exception if registration is unsuccessful.</li>
-     *     <li>Must return user object if the user registers successfully.</li>
-     *     <li>Must throw exception if provided user has a non-zero ID</li>
-     * </ul>
-     *
-     * Note: userToBeRegistered will have an id=0, additional fields may be null.
-     * After registration, the id will be a positive integer.
-     */
     public User register(User user) {
         // Get All Usernames
         List<String> Usernames = new ArrayList<String>();
@@ -93,6 +71,21 @@ public class AuthService {
         }else{
             System.out.println("Registration Failed.");
             return null;
+        }
+    }
+
+    public void allUserTest(){
+        List<User> AllUsers;
+        AllUsers = dao.getAllUsers();
+
+        for(User user : AllUsers){
+            System.out.println(user.getId());
+            System.out.println(user.getUsername());
+            System.out.println(user.getEmail());
+            System.out.println(user.getPassword());
+            System.out.println(user.getRole());
+            System.out.println(user.getLast_name());
+            System.out.println(user.getFirst_name());
         }
     }
 

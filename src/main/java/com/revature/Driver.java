@@ -4,6 +4,9 @@ import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.repositories.UserDAO;
 import com.revature.services.AuthService;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Driver {

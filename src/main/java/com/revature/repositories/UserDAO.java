@@ -365,4 +365,37 @@ public class UserDAO {
         return Emails;
     }
 
+    public List<User> getAllUsers(){
+        List<User> AllUsers = new LinkedList<>();
+        String sql = "SELECT * FROM ers_users";
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("ers_users_id"));
+                user.setUsername(rs.getString("ers_username"));
+                user.setPassword(rs.getString("ers_password"));
+                user.setFirst_name(rs.getString("user_first_name"));
+                user.setLast_name(rs.getString("user_last_name"));
+                user.setEmail(rs.getString("user_email"));
+                user.setPhone(rs.getString("user_phone"));
+                int roleId = rs.getInt("user_role_id");
+                if(roleId == 1){
+                    user.setRole(Role.EMPLOYEE);
+                }else if (roleId == 2){
+                    user.setRole(Role.FINANCE_MANAGER);
+                }
+
+                AllUsers.add(user);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return AllUsers;
+    }
+
 }
