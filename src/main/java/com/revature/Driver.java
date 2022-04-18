@@ -117,6 +117,19 @@ public class Driver {
 //                System.out.println(r.getDescription() + ", $" + r.getAmount() + ", " + r.getStatus());
 //            }
 
+//            // test the complete reimbursement PASSES
+//            Reimbursement test = dao.getReimbursementsById(9);
+//            test.setStatus(Status.APPROVED);
+//            dao.complete(test);
+
+            //test the update pending request PASSES
+//            Reimbursement test = dao.getReimbursementsById(7);
+//            test.setAmount(500.03);
+//            test.setDescription("Need some extra cash to pay rent.");
+//            test.setReimbursementType(1);
+//            dao.update(test);
+
+            System.out.println(dao.getById(7));
 
         }
 
