@@ -57,4 +57,15 @@ public class ReimbursementService {
             return result;
         }
     }
+
+//    public List<Reimbursement> getByAuthor(User user){
+//        List<Reimbursement> result = dao.getByAuthor()
+//        if(result.isEmpty()){
+//            return Collections.emptyList();
+//        }else{
+//            return result;
+//        }
+//    }
+
+
 }

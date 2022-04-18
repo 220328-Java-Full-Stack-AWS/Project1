@@ -7,6 +7,7 @@ import com.revature.models.User;
 import com.revature.repositories.ReimbursementDAO;
 import com.revature.repositories.UserDAO;
 import com.revature.services.AuthService;
+import com.revature.services.ReimbursementService;
 
 import java.util.List;
 import java.util.Scanner;
@@ -51,7 +52,6 @@ public class Driver {
     }
 
     private static void AuthMenu(){
-        System.out.println("");
         System.out.println("Choose an option:");
         System.out.println("1- Login");
         System.out.println("2- Register");
@@ -100,10 +100,23 @@ public class Driver {
 //            Reimbursement r2 = new Reimbursement(0, Status.PENDING, user, tempFinance, 82.32);
 //            dao.create(r2, "I was told that the company would pay for my gas, for this business trip.", 3);
 
-            List<Reimbursement> result = dao.getByStatus(Status.PENDING);
-            for(Reimbursement r : result){
-                System.out.println(r);
-            }
+            // test get by status PASSES
+//            List<Reimbursement> result = dao.getByStatus(Status.PENDING);
+//            for(Reimbursement r : result){
+//                System.out.println(r);
+//            }
+
+
+            // get by author works using the username and email
+            //List<Reimbursement> result = dao.getByAuthor(user.getUsername()); PASSES
+            //List<Reimbursement> result = dao.getByAuthorEmail(user.getEmail()); PASSES
+            //List<Reimbursement> result = dao.getByResolver("johnDoe02@gmail.com");PASSES
+            //List<Reimbursement> result = dao.getByResolverUsername("johnDoe01"); PASSES
+//            List<Reimbursement> result = dao.getAllReimbursements(); PASSES
+//            for(Reimbursement r : result){
+//                System.out.println(r.getDescription() + ", $" + r.getAmount() + ", " + r.getStatus());
+//            }
+
 
         }
 

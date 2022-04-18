@@ -326,6 +326,38 @@ public class UserDAO {
         return user;
     }
 
+    public User getByUsername(String username){
+        User user = new User();
+        String sql = "SELECT * FROM ers_users WHERE ers_username = ?";
+        try {
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
+            while(rs.next()){
+                user.setId(rs.getInt("ers_users_id"));
+                user.setUsername(rs.getString("ers_username"));
+                user.setPassword(rs.getString("ers_password"));
+                user.setFirst_name(rs.getString("user_first_name"));
+                user.setLast_name(rs.getString("user_last_name"));
+                user.setEmail(rs.getString("user_email"));
+                user.setPhone(rs.getString("user_phone"));
+                int roleId = rs.getInt("user_role_id");
+                if(roleId == 1){
+                    user.setRole(Role.EMPLOYEE);
+                }else if (roleId == 2){
+                    user.setRole(Role.FINANCE_MANAGER);
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
     // get by id
     public User getUser(int id){
         User user = new User();
