@@ -1,6 +1,5 @@
 package com.revature.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +29,56 @@ public class UserService {
      */
 	public Optional<User> getByUsername(String username) {
 		return null;
+	}
+
+	/**
+	 * Creates a new User
+	 * @param user - user object that gets all the data needed
+	 * @return A user that has been registered to the system
+	 */
+	public User create(User user){
+		return dao.create(user);
+	}
+
+	/**
+	 * Update a user information.
+	 * @param user - User to be updated.
+	 * @return The updated user information.
+	 */
+	public User updateUser(User user){
+		dao.update(user);
+		User updatedUser = dao.getUserByEmail(user.getId());
+		return updatedUser;
+	}
+
+
+	/**
+	 * Get a user by their id.
+	 * @param id - the user id.
+	 * @return The user with the associated id.
+	 */
+	public User getById(int id){
+		User user = dao.getUserByEmail(id);
+		return user;
+	}
+
+	/**
+	 * Get a user by their email.
+	 * @param Email - the user's email.
+	 * @return A user associated with the email.
+	 */
+	public User getByEmail(String Email){
+		User user = dao.getUserByEmail(Email);
+		return user;
+	}
+
+	/**
+	 * This returns all users in the database.
+	 * @return All users
+	 */
+	public List<User> getAllUsers(){
+		List<User> allUsers = dao.getAllUsers();
+		return allUsers;
 	}
 
 

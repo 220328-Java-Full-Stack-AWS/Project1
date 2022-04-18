@@ -7,7 +7,6 @@ import com.revature.repositories.UserDAO;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The AuthService should handle login and registration for the ERS application.
@@ -26,14 +25,14 @@ public class AuthService {
     UserDAO dao = new UserDAO();
 
     public User login(String username, String password) {
-        User user = dao.getUser(username);
+        User user = dao.getUserByEmail(username);
         User invalid = new User();
         if(user.getId() == 0) {
             System.out.println("Email not found");
-            return invalid;
+            throw new LoginUnsuccessfulException("Email was not found");
         }else if(!(user.getPassword().equals(password))){
             System.out.println("Wrong password");
-            return invalid;
+            throw new LoginUnsuccessfulException("Wrong Password");
         }
         else {
             System.out.println("Login Successful");
@@ -55,6 +54,7 @@ public class AuthService {
         if(Usernames.contains(username)){ // Test if username already taken
             System.out.println("Username already taken");
             Successful = false;
+            throw new UsernameNotUniqueException("Username already in use");
         }else if(Emails.contains(email)){
             User userWithEmail = dao.readByEmail(email);
             System.out.println("Email is linked with Username: " + userWithEmail.getUsername());
@@ -71,21 +71,6 @@ public class AuthService {
         }else{
             System.out.println("Registration Failed.");
             return null;
-        }
-    }
-
-    public void allUserTest(){
-        List<User> AllUsers;
-        AllUsers = dao.getAllUsers();
-
-        for(User user : AllUsers){
-            System.out.println(user.getId());
-            System.out.println(user.getUsername());
-            System.out.println(user.getEmail());
-            System.out.println(user.getPassword());
-            System.out.println(user.getRole());
-            System.out.println(user.getLast_name());
-            System.out.println(user.getFirst_name());
         }
     }
 
