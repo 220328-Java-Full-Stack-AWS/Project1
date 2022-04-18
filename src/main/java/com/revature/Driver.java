@@ -1,15 +1,9 @@
 package com.revature;
 
-import com.revature.models.Reimbursement;
 import com.revature.models.Role;
-import com.revature.models.Status;
 import com.revature.models.User;
-import com.revature.repositories.ReimbursementDAO;
-import com.revature.repositories.UserDAO;
 import com.revature.services.AuthService;
 import com.revature.services.ReimbursementService;
-
-import java.util.List;
 import java.util.Scanner;
 
 public class Driver {
@@ -18,9 +12,7 @@ public class Driver {
     private static String userInput;
     private static Scanner input = new Scanner(System.in);
     private static AuthService authentication = new AuthService();
-
-    private static ReimbursementDAO dao = new ReimbursementDAO();
-    private static UserDAO userdao = new UserDAO();
+    private static ReimbursementService reimbursementService = new ReimbursementService();
 
     public static void main(String[] args) {
         int userChoice;
@@ -129,7 +121,9 @@ public class Driver {
 //            test.setReimbursementType(1);
 //            dao.update(test);
 
-            System.out.println(dao.getById(7));
+            //System.out.println(dao.getById(7));
+
+            ERSystem();
 
         }
 
@@ -187,5 +181,92 @@ public class Driver {
 
         user = authentication.register(userToBeRegistered);
     }
+
+    private static void ERSystem(){
+        int ersChoice;
+        System.out.println("Welcome " + " " +  user.getUsername());
+        System.out.println(user.getRole());
+        System.out.println("What would you like to do today?");
+
+        String role = String.valueOf(user.getRole());
+        if(role.equals("Employee")){
+            li : while(true){
+                EmployeeERS();
+                ersChoice = input.nextInt();
+
+                switch(ersChoice){
+                    case 1:
+                        System.out.println("New Reimbursement Request");
+                        break;
+                    case 2:
+                        System.out.println("View All Pending Request");
+                        break;
+                    case 3:
+                        System.out.println("Edit Pending Request");
+                        break;
+                    case 4:
+                        System.out.println("View Reimbursement History");
+                        break;
+                    case 5:
+                        System.out.println("Delete Pending Request");
+                        break;
+                    case 6:
+                        System.out.println("Edit my account");
+                        break;
+                    case 7:
+                        System.out.println("Logged Out");
+                        break li;
+                    default:
+                        System.out.println("Wrong Input");
+
+                }
+            }
+        }else{
+            li : while(true){
+                FinanceManagerERS();
+                ersChoice = input.nextInt();
+                switch(ersChoice){
+                    case 1:
+                        System.out.println("View All Request by Status");
+                        break;
+                    case 2:
+                        System.out.println("View All Reimbursements");
+                        break;
+                    case 3:
+                        System.out.println("View your Reimbursements history");
+                        break;
+                    case 4:
+                        System.out.println("Edit my account");
+                        break;
+                    case 5:
+                        System.out.println("Logged Out");
+                        break li;
+                    default:
+                        System.out.println("Wrong Input");
+
+                }
+            }
+        }
+
+    }
+
+    private static void EmployeeERS(){
+        System.out.println("1 - New Reimbursement Request");
+        System.out.println("2 - View All Pending Request");
+        System.out.println("3 - Edit Pending Request");
+        System.out.println("4 - View Reimbursement History");
+        System.out.println("5 - Delete Pending Request");
+        System.out.println("6 - Edit my account");
+        System.out.println("7 - Log out");
+    }
+
+    private static void FinanceManagerERS(){
+        System.out.println("1 - View All Request by Status");
+        System.out.println("2 - View All Reimbursements");
+        System.out.println("3 - View your Reimbursements history");
+        System.out.println("4 - Edit my account");
+        System.out.println("5 - Log out");
+    }
+
 
 }
