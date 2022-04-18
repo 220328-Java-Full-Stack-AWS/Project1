@@ -26,6 +26,8 @@ public class AbstractReimbursement {
     private User author;
     private User resolver;
     private double amount;
+    private String description;
+    private int reimbursementType;
 
     public AbstractReimbursement() {
         super();
@@ -80,17 +82,33 @@ public class AbstractReimbursement {
         this.amount = amount;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getReimbursementType() {
+        return reimbursementType;
+    }
+
+    public void setReimbursementType(int reimbursementType) {
+        this.reimbursementType = reimbursementType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof AbstractReimbursement)) return false;
         AbstractReimbursement that = (AbstractReimbursement) o;
-        return id == that.id && Double.compare(that.amount, amount) == 0 && status == that.status && Objects.equals(author, that.author) && Objects.equals(resolver, that.resolver);
+        return id == that.id && Double.compare(that.amount, amount) == 0 && reimbursementType == that.reimbursementType && status == that.status && Objects.equals(author, that.author) && Objects.equals(resolver, that.resolver) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, status, author, resolver, amount);
+        return Objects.hash(id, status, author, resolver, amount, description, reimbursementType);
     }
 
     @Override
@@ -101,6 +119,8 @@ public class AbstractReimbursement {
                 ", author=" + author +
                 ", resolver=" + resolver +
                 ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", reimbursementType=" + reimbursementType +
                 '}';
     }
 }

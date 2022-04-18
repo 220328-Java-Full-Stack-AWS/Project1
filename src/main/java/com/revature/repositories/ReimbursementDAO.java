@@ -5,13 +5,11 @@ import com.revature.models.Status;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +50,12 @@ public class ReimbursementDAO {
             // Execute
             pstmt.executeUpdate();
 
+            // get the reimb_id from the database
+            ResultSet keys = pstmt.getGeneratedKeys();
+            if(keys.next()) {
+                int key = keys.getInt(1);
+                model.setId(key);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -109,7 +113,58 @@ public class ReimbursementDAO {
      * Should retrieve a List of Reimbursements from the DB with the corresponding Status or an empty List if there are no matches.
      */
     public List<Reimbursement> getByStatus(Status status) {
-        return Collections.emptyList();
+        List<Reimbursement> result = new LinkedList<>();
+        String sql = "SELECT * FROM ers_reimbursement WHERE reimb_status_id = ?";
+        int statusConverter = 0;
+        if(status.toString().equals("Pending")){
+            statusConverter = 1;
+        }else if(status.toString().equals("Approved")){
+            statusConverter = 2;
+        }else{
+            statusConverter = 3; // Denied
+        }
+
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, statusConverter);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
+            // get the data from the database
+            while(rs.next()){
+                Reimbursement reimbursement = new Reimbursement();
+                // reimbursement id
+                reimbursement.setId(rs.getInt("reimb_id"));
+                // resolver
+                User resolver = userDao.getUser(rs.getInt("reimb_resolver"));
+                reimbursement.setResolver(resolver);
+                // author
+                User author  = userDao.getUser(rs.getInt("reimb_author"));
+                reimbursement.setAuthor(author);
+                // amount
+                reimbursement.setAmount(rs.getDouble("reimb_amount"));
+                // status
+                reimbursement.setStatus(status);
+                // type
+                reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // description
+                reimbursement.setDescription(rs.getString("reimb_description"));
+
+                // add to list
+                result.add(reimbursement);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return result;
+        }
+        
     }
 
     // Update
@@ -126,7 +181,7 @@ public class ReimbursementDAO {
 
     // Delete
     public void deleteReimbursement(int id){
-        String sql = "DELETE * FROM ers_reimbursement WHERE reimb_id = ?";
+        String sql = "DELETE FROM ers_reimbursement WHERE reimb_id = ?";
         try{
             PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
             pstmt.setInt(1,id);

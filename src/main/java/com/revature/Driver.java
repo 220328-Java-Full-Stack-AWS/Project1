@@ -8,6 +8,7 @@ import com.revature.repositories.ReimbursementDAO;
 import com.revature.repositories.UserDAO;
 import com.revature.services.AuthService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Driver {
@@ -54,7 +55,7 @@ public class Driver {
         System.out.println("Choose an option:");
         System.out.println("1- Login");
         System.out.println("2- Register");
-        System.out.println("3-Exit");
+        System.out.println("3- Exit");
     }
 
     private static void LoginMenu(){
@@ -80,9 +81,30 @@ public class Driver {
 //            dao.create(r1, "I forgot to cancel my subscription, after the free-trial", 4);
 
             //test 2
-            User tempFinance = userdao.getUser("johnDoe02@gmail.com");
-            Reimbursement r2 = new Reimbursement(0, Status.PENDING, user, tempFinance, 15.00);
-            dao.create(r2, "The store sold me spoiled milk", 2);
+//            User tempFinance = userdao.getUser("johnDoe02@gmail.com");
+//            Reimbursement r2 = new Reimbursement(0, Status.PENDING, user, tempFinance, 15.00);
+//            dao.create(r2, "The store sold me spoiled milk", 2);
+
+            // test the getById reimbursement
+//            System.out.println(dao.getById(3)); // passes
+
+            // test the deleteReimbursement method
+//            User tempFinance = userdao.getUser("johnDoe02@gmail.com");
+//            Reimbursement r2 = new Reimbursement(0, Status.PENDING, user, tempFinance, 25.00);
+//            dao.create(r2, "I bought the wrong size pants", 5);
+//            dao.deleteReimbursement(3);
+//            dao.deleteReimbursement(4);
+
+            // adding more reimbursement types to test the get by status
+//            User tempFinance = userdao.getUser("kylePlummer@gmail.com");
+//            Reimbursement r2 = new Reimbursement(0, Status.PENDING, user, tempFinance, 82.32);
+//            dao.create(r2, "I was told that the company would pay for my gas, for this business trip.", 3);
+
+            List<Reimbursement> result = dao.getByStatus(Status.PENDING);
+            for(Reimbursement r : result){
+                System.out.println(r);
+            }
+
         }
 
     }
