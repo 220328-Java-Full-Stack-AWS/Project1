@@ -89,11 +89,11 @@ public class ReimbursementDAO {
                 reimbursement.setDescription(rs.getString("reimb_description"));
                 // Author
                 int authorId = rs.getInt("reimb_author");
-                User author = userDao.read(authorId);
+                User author = userDao.getById(authorId);
                 reimbursement.setAuthor(author);
                 // Resolver
                 int resolverId = rs.getInt("reimb_resolver");
-                User resolver = userDao.read(resolverId);
+                User resolver = userDao.getById(resolverId);
                 reimbursement.setResolver(resolver);
                 // Amount
                 reimbursement.setAmount(rs.getDouble("reimb_amount"));
@@ -104,7 +104,7 @@ public class ReimbursementDAO {
             e.printStackTrace();
         }
 
-        if(!found){
+        if(found){
             return Optional.of(reimbursement);
         }else{
             return Optional.empty();
@@ -116,7 +116,7 @@ public class ReimbursementDAO {
      * @param id
      * @return
      */
-    public Reimbursement getReimbursementsById(int id) {
+    public Reimbursement getReimbursementById(int id) {
         Reimbursement reimbursement = new Reimbursement();
         boolean found = true;
         String sql = "SELECT * FROM ers_reimbursement WHERE reimb_id = ?";
@@ -141,11 +141,11 @@ public class ReimbursementDAO {
                 reimbursement.setDescription(rs.getString("reimb_description"));
                 // Author
                 int authorId = rs.getInt("reimb_author");
-                User author = userDao.read(authorId);
+                User author = userDao.getById(authorId);
                 reimbursement.setAuthor(author);
                 // Resolver
                 int resolverId = rs.getInt("reimb_resolver");
-                User resolver = userDao.read(resolverId);
+                User resolver = userDao.getById(resolverId);
                 reimbursement.setResolver(resolver);
                 // Amount
                 reimbursement.setAmount(rs.getDouble("reimb_amount"));
@@ -187,10 +187,10 @@ public class ReimbursementDAO {
                 // reimbursement id
                 reimbursement.setId(rs.getInt("reimb_id"));
                 // resolver
-                User resolver = userDao.getUserByEmail(rs.getInt("reimb_resolver"));
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
                 reimbursement.setResolver(resolver);
                 // author
-                User author  = userDao.getUserByEmail(rs.getInt("reimb_author"));
+                User author  = userDao.getById(rs.getInt("reimb_author"));
                 reimbursement.setAuthor(author);
                 // amount
                 reimbursement.setAmount(rs.getDouble("reimb_amount"));
@@ -238,7 +238,7 @@ public class ReimbursementDAO {
                 // reimbursement id
                 reimbursement.setId(rs.getInt("reimb_id"));
                 // resolver
-                User resolver = userDao.getUserByEmail(rs.getInt("reimb_resolver"));
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
                 reimbursement.setResolver(resolver);
                 // author
                 reimbursement.setAuthor(author);
@@ -296,7 +296,7 @@ public class ReimbursementDAO {
                 // reimbursement id
                 reimbursement.setId(rs.getInt("reimb_id"));
                 // resolver
-                User resolver = userDao.getUserByEmail(rs.getInt("reimb_resolver"));
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
                 reimbursement.setResolver(resolver);
                 // author
                 reimbursement.setAuthor(author);
@@ -354,7 +354,7 @@ public class ReimbursementDAO {
                 // resolver
                 reimbursement.setResolver(resolver);
                 // author
-                User author1  = userDao.getUserByEmail(rs.getInt("reimb_author"));
+                User author1  = userDao.getById(rs.getInt("reimb_author"));
                 reimbursement.setAuthor(author1);
                 // amount
                 reimbursement.setAmount(rs.getDouble("reimb_amount"));
@@ -410,7 +410,7 @@ public class ReimbursementDAO {
                 // resolver
                 reimbursement.setResolver(resolver);
                 // author
-                User author  = userDao.getUserByEmail(rs.getInt("reimb_author"));
+                User author  = userDao.getById(rs.getInt("reimb_author"));
                 reimbursement.setAuthor(author);
                 // amount
                 reimbursement.setAmount(rs.getDouble("reimb_amount"));
@@ -463,10 +463,10 @@ public class ReimbursementDAO {
                 // reimbursement id
                 reimbursement.setId(rs.getInt("reimb_id"));
                 // resolver
-                User resolver = userDao.getUserByEmail(rs.getInt("reimb_resolver"));
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
                 reimbursement.setResolver(resolver);
                 // author
-                User author  = userDao.getUserByEmail(rs.getInt("reimb_author"));
+                User author  = userDao.getById(rs.getInt("reimb_author"));
                 reimbursement.setAuthor(author);
                 // amount
                 reimbursement.setAmount(rs.getDouble("reimb_amount"));

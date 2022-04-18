@@ -129,7 +129,7 @@ public class UserDAO {
                 }
 
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return user;
@@ -139,7 +139,7 @@ public class UserDAO {
      * @param id - the user's ers_users_id.
      * @return The user linked with the id.
      */
-    public User getUserByEmail(int id){
+    public User getById(int id){
         User user = new User();
         String sql = "SELECT * FROM ers_users WHERE ers_users_id = ?";
         try {
@@ -166,7 +166,7 @@ public class UserDAO {
                 }
 
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return user;

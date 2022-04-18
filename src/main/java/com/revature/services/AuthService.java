@@ -56,7 +56,7 @@ public class AuthService {
             Successful = false;
             throw new UsernameNotUniqueException("Username already in use");
         }else if(Emails.contains(email)){
-            User userWithEmail = dao.readByEmail(email);
+            User userWithEmail = dao.getUserByEmail(email);
             System.out.println("Email is linked with Username: " + userWithEmail.getUsername());
             Successful = false;
         }else{

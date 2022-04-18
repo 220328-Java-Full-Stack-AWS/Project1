@@ -28,7 +28,13 @@ public class UserService {
 	 *     Should retrieve a User with the corresponding username or an empty optional if there is no match.
      */
 	public Optional<User> getByUsername(String username) {
-		return null;
+		User user = dao.getByUsername(username);
+		boolean found = true;
+		if(found){
+			return Optional.of(user);
+		}else{
+			return Optional.empty();
+		}
 	}
 
 	/**
@@ -47,7 +53,7 @@ public class UserService {
 	 */
 	public User updateUser(User user){
 		dao.update(user);
-		User updatedUser = dao.getUserByEmail(user.getId());
+		User updatedUser = dao.getById(user.getId());
 		return updatedUser;
 	}
 
@@ -58,7 +64,7 @@ public class UserService {
 	 * @return The user with the associated id.
 	 */
 	public User getById(int id){
-		User user = dao.getUserByEmail(id);
+		User user = dao.getById(id);
 		return user;
 	}
 
