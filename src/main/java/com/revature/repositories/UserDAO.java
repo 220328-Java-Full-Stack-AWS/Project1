@@ -299,7 +299,7 @@ public class UserDAO {
      * @param user - The user that is going to be updated.
      */
     public void update(User user){
-        String sql = "UPDATE ers_users SET ers_username = ?, ers_first_name = ?, ers_last_name = ?, ers_password = ?, ers_email = ?, ers_phone = ? WHERE ers_users_id = ?";
+        String sql = "UPDATE ers_users SET ers_username = ?, user_first_name = ?, user_last_name = ?, ers_password = ?, user_email = ?, user_phone = ? WHERE ers_users_id = ?";
         try{
             PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
             pstmt.setString(1, user.getUsername());

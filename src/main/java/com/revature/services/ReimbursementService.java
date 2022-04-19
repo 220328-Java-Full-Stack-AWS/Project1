@@ -95,11 +95,11 @@ public class ReimbursementService {
 
     /**
      * Get a reimbursement by its id.
-     * @param model the reimbursement we are looking for.
+     * @param id the reimbursement we are looking for.
      * @return the reimbursement linked with the id.
      */
-    public Reimbursement getById(Reimbursement model){
-        Reimbursement reimbursement = reimbDAO.getReimbursementById(model.getId());
+    public Reimbursement getById(int id){
+        Reimbursement reimbursement = reimbDAO.getReimbursementById(id);
         return reimbursement;
     }
 
