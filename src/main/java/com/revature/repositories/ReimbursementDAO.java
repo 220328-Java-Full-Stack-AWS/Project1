@@ -19,7 +19,7 @@ public class ReimbursementDAO {
     //Create
     public Reimbursement create(Reimbursement model, String description, int reimbursement_type){
         Reimbursement reimbursement = new Reimbursement();
-        String sql = "INSERT INTO ers_reimbursement (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_resolver, reimb_status_id, reimb_type_id) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO ers_reimbursement (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_status_id, reimb_type_id) VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
 
@@ -36,14 +36,11 @@ public class ReimbursementDAO {
             // Author
             pstmt.setInt(4, model.getAuthor().getId());
 
-            // Resolver
-            pstmt.setInt(5, model.getResolver().getId());
-
             // Status
-            pstmt.setInt(6, 1); // ers_status_id = 1 is "Pending"
+            pstmt.setInt(5, 1); // ers_status_id = 1 is "Pending"
 
             // Type
-            pstmt.setInt(7, reimbursement_type); // get the reimbursement through the parameter
+            pstmt.setInt(6, reimbursement_type); // get the reimbursement through the parameter
 
             // Execute
             pstmt.executeUpdate();
@@ -223,6 +220,59 @@ public class ReimbursementDAO {
     public List<Reimbursement> getByAuthor(String username) {
         List<Reimbursement> result = new LinkedList<>();
         String sql = "SELECT * FROM ers_reimbursement WHERE reimb_author = ?";
+        User author = userDao.getByUsername(username);
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, author.getId());
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
+            // get the data from the database
+            while(rs.next()){
+                Reimbursement reimbursement = new Reimbursement();
+                // reimbursement id
+                reimbursement.setId(rs.getInt("reimb_id"));
+                // resolver
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
+                reimbursement.setResolver(resolver);
+                // author
+                reimbursement.setAuthor(author);
+                // amount
+                reimbursement.setAmount(rs.getDouble("reimb_amount"));
+                // status
+                int status = rs.getInt("reimb_status_id");
+                if(status == 1){
+                    reimbursement.setStatus(Status.PENDING);
+                }else if(status == 2){
+                    reimbursement.setStatus(Status.APPROVED);
+                }else{
+                    reimbursement.setStatus(Status.DENIED);
+                }
+                // type
+                reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // description
+                reimbursement.setDescription(rs.getString("reimb_description"));
+
+                // add to list
+                result.add(reimbursement);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return result;
+        }
+
+    }
+
+    public List<Reimbursement> getPending(String username) {
+        List<Reimbursement> result = new LinkedList<>();
+        String sql = "SELECT * FROM ers_reimbursement WHERE reimb_author = ? AND reimb_status_id = 1";
         User author = userDao.getByUsername(username);
         try{
             Connection conn = ConnectionFactory.getConnection();  // get the connection

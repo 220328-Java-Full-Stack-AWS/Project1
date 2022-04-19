@@ -75,10 +75,13 @@ public class ReimbursementService {
         return updatedReimbursement;
     }
 
-    public Reimbursement NewRequest(Reimbursement model, String description, int type){
+    public void NewRequest(Reimbursement model, String description, int type){
         reimbDAO.create(model, description, type);
-        Reimbursement reimbursement = reimbDAO.getReimbursementById(model.getId());
-        return reimbursement;
+    }
+
+    public List<Reimbursement> getAllPending(User user){
+        List<Reimbursement> allPending = reimbDAO.getPending(user.getUsername());
+        return allPending;
     }
 
     /**
@@ -158,6 +161,10 @@ public class ReimbursementService {
         Reimbursement reimbursement = reimbDAO.getReimbursementById(model.getId());
 
         return reimbursement;
+    }
+
+    public void deleteReimbursement(int id){
+        reimbDAO.deleteReimbursement(id);
     }
 
 }

@@ -201,25 +201,207 @@ public class Driver {
             li : while(true){
                 EmployeeERS();
                 ersChoice = input.nextInt();
-
                 switch(ersChoice){
                     case 1:
                         System.out.println("New Reimbursement Request");
+                        Reimbursement reimbursement = new Reimbursement();
+                        reimbursement.setAuthor(user);
+                        reimbursement.setStatus(Status.PENDING);
+                        //Amount
+                        System.out.println("Enter the reimbursement amount:");
+                        double amount = input.nextDouble();
+                        reimbursement.setAmount(amount);
+                        // reimbursement type
+                        System.out.println("Choose reimbursement type:");
+                        System.out.println("1- Lodging");
+                        System.out.println("2- Food");
+                        System.out.println("3- Travel");
+                        System.out.println("4- Entertainment");
+                        System.out.println("5- Shopping");
+                        System.out.println("6- Other");
+                        int type = input.nextInt();
+                        switch (type) {
+                            case 1:
+                                reimbursement.setReimbursementType(1);
+                                break;
+                            case 2:
+                                reimbursement.setReimbursementType(2);
+                                break;
+                            case 3:
+                                reimbursement.setReimbursementType(3);
+                                break;
+                            case 4:
+                                reimbursement.setReimbursementType(4);
+                                break;
+                            case 5:
+                                reimbursement.setReimbursementType(5);
+                                break;
+                            case 6:
+                                reimbursement.setReimbursementType(6);
+                                break;
+                            default:
+                                System.out.println("Invalid Choice");
+                        }
+
+                        input.nextLine();
+                        // Description
+                        System.out.println("Enter a description:");
+                        String description = input.nextLine();
+                        reimbursement.setDescription(description);
+
+                        reimbursementService.NewRequest(reimbursement, reimbursement.getDescription(), reimbursement.getReimbursementType());
+                        System.out.println("Reimbursement added!");
                         break;
                     case 2:
                         System.out.println("View All Pending Request");
+                        List<Reimbursement> allPending = reimbursementService.getAllPending(user);
+                        for(Reimbursement r : allPending){
+                            System.out.println("Id:" + r.getId() + "- Amount:" + r.getAmount() + "- Description:" + r.getDescription() + "- Author:" + r.getAuthor().getUsername() + "- Resolver:" + r.getResolver().getUsername() + "- Status:" + r.getStatus() + "- Reimbursement Type:" + r.getReimbursementType());
+                        }
                         break;
                     case 3:
                         System.out.println("Edit Pending Request");
+                        List<Reimbursement> allPending2 = reimbursementService.getAllPending(user);
+                        for(Reimbursement r : allPending2){
+                            System.out.println("Id:" + r.getId() + "- Amount:" + r.getAmount() + "- Description:" + r.getDescription() + "- Author:" + r.getAuthor().getUsername() + "- Resolver:" + r.getResolver().getUsername() + "- Status:" + r.getStatus() + "- Reimbursement Type:" + r.getReimbursementType());
+                        }
+                        System.out.println("Enter the id of the reimbursement");
+                        int reimbursementID = input.nextInt();
+                        Reimbursement model = reimbursementService.getById(reimbursementID);
+                        System.out.println("Id:" + model.getId() + "- Amount:" + model.getAmount() + "- Description:" + model.getDescription() + "- Author:" + model.getAuthor().getUsername() + "- Resolver:" + model.getResolver().getUsername() + "- Status:" + model.getStatus() + "- Reimbursement Type:" + model.getReimbursementType());
+                        System.out.println("1 - Edit Amount");
+                        System.out.println("2 - Edit Description");
+                        System.out.println("3 - Edit Reimbursement Type");
+                        System.out.println("4 - Cancel");
+                        int editReimbursementChoice = input.nextInt();
+                        switch(editReimbursementChoice){
+                            case 1:
+                                System.out.println("Enter new amount:");
+                                double newAmount = input.nextDouble();
+                                model.setAmount(newAmount);
+                                break;
+                            case 2:
+                                input.nextLine();
+                                System.out.println("Enter new description:");
+                                String newDescription = input.nextLine();
+                                model.setDescription(newDescription);
+                                break;
+                            case 3:
+                                System.out.println("Choose reimbursement type:");
+                                System.out.println("1- Lodging");
+                                System.out.println("2- Food");
+                                System.out.println("3- Travel");
+                                System.out.println("4- Entertainment");
+                                System.out.println("5- Shopping");
+                                System.out.println("6- Other");
+                                int newType = input.nextInt();
+                                switch (newType) {
+                                    case 1:
+                                        model.setReimbursementType(1);
+                                        break;
+                                    case 2:
+                                        model.setReimbursementType(2);
+                                        break;
+                                    case 3:
+                                        model.setReimbursementType(3);
+                                        break;
+                                    case 4:
+                                        model.setReimbursementType(4);
+                                        break;
+                                    case 5:
+                                        model.setReimbursementType(5);
+                                        break;
+                                    case 6:
+                                        model.setReimbursementType(6);
+                                        break;
+                                    default:
+                                        System.out.println("Invalid Choice");
+                                }
+                                break;
+                        }
                         break;
                     case 4:
                         System.out.println("View Reimbursement History");
+                        List<Reimbursement> history = reimbursementService.getByAuthor(user);
+                        for(Reimbursement r : history){
+                            System.out.println("Id:" + r.getId() + "- Amount:" + r.getAmount() + "- Description:" + r.getDescription() + "- Author:" + r.getAuthor().getUsername() + "- Resolver:" + r.getResolver().getUsername() + "- Status:" + r.getStatus() + "- Reimbursement Type:" + r.getReimbursementType());
+                        }
                         break;
                     case 5:
                         System.out.println("Delete Pending Request");
+                        List<Reimbursement> allReimbursements = reimbursementService.getByAuthor(user);
+                        for(Reimbursement r : allReimbursements){
+                            System.out.println("Id:" + r.getId() + "- Amount:" + r.getAmount() + "- Description:" + r.getDescription() + "- Author:" + r.getAuthor().getUsername() + "- Resolver:" + r.getResolver().getUsername() + "- Status:" + r.getStatus() + "- Reimbursement Type:" + r.getReimbursementType());
+                        }
+                        System.out.println("Enter the reimbursement id you want to delete:");
+                        int deleteId = input.nextInt();
+                        reimbursementService.deleteReimbursement(deleteId);
+                        System.out.println("Reimbursement Removed");
                         break;
                     case 6:
                         System.out.println("Edit my account");
+                        System.out.println(userService.getById(user.getId()).getFirst_name());
+                        System.out.println(userService.getById(user.getId()).getLast_name());
+                        System.out.println(userService.getById(user.getId()).getEmail());
+                        System.out.println(userService.getById(user.getId()).getPhone());
+                        System.out.println(userService.getById(user.getId()).getUsername());
+                        System.out.println(userService.getById(user.getId()).getPassword());
+                        System.out.println("What would you like to edit?");
+
+                        System.out.println("1 - Change First Name");
+                        System.out.println("2 - Change Last Name");
+                        System.out.println("3 - Change Email");
+                        System.out.println("4 - Change Phone");
+                        System.out.println("5 - Change Username");
+                        System.out.println("6 - Change Password");
+                        System.out.println("7 - Cancel");
+                        int userChange = input.nextInt();
+                        switch (userChange){
+                            case 1:
+                                System.out.println("Enter new first name:");
+                                String newFirstName = input.next();
+                                user.setFirst_name(newFirstName);
+                                break;
+                            case 2:
+                                System.out.println("Enter new last name:");
+                                String newLastName = input.next();
+                                user.setLast_name(newLastName);
+                                break;
+                            case 3:
+                                System.out.println("Enter new email:");
+                                String newEmail = input.next();
+                                user.setEmail(newEmail);
+                                break;
+                            case 4:
+                                System.out.println("Enter new Phone:");
+                                String newPhone = input.next();
+                                user.setPhone(newPhone);
+                                break;
+                            case 5:
+                                System.out.println("Enter new username:");
+                                String newUsername = input.next();
+                                // test if username is taken
+                                UserDAO userDao = new UserDAO();
+                                List<String> usernames = userDao.getAllUsernames();
+                                if(usernames.contains(newUsername)){
+                                    System.out.println("Username already taken");
+                                    throw new UsernameNotUniqueException("Username already taken");
+                                }else{
+                                    user.setPhone(newUsername);
+                                }
+                                break;
+                            case 6:
+                                System.out.println("Enter new Password:");
+                                String newPassword = input.next();
+                                user.setPassword(newPassword);
+                                break;
+                            case 7:
+                                System.out.println("Cancel");
+                                break;
+                            default:
+                                System.out.println("Invalid Input");
+                        }
+                        userService.updateUser(user);
                         break;
                     case 7:
                         System.out.println("Logged Out");
@@ -296,7 +478,7 @@ public class Driver {
                         }
                         break;
                     case 4:
-                        System.out.println("View your Reimbursements history");
+                        System.out.println("View all your processed reimbursements");
                         List<Reimbursement> history = reimbursementService.getByResolver2(user);
                         for(Reimbursement r : history){
                             System.out.println("Id:" + r.getId() + "- Amount:" + r.getAmount() + "- Description:" + r.getDescription() + "- Author:" + r.getAuthor().getUsername() + "- Resolver:" + r.getResolver().getUsername() + "- Status:" + r.getStatus() + "- Reimbursement Type:" + r.getReimbursementType());
@@ -394,7 +576,7 @@ public class Driver {
         System.out.println("1 - Process Reimbursements");
         System.out.println("2 - View All Request by Status");
         System.out.println("3 - View All Reimbursements");
-        System.out.println("4 - View your Reimbursements history");
+        System.out.println("4 - View All Reimbursements you processed");
         System.out.println("5 - Edit my account");
         System.out.println("6 - Log out");
     }
