@@ -23,6 +23,7 @@
     <servlet>
         <servlet-name>healthServlet</servlet-name>
         <servlet-class>com.revature.servlets.HealthServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
 </web-app>

@@ -7,6 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class HealthServlet extends HttpServlet {
+
+    @Override
+    public void init() throws ServletException {
+        System.out.println("is this eager?");
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(200);
