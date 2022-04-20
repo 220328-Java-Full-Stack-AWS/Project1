@@ -10,6 +10,9 @@ import com.revature.services.AuthService;
 import com.revature.services.ReimbursementService;
 import com.revature.services.UserService;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +25,7 @@ public class Driver {
     private static UserService userService = new UserService();
     private static ReimbursementService reimbursementService = new ReimbursementService();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int userChoice;
 
         System.out.println("Welcome to the Employee Reimbursement System");

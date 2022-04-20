@@ -80,11 +80,6 @@ public class AuthService {
      * possibility of a user being unavailable.
      */
     public boolean retrieveCurrentUser(User user) {
-        User temp = login(user.getEmail(), user.getPassword());
-        if(temp != null){
-            return true;
-        }else{
-            return false;
-        }
+        return false;
     }
 }

@@ -5,6 +5,10 @@ import com.revature.models.Status;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.sql.*;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -584,8 +588,9 @@ public class ReimbursementDAO {
         }
     }
 
+    @Transactional
     public void complete(Reimbursement model) {
-        String sql = "UPDATE ers_reimbursement SET reimb_resolved = ?, reimb_status_id = ? WHERE reimb_id = ?";
+        String sql = "UPDATE ers_reimbursement SET reimb_resolved = ?, reimb_status_id = ?, reimb_resolver = ?, reimb_receipt = ? WHERE reimb_id = ?";
         try{
             Connection conn = ConnectionFactory.getConnection();  // get the connection
             PreparedStatement pstmt = null;
@@ -603,8 +608,13 @@ public class ReimbursementDAO {
             }else if(status.equals("Denied")){
                 pstmt.setInt(2, 3);
             }
+            //resolver
+            pstmt.setInt(3, model.getResolver().getId());
+            // receipt
+            String receipt = "Your reimbursement request of $" + model.getAmount() + " has been " + status + " by " + model.getResolver().getFirst_name() + " " + model.getResolver().getLast_name();
+            pstmt.setString(4, receipt);
             // get id
-            pstmt.setInt(3, model.getId());
+            pstmt.setInt(5, model.getId());
             pstmt.executeUpdate(); // actually fire off the SQL
         }catch (Exception e){
             e.printStackTrace();

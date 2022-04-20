@@ -37,11 +37,12 @@ public class ConnectionFactory {
     private static Connection connect() {
         try {
             //New method grabbing the properties from the JAR classpath
+            Class.forName("org.postgresql.Driver");
             Properties props = new Properties();
             ClassLoader loader = Thread.currentThread().getContextClassLoader();
             InputStream input = loader.getResourceAsStream("application.properties");
             props.load(input);
-
+            Class.forName(props.getProperty("driver"));
             String connectionString = "jdbc:postgresql://" +
                     props.getProperty("hostname") + ":" +
                     props.getProperty("port") + "/" +
@@ -51,7 +52,7 @@ public class ConnectionFactory {
             String password = props.getProperty("password");
 
             connection = DriverManager.getConnection(connectionString, username, password);
-        } catch (IOException | SQLException e) {
+        } catch (IOException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
