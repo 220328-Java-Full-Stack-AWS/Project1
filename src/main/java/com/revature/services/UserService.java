@@ -57,6 +57,10 @@ public class UserService {
 		return updatedUser;
 	}
 
+	public void update(User user){
+		dao.update(user);
+	}
+
 
 	/**
 	 * Get a user by their id.
@@ -85,6 +89,10 @@ public class UserService {
 	public List<User> getAllUsers(){
 		List<User> allUsers = dao.getAllUsers();
 		return allUsers;
+	}
+
+	public void deleteUser(int id){
+		dao.deleteUser(id);
 	}
 
 
