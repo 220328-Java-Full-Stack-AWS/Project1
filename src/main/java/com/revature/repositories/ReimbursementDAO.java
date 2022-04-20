@@ -5,10 +5,6 @@ import com.revature.models.Status;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
 import java.sql.*;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -55,6 +51,7 @@ public class ReimbursementDAO {
                 int key = keys.getInt(1);
                 model.setId(key);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -100,6 +97,12 @@ public class ReimbursementDAO {
                 reimbursement.setAmount(rs.getDouble("reimb_amount"));
                 // type
                 reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -123,7 +126,7 @@ public class ReimbursementDAO {
         String sql = "SELECT * FROM ers_reimbursement WHERE reimb_id = ?";
         try{
             PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
-            pstmt.setInt(1,id);
+            pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
 
             while(rs.next()){
@@ -152,6 +155,12 @@ public class ReimbursementDAO {
                 reimbursement.setAmount(rs.getDouble("reimb_amount"));
                 // type
                 reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -201,6 +210,12 @@ public class ReimbursementDAO {
                 reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
                 // description
                 reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
 
                 // add to list
                 result.add(reimbursement);
@@ -258,7 +273,12 @@ public class ReimbursementDAO {
                 reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
                 // description
                 reimbursement.setDescription(rs.getString("reimb_description"));
-
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
                 // add to list
                 result.add(reimbursement);
             }
@@ -311,6 +331,12 @@ public class ReimbursementDAO {
                 reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
                 // description
                 reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
 
                 // add to list
                 result.add(reimbursement);
@@ -369,6 +395,12 @@ public class ReimbursementDAO {
                 reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
                 // description
                 reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
 
                 // add to list
                 result.add(reimbursement);
@@ -425,6 +457,12 @@ public class ReimbursementDAO {
                 reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
                 // description
                 reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
 
                 // add to list
                 result.add(reimbursement);
@@ -481,6 +519,12 @@ public class ReimbursementDAO {
                 reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
                 // description
                 reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
 
                 // add to list
                 result.add(reimbursement);
@@ -537,6 +581,12 @@ public class ReimbursementDAO {
                 reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
                 // description
                 reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
 
                 // add to list
                 result.add(reimbursement);
@@ -588,7 +638,6 @@ public class ReimbursementDAO {
         }
     }
 
-    @Transactional
     public void complete(Reimbursement model) {
         String sql = "UPDATE ers_reimbursement SET reimb_resolved = ?, reimb_status_id = ?, reimb_resolver = ?, reimb_receipt = ? WHERE reimb_id = ?";
         try{

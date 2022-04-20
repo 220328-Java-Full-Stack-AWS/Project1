@@ -258,43 +258,6 @@ public class UserDAO {
     }
 
     /**
-     * Should retrieve a User from the DB with the corresponding username or an empty optional if there is no match.
-     */
-//    public Optional<User> getByUsername(String username) {
-//        User user = new User();
-//        Optional<User> result = Optional.empty();
-//        try {
-//            String sql =  "SELECT * FROM ers_users WHERE ers_username = ?";
-//            Connection conn = ConnectionFactory.getConnection();  // get the connection
-//            PreparedStatement pstmt = conn.prepareStatement(sql);
-//            pstmt.setString(1, username);
-//            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
-//
-//            while(rs.next()){
-//                user.setId(rs.getInt("ers_users_id"));
-//                user.setUsername(rs.getString("ers_username"));
-//                user.setPassword(rs.getString("ers_password"));
-//                user.setFirst_name(rs.getString("user_first_name"));
-//                user.setLast_name(rs.getString("user_last_name"));
-//                user.setEmail(rs.getString("user_email"));
-//                user.setPhone(rs.getString("user_phone"));
-//                int roleId = rs.getInt("user_role_id");
-//                if(roleId == 1){
-//                    user.setRole(Role.EMPLOYEE);
-//                }else if (roleId == 2){
-//                    user.setRole(Role.FINANCE_MANAGER);
-//                }
-//            }
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        result = Optional.ofNullable(user);
-//        return result;
-//    }
-
-    // UPDATE
-
-    /**
      * Updates all user's info
      * @param user - The user that is going to be updated.
      */

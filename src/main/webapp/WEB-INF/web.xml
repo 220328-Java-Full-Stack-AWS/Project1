@@ -26,4 +26,14 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet-mapping>
+        <servlet-name>reimbursementServlet</servlet-name>
+        <url-pattern>/reimbursement</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>reimbursementServlet</servlet-name>
+        <servlet-class>com.revature.servlets.ReimbursementServlet</servlet-class>
+    </servlet>
+
 </web-app>

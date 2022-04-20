@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -26,8 +27,11 @@ public class AbstractReimbursement {
     private User author;
     private User resolver;
     private double amount;
+    private Timestamp submitted;
+    private Timestamp resolved;
     private String description;
     private int reimbursementType;
+    private String receipt;
 
     public AbstractReimbursement() {
         super();
@@ -49,6 +53,30 @@ public class AbstractReimbursement {
         this.amount = amount;
         this.description = description;
         this.reimbursementType = reimbursementType;
+    }
+
+    public AbstractReimbursement(int id, Status status, User author, User resolver, double amount, String description, int reimbursementType, Timestamp submitted){
+        this.id = id;
+        this.status = status;
+        this.author = author;
+        this.resolver = resolver;
+        this.amount = amount;
+        this.description = description;
+        this.reimbursementType = reimbursementType;
+        this.submitted = submitted;
+    }
+
+    public AbstractReimbursement(int id, Status status, User author, User resolver, double amount, String description, int reimbursementType, Timestamp submitted, Timestamp resolved, String receipt){
+        this.id = id;
+        this.status = status;
+        this.author = author;
+        this.resolver = resolver;
+        this.amount = amount;
+        this.description = description;
+        this.reimbursementType = reimbursementType;
+        this.submitted = submitted;
+        this.resolved = resolved;
+        this.receipt = receipt;
     }
 
     public int getId() {
@@ -107,29 +135,56 @@ public class AbstractReimbursement {
         this.reimbursementType = reimbursementType;
     }
 
+    public Timestamp getSubmitted() {
+        return submitted;
+    }
+
+    public void setSubmitted(Timestamp submitted) {
+        this.submitted = submitted;
+    }
+
+    public Timestamp getResolved() {
+        return resolved;
+    }
+
+    public void setResolved(Timestamp resolved) {
+        this.resolved = resolved;
+    }
+
+    public String getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(String receipt) {
+        this.receipt = receipt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AbstractReimbursement)) return false;
         AbstractReimbursement that = (AbstractReimbursement) o;
-        return id == that.id && Double.compare(that.amount, amount) == 0 && reimbursementType == that.reimbursementType && status == that.status && Objects.equals(author, that.author) && Objects.equals(resolver, that.resolver) && Objects.equals(description, that.description);
+        return id == that.id && Double.compare(that.amount, amount) == 0 && reimbursementType == that.reimbursementType && status == that.status && Objects.equals(author, that.author) && Objects.equals(resolver, that.resolver) && Objects.equals(submitted, that.submitted) && Objects.equals(resolved, that.resolved) && Objects.equals(description, that.description) && Objects.equals(receipt, that.receipt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, status, author, resolver, amount, description, reimbursementType);
+        return Objects.hash(id, status, author, resolver, amount, submitted, resolved, description, reimbursementType, receipt);
     }
 
     @Override
     public String toString() {
-        return "AbstractReimbursement{" +
+        return "Reimbursement:" +
                 "id=" + id +
                 ", status=" + status +
                 ", author=" + author +
                 ", resolver=" + resolver +
                 ", amount=" + amount +
+                ", submitted=" + submitted +
+                ", resolved=" + resolved +
                 ", description='" + description + '\'' +
                 ", reimbursementType=" + reimbursementType +
-                '}';
+                ", receipt='" + receipt + '\'' +
+                '.';
     }
 }

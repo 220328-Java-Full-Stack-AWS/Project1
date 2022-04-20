@@ -102,8 +102,7 @@ public class ReimbursementService {
      * @return the reimbursement linked with the id.
      */
     public Reimbursement getById(int id){
-        Reimbursement reimbursement = reimbDAO.getReimbursementById(id);
-        return reimbursement;
+        return reimbDAO.getReimbursementById(id);
     }
 
     /**
