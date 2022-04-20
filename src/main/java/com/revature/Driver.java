@@ -322,6 +322,7 @@ public class Driver {
                                 }
                                 break;
                         }
+                        reimbursementService.update(model);
                         break;
                     case 4:
                         System.out.println("View Reimbursement History");

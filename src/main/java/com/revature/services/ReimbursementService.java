@@ -75,8 +75,12 @@ public class ReimbursementService {
         return updatedReimbursement;
     }
 
-    public void NewRequest(Reimbursement model, String description, int type){
-        reimbDAO.create(model, description, type);
+    public Reimbursement create(Reimbursement model){
+        return reimbDAO.create(model);
+    }
+
+    public Reimbursement NewRequest(Reimbursement model, String description, int type){
+        return reimbDAO.NewRequest(model, description, type);
     }
 
     public List<Reimbursement> getAllPending(User user){
@@ -154,12 +158,8 @@ public class ReimbursementService {
         return AllReimbursements;
     }
 
-    public Reimbursement update(Reimbursement model){
+    public void update(Reimbursement model){
         reimbDAO.update(model);
-        // Once updated, then get the updated data
-        Reimbursement reimbursement = reimbDAO.getReimbursementById(model.getId());
-
-        return reimbursement;
     }
 
     public void deleteReimbursement(int id){

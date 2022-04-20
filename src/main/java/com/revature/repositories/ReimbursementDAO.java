@@ -17,7 +17,48 @@ public class ReimbursementDAO {
 
     // Structure of methods are in the CRUD format (Create, Read, Update, Delete)
     //Create
-    public Reimbursement create(Reimbursement model, String description, int reimbursement_type){
+    public Reimbursement create(Reimbursement model){
+        Reimbursement reimbursement = new Reimbursement();
+        String sql = "INSERT INTO ers_reimbursement (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_status_id, reimb_type_id) VALUES (?,?,?,?,?,?)";
+        try {
+            PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
+
+            // Amount
+            pstmt.setDouble(1, model.getAmount());
+
+            // Submitted
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            pstmt.setTimestamp(2, ts);
+
+            // Description
+            pstmt.setString(3, model.getDescription());
+
+            // Author
+            pstmt.setInt(4, model.getAuthor().getId());
+
+            // Status
+            pstmt.setInt(5, 1); // ers_status_id = 1 is "Pending"
+
+            // Type
+            pstmt.setInt(6, model.getReimbursementType()); // get the reimbursement through the parameter
+
+            // Execute
+            pstmt.executeUpdate();
+
+            // get the reimb_id from the database
+            ResultSet keys = pstmt.getGeneratedKeys();
+            if(keys.next()) {
+                int key = keys.getInt(1);
+                model.setId(key);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reimbursement;
+    }
+
+    public Reimbursement NewRequest(Reimbursement model, String description, int reimbursement_type){
         Reimbursement reimbursement = new Reimbursement();
         String sql = "INSERT INTO ers_reimbursement (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_status_id, reimb_type_id) VALUES (?,?,?,?,?,?)";
         try {

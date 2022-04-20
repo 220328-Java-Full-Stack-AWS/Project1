@@ -32,4 +32,28 @@ public class ReimbursementServlet extends HttpServlet {
         resp.getWriter().print(json);
         resp.setStatus(200);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Reimbursement reimbursement = mapper.readValue(req.getInputStream(), Reimbursement.class);
+        reimbursement = service.create(reimbursement);
+        String json = mapper.writeValueAsString(reimbursement);
+        resp.setStatus(201); // object successfully persisted
+        resp.getWriter().print(json);
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Reimbursement reimbursement = mapper.readValue(req.getReader().toString(), Reimbursement.class);
+        service.update(reimbursement);
+        String json = mapper.writeValueAsString(reimbursement);
+        resp.setStatus(201); // Object successfully persisted
+        resp.getWriter().print(json);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        service.deleteReimbursement(Integer.parseInt(req.getHeader("reimb_id")));
+        resp.setStatus(200);
+    }
 }
