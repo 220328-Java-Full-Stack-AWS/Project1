@@ -59,4 +59,27 @@
         <servlet-class>com.revature.servlets.LoginServlet</servlet-class>
     </servlet>
 
+    <!--reimbursements for finance manager-->
+    <servlet-mapping>
+        <servlet-name>financeReimbursementServlet</servlet-name>
+        <url-pattern>/FinanceManager/Reimbursements</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>financeReimbursementServlet</servlet-name>
+        <servlet-class>com.revature.servlets.FinanceReimbursementServlet</servlet-class>
+    </servlet>
+
+    <!--reimbursements for user-->
+    <servlet-mapping>
+        <servlet-name>userReimbursementServlet</servlet-name>
+        <url-pattern>/User/Reimbursements</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userReimbursementServlet</servlet-name>
+        <servlet-class>com.revature.servlets.UserReimbursementServlet</servlet-class>
+    </servlet>
+
+
 </web-app>
