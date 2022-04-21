@@ -36,7 +36,7 @@ public class AuthenticationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = mapper.readValue(req.getReader().toString(), User.class);
-        user = userService.create(user);
+        user = service.register(user);
         String json = mapper.writeValueAsString(user);
         resp.setStatus(201);
         resp.getWriter().print(json);

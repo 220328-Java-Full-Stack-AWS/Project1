@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -20,6 +22,7 @@ import java.util.Objects;
  *
  * @author Center of Excellence
  */
+@JsonIgnoreProperties
 public class AbstractReimbursement {
 
     private int id;
