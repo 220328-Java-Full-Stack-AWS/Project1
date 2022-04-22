@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 public class FinanceReimbursementServlet extends HttpServlet {
@@ -24,12 +25,10 @@ public class FinanceReimbursementServlet extends HttpServlet {
     // get all reimbursements
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Reimbursement> AllReimbursements = service.getAllReimbursements();
-        for(Reimbursement r : AllReimbursements){
-            String json = mapper.writeValueAsString(r);
-            resp.getWriter().print(json);
-        }
         resp.setContentType("application/json");
+        List<Reimbursement> AllReimbursements = service.getAllReimbursements();
+        String json = mapper.writeValueAsString(AllReimbursements);
+        resp.getWriter().print(json);
         resp.setStatus(200);
     }
 

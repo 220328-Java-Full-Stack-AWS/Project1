@@ -1,8 +1,8 @@
 package com.revature.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.User;
 import com.revature.services.AuthService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.services.UserService;
 
 import javax.servlet.ServletException;
@@ -24,6 +24,7 @@ public class AuthenticationServlet extends HttpServlet {
         this.mapper = new ObjectMapper();
     }
 
+    // login
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = service.login(req.getHeader("email"), req.getHeader("pswd"));
@@ -33,6 +34,8 @@ public class AuthenticationServlet extends HttpServlet {
         resp.setStatus(200);
     }
 
+
+    // register
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = mapper.readValue(req.getReader().toString(), User.class);
@@ -42,8 +45,7 @@ public class AuthenticationServlet extends HttpServlet {
         resp.getWriter().print(json);
     }
 
-
-
+    // update account
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = mapper.readValue(req.getReader().toString(), User.class);
@@ -53,9 +55,11 @@ public class AuthenticationServlet extends HttpServlet {
         resp.getWriter().print(json);
     }
 
+    // delete account
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         userService.deleteUser(Integer.parseInt(req.getHeader("ers_users_id")));
         resp.setStatus(200);
     }
+
 }
