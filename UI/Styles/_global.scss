@@ -6,7 +6,6 @@
 
 body{
     font-family: 'Kanit', sans-serif;
-    color: white;
     background-color: #CAF0F8;
     overflow-x: hidden;
     min-height: 100vh;
@@ -16,7 +15,19 @@ body{
 .main{
     flex-grow: 1;
 }
-
+h5{
+    font-size: 2rem;
+    text-align: center;
+    text-decoration: underline;
+}
+p{
+    font-size: 1rem;
+}
+b{
+    font-size: .8rem;
+    color: grey;
+    font-weight: 100;
+}
 header{
     color: #fff;
     font-size: .9rem;
