@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Reimbursment System</title>
+    <!-- description -->
+    <meta name="description" content="The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL.">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./assets/iconmonstr-banknote-15-240.png" type="image/x-icon">
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" href="./Styles/Style.css">
+
+</head>
+<body>
+    <div class="main-header">
+        <i class="fa-solid fa-bars"></i>
+        <h2>Employee Reimbursment System</h2>
+    </div>
+    <section class="main-page">
+
+        <h2>All Reimbursments</h2>
+
+        <table id="table">
+            <tr id="categories">
+                <th>Id</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Author</th>
+                <th>Submitted</th>
+                <th>Completed</th>
+            </tr>
+        </table>
+
+    </section>
+
+    <footer>
+        <h2>ERSystems</h2>
+        <span class="copyright">Copyright &copy; <script>document.write(new Date().getFullYear())</script>, ERSystems Inc.</span>
+    </footer>    
+    <!-- API -->
+    <script>
+        const api_url = "http://localhost:8080/EmployeeReimbursement/Reimbursements/FinanceManager";
+
+        async function getReimbursement(url){
+            const response = await fetch(url,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            }
+            );
+            let json = await response.json();
+            let reimbursements = json;
+            console.log(reimbursements);
+            const table = document.getElementById('table');
+            reimbursements.forEach(function (reimbursement) {
+                const reimbursementRow = document.createElement("tr");
+                // column 1
+                const column1 = document.createElement("th");
+                column1.innerHTML = reimbursement.id;
+                reimbursementRow.appendChild(column1);
+                // column 2
+                const column2 = document.createElement("th");
+                column2.innerHTML = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
+                reimbursementRow.appendChild(column2);
+                // column 3
+                const column3 = document.createElement("th");
+                column3.style.width="30%";
+                column3.innerHTML = reimbursement.description;
+                reimbursementRow.appendChild(column3);
+                // column 4
+                const column4 = document.createElement("th");
+                let type = reimbursement.reimbursementType;
+                if(type === 1){
+                    column4.innerHTML = "Lodging";
+                }else if(type === 2){
+                    column4.innerHTML = "Food";
+                }else if(type === 3){
+                    column4.innerHTML = "Travel";
+                }else if(type === 4){
+                    column4.innerHTML = "Entertainment";
+                }else if(type === 5){
+                    column4.innerHTML = "Shopping";
+                }else if(type === 6){
+                    column4.innerHTML = "Other";
+                }else{
+                    column4.innerHTML = "NULL";
+                }
+                reimbursementRow.appendChild(column4);
+
+                // column 5
+                const column5 = document.createElement("th");
+                let status = reimbursement.status;
+                if(status === "PENDING"){
+                    column5.style.color = "#0077B6";
+                    column5.innerHTML = reimbursement.status;
+                }else if(status === "DENIED"){
+                    column5.style.color = "red";
+                    column5.classList.add("status");
+                    column5.innerHTML = reimbursement.status + ` <a href="./receipt.html">receipt</a>`;
+                }else{
+                    column5.style.color = "green";
+                    column5.classList.add("status");
+                    column5.innerHTML = reimbursement.status + ` <a href="./receipt.html">receipt</a>`;
+                }
+                reimbursementRow.appendChild(column5);
+
+                // column6
+                const column6 = document.createElement("th");
+                column6.innerHTML = reimbursement.author.username;
+                reimbursementRow.appendChild(column6);
+                
+                // column7
+                const column7 = document.createElement("th");
+                var date = new Date(reimbursement.submitted).toLocaleDateString("en-US");
+                column7.innerHTML = date;
+                reimbursementRow.appendChild(column7);
+
+                // column8
+                const column8 = document.createElement("th");
+                let resolved = reimbursement.resolved;
+                if(resolved === null){
+                    column8.innerHTML = `<a href="./index.html">Process</a>`;
+                }else{
+                    var date = new Date(reimbursement.resolved).toLocaleDateString("en-US");
+                    column8.innerHTML = date;
+                }
+                reimbursementRow.appendChild(column8);
+
+                table.appendChild(reimbursementRow);
+            });
+        }
+
+        window.onload = getReimbursement(api_url);
+    </script>
+        <!-- <script>
+            const api_url = "http://localhost:8080/EmployeeReimbursement/auth";
+     
+            async function getUser(url, email, password){
+                const response = await fetch(url,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "email": email,
+                        "pswd": password
+                    }
+                }
+                );
+                let json = await response.json();
+                console.log(json);
+            }
+            getUser(api_url, "leobarrientos02@gmail.com", "password");
+         </script> -->
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>
+</body>
+</html>

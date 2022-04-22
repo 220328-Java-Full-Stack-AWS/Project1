@@ -588,7 +588,7 @@ public class ReimbursementDAO {
      */
     public List<Reimbursement> getAllReimbursements() {
         List<Reimbursement> result = new LinkedList<>();
-        String sql = "SELECT * FROM ers_reimbursement";
+        String sql = "SELECT * FROM ers_reimbursement ORDER BY reimb_id ASC";
         try{
             Connection conn = ConnectionFactory.getConnection();  // get the connection
             PreparedStatement pstmt = null;

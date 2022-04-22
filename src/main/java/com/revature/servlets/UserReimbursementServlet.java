@@ -32,10 +32,8 @@ public class UserReimbursementServlet extends HttpServlet {
         Optional<User> temp = userService.getByUsername(req.getHeader("username"));
         User user = temp.get();
         List<Reimbursement> AllReimbursements = service.getByAuthor(user);
-        for(Reimbursement r : AllReimbursements){
-            String json = mapper.writeValueAsString(r);
-            resp.getWriter().print(json);
-        }
+        String json = mapper.writeValueAsString(AllReimbursements);
+        resp.getWriter().print(json);
         resp.setContentType("application/json");
         resp.setStatus(200);
     }
