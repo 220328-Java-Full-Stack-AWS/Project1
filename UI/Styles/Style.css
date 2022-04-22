@@ -692,7 +692,7 @@ footer .footer-options span {
           animation-name: awn-fade-in;
   -webkit-animation-timing-function: ease-out;
           animation-timing-function: ease-out;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
   bottom: 0;
   display: -webkit-box;
   display: -ms-flexbox;
