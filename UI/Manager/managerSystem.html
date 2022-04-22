@@ -84,21 +84,29 @@
                 // column 4
                 const column4 = document.createElement("th");
                 let type = reimbursement.reimbursementType;
-                if(type === 1){
-                    column4.innerHTML = "Lodging";
-                }else if(type === 2){
-                    column4.innerHTML = "Food";
-                }else if(type === 3){
-                    column4.innerHTML = "Travel";
-                }else if(type === 4){
-                    column4.innerHTML = "Entertainment";
-                }else if(type === 5){
-                    column4.innerHTML = "Shopping";
-                }else if(type === 6){
-                    column4.innerHTML = "Other";
-                }else{
-                    column4.innerHTML = "NULL";
-                }
+                var typeText;
+                    if(type === 1){
+                        column4.innerHTML = "Lodging";
+                        typeText = "Lodging";
+                    }else if(type === 2){
+                        column4.innerHTML = "Food";
+                        typeText = "Food";
+                    }else if(type === 3){
+                        column4.innerHTML = "Travel";
+                        typeText = "Travel";
+                    }else if(type === 4){
+                        column4.innerHTML = "Entertainment";
+                        typeText = "Entertainment";
+                    }else if(type === 5){
+                        column4.innerHTML = "Shopping";
+                        typeText = "Shopping";
+                    }else if(type === 6){
+                        column4.innerHTML = "Other";
+                        typeText = "Other";
+                    }else{
+                        column4.innerHTML = "NULL";
+                        typeText = "NULL";
+                    }
                 reimbursementRow.appendChild(column4);
 
                 // column 5
@@ -111,12 +119,12 @@
                     column5.style.color = "red";
                     column5.classList.add("status");
                     column5.innerHTML = reimbursement.status + ` 
-                        <button onclick="notifier.modal('<h5>Receipt</h5><br><p>ID: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
+                        <button onclick="notifier.modal('<h5>Receipt</h5><br><p>-Id: ${reimbursement.id}</p><p>-Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>-Description: ${reimbursement.description}</p><p>-Reimbursement type: ${typeText}</p><p>-Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>-Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>-Status: ${reimbursement.status}</p><p>-Finance Manager: ${reimbursement.resolver.username}</p><p>-Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
                 }else{
                     column5.style.color = "green";
                     column5.classList.add("status");
                     column5.innerHTML = reimbursement.status + ` 
-                        <button onclick="notifier.modal('<h5>Receipt</h5><br><p>ID: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
+                        <button onclick="notifier.modal('<h5>Receipt</h5><br><p>-Id: ${reimbursement.id}</p><p>-Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>-Description: ${reimbursement.description}</p><p>-Reimbursement type: ${typeText}</p><p>-Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>-Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>-Status: ${reimbursement.status}</p><p>-Finance Manager: ${reimbursement.resolver.username}</p><p>-Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
                 }
                 reimbursementRow.appendChild(column5);
 
