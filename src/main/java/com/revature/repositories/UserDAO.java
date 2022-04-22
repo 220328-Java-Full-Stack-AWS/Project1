@@ -36,12 +36,13 @@ public class UserDAO {
             pstmt.setString(5, userToBeRegistered.getEmail());
             pstmt.setString(6, userToBeRegistered.getPhone());
 
-            String role = String.valueOf(userToBeRegistered.getRole());
-            if(role.equals("Employee")){
-                pstmt.setInt(7, 1);
-            }else{
-                pstmt.setInt(7, 2);
-            }
+//            String role = String.valueOf(userToBeRegistered.getRole());
+//            if(role.equals("Employee")){
+//                pstmt.setInt(7, 1);
+//            }else{
+//                pstmt.setInt(7, 2);
+//            }
+            pstmt.setInt(7, 1); // set all new users to non-manager
 
             pstmt.executeUpdate();
 

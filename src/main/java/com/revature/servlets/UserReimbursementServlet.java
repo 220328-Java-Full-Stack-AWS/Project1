@@ -29,12 +29,11 @@ public class UserReimbursementServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Optional<User> temp = userService.getByUsername(req.getHeader("username"));
-        User user = temp.get();
+        resp.setContentType("application/json");
+        User user = userService.getById(Integer.parseInt(req.getHeader("user_id")));
         List<Reimbursement> AllReimbursements = service.getByAuthor(user);
         String json = mapper.writeValueAsString(AllReimbursements);
         resp.getWriter().print(json);
-        resp.setContentType("application/json");
         resp.setStatus(200);
     }
 

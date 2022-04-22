@@ -1,0 +1,127 @@
+.main-header{
+    color: #fff;
+    font-size: .9rem;
+    padding: 1rem 2rem;
+    background-color: #023E8A;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    i{
+        cursor: pointer;
+    }
+    h2{
+        margin-left: 2rem;
+    }
+}
+
+.main-page{
+    width: 100%;
+    margin: 2rem 0rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+
+    h2{
+        font-size: 2.5rem;
+        color: #023E8A;
+        text-decoration: underline;
+        margin: 1rem 0rem;
+    }
+    // table content
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 95%;
+        border: 1px solid #90E0EF;
+        color: black;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 12px;
+        font-weight: 300;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      #categories{
+          background-color: #023E8A;
+          color: white;
+          font-weight: 600;
+      }
+      i{
+          margin-left:.25rem;
+          font-size: 1rem;
+          cursor: pointer;
+      }
+
+    //   For manager status column
+      .status{
+          display: flex;
+          flex-direction: column;
+          margin: 0;
+          a{
+              color: grey;
+              font-size: .9rem;
+          }
+      }
+      // end
+
+      // For user with no reimbuserments
+      .nothing{
+        width: 60%;
+        padding: 1rem 0rem;
+        font-size: 2rem;
+        color: #023E8A;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        button{
+            width: 10%;
+            cursor: pointer;
+            background-color: #0077B6;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            padding: .3rem 1rem;
+            border-radius: 7px;
+            transition: all .7s ease;
+            &:hover{
+                background-color: #023E8A;
+            }
+        }
+      }
+
+      // For managing the reimbuserments
+      .unavailable{
+        button{
+            border: none;
+            padding: .2rem .4rem;
+            border-radius: 3px;
+            pointer-events: none;
+            background-color: lightgrey;
+            color: rgb(157, 156, 156);
+        }
+      }
+      .available{
+        button{
+            color: white;
+            border: none;
+            padding: .2rem .4rem;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        #edit{
+            background-color: #0077B6;
+        }
+        #delete{
+            background-color: red;
+        }
+      }
+
+
+}

@@ -8,38 +8,40 @@
     <!-- description -->
     <meta name="description" content="The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL.">
     <!-- favicon -->
-    <link rel="shortcut icon" href="./assets/iconmonstr-banknote-15-240.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/iconmonstr-banknote-15-240.png" type="image/x-icon">
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
     <!-- css -->
-    <link rel="stylesheet" href="./Styles/Style.css">
+    <link rel="stylesheet" href="../Styles/Style.css">
 
 </head>
 <body>
-    <div class="main-header">
-        <i class="fa-solid fa-bars"></i>
-        <h2>Employee Reimbursment System</h2>
+    <div class="main">
+        <div class="main-header">
+            <i class="fa-solid fa-bars"></i>
+            <h2>Employee Reimbursment System</h2>
+        </div>
+        <section class="main-page">
+    
+            <h2>All Reimbursments</h2>
+    
+            <table id="table">
+                <tr id="categories">
+                    <th>Id</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Author</th>
+                    <th>Submitted</th>
+                    <th>Resolved</th>
+                </tr>
+            </table>
+    
+        </section>
     </div>
-    <section class="main-page">
-
-        <h2>All Reimbursments</h2>
-
-        <table id="table">
-            <tr id="categories">
-                <th>Id</th>
-                <th>Amount</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Author</th>
-                <th>Submitted</th>
-                <th>Completed</th>
-            </tr>
-        </table>
-
-    </section>
 
     <footer>
         <h2>ERSystems</h2>

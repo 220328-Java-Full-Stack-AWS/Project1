@@ -10,6 +10,20 @@ body {
   color: white;
   background-color: #CAF0F8;
   overflow-x: hidden;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.main {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 header {
@@ -20,8 +34,6 @@ header {
 }
 
 footer {
-  position: relative;
-  bottom: 0;
   width: 100%;
   padding: .5rem;
   background-color: #023E8A;
@@ -171,5 +183,68 @@ footer .footer-options span {
 .main-page .status a {
   color: grey;
   font-size: .9rem;
+}
+
+.main-page .nothing {
+  width: 60%;
+  padding: 1rem 0rem;
+  font-size: 2rem;
+  color: #023E8A;
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.main-page .nothing button {
+  width: 10%;
+  cursor: pointer;
+  background-color: #0077B6;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  padding: .3rem 1rem;
+  border-radius: 7px;
+  -webkit-transition: all .7s ease;
+  transition: all .7s ease;
+}
+
+.main-page .nothing button:hover {
+  background-color: #023E8A;
+}
+
+.main-page .unavailable button {
+  border: none;
+  padding: .2rem .4rem;
+  border-radius: 3px;
+  pointer-events: none;
+  background-color: lightgrey;
+  color: #9d9c9c;
+}
+
+.main-page .available button {
+  color: white;
+  border: none;
+  padding: .2rem .4rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.main-page .available #edit {
+  background-color: #0077B6;
+}
+
+.main-page .available #delete {
+  background-color: red;
 }
 /*# sourceMappingURL=Style.css.map */
