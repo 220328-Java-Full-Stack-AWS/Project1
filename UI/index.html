@@ -5,10 +5,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Reimbursment System | Login</title>
+    <!-- description -->
     <meta name="description" content="The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL.">
+    <!-- favicon -->
     <link rel="shortcut icon" href="./assets/iconmonstr-banknote-15-240.png" type="image/x-icon">
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" href="./Styles/Style.css">
 </head>
 <body>
-    
+    <div class="main">
+        <header>
+            <h2>Employee Reimbursment System</h2>
+        </header>
+        <section class="login-page">
+            <form class="login-form">
+                <span id="error"></span>
+                <h2>Login</h2>
+                <input type="text" name="email" required id="email" class="form-input-email" placeholder="Enter email address">
+                <input type="password" name="password" id="input" required class="form-input-password" placeholder="Enter password">
+                <span class="showPassword">Show Password</span>
+                <input type="submit" value="Submit" class="login-submit">
+            </form>
+            <span>Need an account? <a href="./register.html">Register</a></span> 
+        </section>
+    </div>
+    <footer>
+        <h2>ERSystems</h2>
+        <span class="copyright">Copyright &copy; <script>document.write(new Date().getFullYear())</script>, ERSystems Inc.</span>
+        <div class="footer-options">
+            <a href="#">Login</a>
+            <span>|</span>
+            <a href="./register.html">Register</a>
+        </div>
+    </footer>
+
+    <!-- Front End JavaScript -->
+    <script>
+        const showPassword = document.querySelector(".showPassword");
+        var x = document.getElementById("input");
+        showPassword.addEventListener("click", () => {
+        if (showPassword.textContent === "Show Password") {
+            x.type = "text";
+            showPassword.textContent = "Hide Password";
+        } else if (showPassword.textContent === "Hide Password") {
+            x.type = "password";
+            showPassword.textContent = "Show Password";
+        }
+        });
+    </script>
 </body>
 </html>

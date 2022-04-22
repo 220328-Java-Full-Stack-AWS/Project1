@@ -1,0 +1,78 @@
+.login-page{
+    width: 100%;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    background-color: #CAF0F8;
+    .login-form{
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        #error{
+            width: 100%;
+            background-color: #fff;
+            color: red;
+            text-align: center;
+            font-weight: 600;
+            margin: .5rem 0;
+        }
+        h2{
+            font-size: 2.5rem;
+            color: #023E8A;
+            text-decoration: underline;
+            
+        }
+        .form-input-email{
+            font-size: 1.2rem;
+            width: 100%;
+            color: #023E8A;
+            margin-bottom: 1rem;
+            padding: .5rem;
+            outline: none;
+            border: none;
+            border-radius: 3px;
+        }
+        .form-input-password{
+            font-size: 1.2rem;
+            width: 100%;
+            color: #023E8A;
+            padding: .5rem;
+            outline: none;
+            border:  none;
+            border-radius: 3px;
+        }
+
+        .showPassword{
+            font-size: .9rem;
+            color: #023E8A;
+            margin: .25rem 0 1rem 0;
+            cursor: pointer;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+        .login-submit{
+            border:  none;
+            border-radius: 3px;
+            font-size: 1.2rem;
+            padding: .5rem .3rem;
+            background-color: #023E8A;
+            color: white;
+            cursor: pointer;
+            transition: all .5s ease;
+            &:hover{
+                background-color: #03045E;
+            }
+        }
+
+    }
+    span{
+        color:#023E8A;
+        margin: 1rem 0rem;
+        a{
+            color:#023E8A;
+        }
+    }
+}

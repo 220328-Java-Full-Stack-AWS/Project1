@@ -1,0 +1,88 @@
+.register-page{
+    margin: 1rem 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    background-color: #CAF0F8;
+    .register-form{
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+        h2{
+            font-size: 2.5rem;
+            color: #023E8A;
+            text-decoration: underline;
+            
+        }
+        input{
+            font-size: 1.1rem;
+            width: 100%;
+            color: #023E8A;
+            margin-bottom: 1rem;
+            padding: .5rem .8rem;
+            outline: none;
+            border: none;
+            border-radius: 3px;
+        }
+        .register-form-card{
+            margin-bottom: .5rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            .card{
+                input{
+                    margin: 0 0 .5rem 0;
+                }
+                width: 48.5%;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+        .register-form-password{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            .card{
+                input{
+                    margin: 0 0 .3rem 0;
+                }
+                width: 48.5%;
+                display: flex;
+                flex-direction: column;
+                .showPassword, .confirmPassword{
+                    font-size: .9rem;
+                    color: #023E8A;
+                    cursor: pointer;
+                    &:hover{
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+        .register-submit{
+            margin-top: .5rem;
+            border: none;
+            border-radius: 3px;
+            font-size: 1.2rem;
+            padding: .5rem .3rem;
+            background-color: #023E8A;
+            color: white;
+            cursor: pointer;
+            transition: all .5s ease;
+            &:hover{
+                background-color: #03045E;
+            }
+        }
+
+    }
+    span{
+        color:#03045E;
+        a{
+            color:#03045E;
+        }
+    }
+}

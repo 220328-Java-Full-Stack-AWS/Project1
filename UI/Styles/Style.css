@@ -30,7 +30,7 @@ header {
   color: #fff;
   font-size: .9rem;
   padding: 1rem 2rem;
-  background-color: #354f52;
+  background-color: #023E8A;
 }
 
 footer {
@@ -80,13 +80,260 @@ footer .footer-options a {
 
 footer .footer-options a:hover {
   text-decoration: underline;
-  color: #84a98c;
+  color: #ADE8F4;
 }
 
 footer .footer-options span {
-  font-size: 1.5rem;
-  color: #cad2c5;
+  font-size: 1rem;
+  color: white;
   margin: 0 1rem;
+}
+
+.login-page {
+  width: 100%;
+  margin-top: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #CAF0F8;
+}
+
+.login-page .login-form {
+  width: 30%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.login-page .login-form #error {
+  width: 100%;
+  background-color: #fff;
+  color: red;
+  text-align: center;
+  font-weight: 600;
+  margin: .5rem 0;
+}
+
+.login-page .login-form h2 {
+  font-size: 2.5rem;
+  color: #023E8A;
+  text-decoration: underline;
+}
+
+.login-page .login-form .form-input-email {
+  font-size: 1.2rem;
+  width: 100%;
+  color: #023E8A;
+  margin-bottom: 1rem;
+  padding: .5rem;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+}
+
+.login-page .login-form .form-input-password {
+  font-size: 1.2rem;
+  width: 100%;
+  color: #023E8A;
+  padding: .5rem;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+}
+
+.login-page .login-form .showPassword {
+  font-size: .9rem;
+  color: #023E8A;
+  margin: .25rem 0 1rem 0;
+  cursor: pointer;
+}
+
+.login-page .login-form .showPassword:hover {
+  text-decoration: underline;
+}
+
+.login-page .login-form .login-submit {
+  border: none;
+  border-radius: 3px;
+  font-size: 1.2rem;
+  padding: .5rem .3rem;
+  background-color: #023E8A;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+}
+
+.login-page .login-form .login-submit:hover {
+  background-color: #03045E;
+}
+
+.login-page span {
+  color: #023E8A;
+  margin: 1rem 0rem;
+}
+
+.login-page span a {
+  color: #023E8A;
+}
+
+.register-page {
+  margin: 1rem 0;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #CAF0F8;
+}
+
+.register-page .register-form {
+  width: 45%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.register-page .register-form h2 {
+  font-size: 2.5rem;
+  color: #023E8A;
+  text-decoration: underline;
+}
+
+.register-page .register-form input {
+  font-size: 1.1rem;
+  width: 100%;
+  color: #023E8A;
+  margin-bottom: 1rem;
+  padding: .5rem .8rem;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+}
+
+.register-page .register-form .register-form-card {
+  margin-bottom: .5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.register-page .register-form .register-form-card .card {
+  width: 48.5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.register-page .register-form .register-form-card .card input {
+  margin: 0 0 .5rem 0;
+}
+
+.register-page .register-form .register-form-password {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.register-page .register-form .register-form-password .card {
+  width: 48.5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.register-page .register-form .register-form-password .card input {
+  margin: 0 0 .3rem 0;
+}
+
+.register-page .register-form .register-form-password .card .showPassword, .register-page .register-form .register-form-password .card .confirmPassword {
+  font-size: .9rem;
+  color: #023E8A;
+  cursor: pointer;
+}
+
+.register-page .register-form .register-form-password .card .showPassword:hover, .register-page .register-form .register-form-password .card .confirmPassword:hover {
+  text-decoration: underline;
+}
+
+.register-page .register-form .register-submit {
+  margin-top: .5rem;
+  border: none;
+  border-radius: 3px;
+  font-size: 1.2rem;
+  padding: .5rem .3rem;
+  background-color: #023E8A;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+}
+
+.register-page .register-form .register-submit:hover {
+  background-color: #03045E;
+}
+
+.register-page span {
+  color: #03045E;
+}
+
+.register-page span a {
+  color: #03045E;
 }
 
 .main-header {
