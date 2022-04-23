@@ -22,14 +22,14 @@
             <h2>Employee Reimbursment System</h2>
         </header>
         <section class="login-page">
-            <form class="login-form">
+            <div class="login-form">
                 <span id="error"></span>
                 <h2>Login</h2>
-                <input type="text" name="email" required id="email" class="form-input-email" placeholder="Enter email address">
-                <input type="password" name="password" id="input" required class="form-input-password" placeholder="Enter password">
+                <input type="text" name="email" required id="user_email" class="form-input-email" placeholder="Enter email address">
+                <input type="password" name="password" id="ers_password" required class="form-input-password" placeholder="Enter password">
                 <span class="showPassword">Show Password</span>
-                <input type="submit" value="Submit" class="login-submit">
-            </form>
+                <button type="submit" value="Submit" id="login-btn" class="login-submit">Log In</button>
+            </div>
             <span>Need an account? <a href="./register.html">Register</a></span> 
         </section>
     </div>
@@ -42,11 +42,25 @@
             <a href="./register.html">Register</a>
         </div>
     </footer>
+    <!-- BackEnd JavaScript -->
+    <script>
+        document.getElementById('login-btn').addEventListener('click',()=>{
+            let email = document.getElementById('user_email').value;
+            let password = document.getElementById('ers_password').value;
+            
+            if(email === "leobarrientos02@gmail.com" && password === "password"){
+                window.location.href = "./User/userSystem.html";
+            }else{
+                const error = document.getElementById('error');
+                error.innerHTML = "Wrong Credentials";
+            }
+        })
 
+    </script>
     <!-- Front End JavaScript -->
     <script>
         const showPassword = document.querySelector(".showPassword");
-        var x = document.getElementById("input");
+        var x = document.getElementById("ers_password");
         showPassword.addEventListener("click", () => {
         if (showPassword.textContent === "Show Password") {
             x.type = "text";

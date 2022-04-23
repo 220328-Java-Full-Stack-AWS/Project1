@@ -23,7 +23,6 @@
     <servlet>
         <servlet-name>healthServlet</servlet-name>
         <servlet-class>com.revature.servlets.HealthServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
     </servlet>
 
     <!--authentication-->
@@ -40,7 +39,7 @@
     <!--reimbursements for finance manager-->
     <servlet-mapping>
         <servlet-name>financeReimbursementServlet</servlet-name>
-        <url-pattern>/Reimbursements/FinanceManager</url-pattern>
+        <url-pattern>/reimbursements/finance_manager</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -51,7 +50,7 @@
     <!--reimbursements for user-->
     <servlet-mapping>
         <servlet-name>userReimbursementServlet</servlet-name>
-        <url-pattern>/Reimbursements/User</url-pattern>
+        <url-pattern>/reimbursements/user</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -70,6 +69,5 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <!-- /CORS FILTER -->
-
 
 </web-app>
