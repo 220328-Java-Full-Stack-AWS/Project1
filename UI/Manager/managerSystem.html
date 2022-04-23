@@ -22,14 +22,9 @@
 <body>
     <div class="main">
         <div class="main-header">
+            <i class="fa-solid fa-bars"></i>
             <h2>Employee Reimbursment System</h2>
-            <span><p id="username"></p><i class="fa fa-user-circle" aria-hidden="true" onclick="toggleNavbar()"></i></span>
         </div>
-        <nav>
-            <span>Finance Manager</span>
-            <span>Settings</span>
-            <span>Logout</span>
-        </nav>
         <section class="main-page">
     
             <h2>All Reimbursments</h2>
@@ -46,6 +41,7 @@
                     <th>Resolved</th>
                 </tr>
             </table>
+    
         </section>
     </div>
 
@@ -68,7 +64,7 @@
             );
             let json = await response.json();
             let reimbursements = json;
-            //console.log(reimbursements);
+            console.log(reimbursements);
             const table = document.getElementById('table');
             reimbursements.forEach(function (reimbursement) {
                 const reimbursementRow = document.createElement("tr");
@@ -123,12 +119,12 @@
                     column5.style.color = "red";
                     column5.classList.add("status");
                     column5.innerHTML = reimbursement.status + ` 
-                        <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
+                        <button onclick="notifier.modal('<h5>Receipt</h5><br><p>-Id: ${reimbursement.id}</p><p>-Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>-Description: ${reimbursement.description}</p><p>-Reimbursement type: ${typeText}</p><p>-Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>-Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>-Status: ${reimbursement.status}</p><p>-Finance Manager: ${reimbursement.resolver.username}</p><p>-Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
                 }else{
                     column5.style.color = "green";
                     column5.classList.add("status");
                     column5.innerHTML = reimbursement.status + ` 
-                        <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
+                        <button onclick="notifier.modal('<h5>Receipt</h5><br><p>-Id: ${reimbursement.id}</p><p>-Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>-Description: ${reimbursement.description}</p><p>-Reimbursement type: ${typeText}</p><p>-Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>-Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>-Status: ${reimbursement.status}</p><p>-Finance Manager: ${reimbursement.resolver.username}</p><p>-Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
                 }
                 reimbursementRow.appendChild(column5);
 
@@ -160,19 +156,10 @@
 
         window.onload = getReimbursement(api_url);
     </script>
-
     <!-- Front End JavaScript -->
     <script>
         // Notifier Package
         var notifier = new AWN();
-        function toggleNavbar() {
-            const nav = document.querySelector('nav');
-            if(getComputedStyle(nav).display === "none"){
-                nav.style.display = "flex";
-            }else{
-                nav.style.display = "none";
-            }
-        }
     </script>
         <!-- <script>
             const api_url = "http://localhost:8080/EmployeeReimbursement/auth";

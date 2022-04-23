@@ -1,59 +1,17 @@
 .main-header{
-    color: white;
+    color: #fff;
     font-size: .9rem;
     padding: 1rem 2rem;
     background-color: #023E8A;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    span{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        i{
-            margin-left:.5rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            &:hover{
-                color: lightgray;
-            }
-        }
-    }
-}
-nav{
-    border-top: #0077B6 1px solid;
-    width: 20%;
-    position: fixed;
-    right:0;
-    background-color: #023E8A;
-    display: none;
-    flex-direction: column;
-    padding: .5rem;
-    border-bottom-left-radius: 6px;
-    p{
-        font-weight: 200;
-        text-align: center;
-        color: white;
-        font-size: 1rem;
-        width: 100%;
-        margin-bottom: .3rem;        
-    }
-    span{
-        font-weight: 200;
-        text-align: center;
-        color: white;
-        font-size: 1rem;
-        width: 100%;
-        margin-bottom: .3rem;
+    i{
         cursor: pointer;
-        i{
-            margin-right: .5rem;
-        }
-        &:hover{
-            background-color: #022f6a;
-        }
+        font-size: 1.2rem;
+    }
+    h2{
+        margin-left: 2rem;
     }
 }
 
