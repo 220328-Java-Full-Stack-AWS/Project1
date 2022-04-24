@@ -5,10 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Reimbursment System | Login</title>
+    <!-- notification package-->
+    <script src="../notification/index.js"></script> 
     <!-- description -->
     <meta name="description" content="The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL.">
     <!-- favicon -->
-    <link rel="shortcut icon" href="./assets/iconmonstr-banknote-15-240.png" type="image/x-icon">
+    <!-- <link rel="shortcut icon" href="./assets/iconmonstr-banknote-15-240.png" type="image/x-icon"> -->
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,21 +46,53 @@
     </footer>
     <!-- BackEnd JavaScript -->
     <script>
-        document.getElementById('login-btn').addEventListener('click',()=>{
-            let email = document.getElementById('user_email').value;
-            let password = document.getElementById('ers_password').value;
-            
-            if(email === "leobarrientos02@gmail.com" && password === "password"){
-                window.location.href = "./User/userSystem.html";
-            }else{
-                const error = document.getElementById('error');
-                error.innerHTML = "Wrong Credentials";
+        const api_url = "http://localhost:8080/api/login";
+        const error = document.getElementById('error');
+        
+        async function login(url){
+            const response = await fetch(url,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "email": document.getElementById('user_email').value,
+                    "password": document.getElementById('ers_password').value
+                }
             }
-        })
+            );
+            if(response.status !== 200){
+                notifier.alert("Account not found");
+            }else{
+                let json = await response.json();
+                var user = {
+                    'username': json.username,
+                    'firstName': json.first_name,
+                    'lastName': json.last_name,
+                    'email': json.email,
+                    'role': json.role,
+                    'id': json.id,
+                    'phone': json.phone
+                };
+
+                localStorage.setItem('user', JSON.stringify(user));
+                if(json.role === "EMPLOYEE"){
+                    window.location.href = "./User/userSystem.html";
+                }else{
+                    window.location.href = "./Manager/managerSystem.html";
+                }
+                
+            }
+        }
+        document.getElementById('login-btn').addEventListener('click',()=>{
+            login(api_url);
+        });
 
     </script>
+
     <!-- Front End JavaScript -->
     <script>
+        // Notifier Package
+        var notifier = new AWN();
         const showPassword = document.querySelector(".showPassword");
         var x = document.getElementById("ers_password");
         showPassword.addEventListener("click", () => {
@@ -71,5 +105,7 @@
         }
         });
     </script>
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>
 </body>
 </html>

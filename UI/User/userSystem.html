@@ -70,7 +70,7 @@
             );
             let json = await response.json();
             let reimbursements = json;
-            console.log(reimbursements);
+            // console.log(reimbursements);
 
             const table = document.getElementById('table');
             if(reimbursements.length === 0 ){
@@ -179,11 +179,14 @@
 
                 const username = document.getElementById('username');
                 username.innerHTML = reimbursements[0].author.username;
+
             }
  
         }
-
-        window.onload = getReimbursement(api_url, 7);
+        // Retrieve the object from storage
+        var retrievedObject = localStorage.getItem('user');
+        var info =  JSON.parse(retrievedObject);
+        window.onload = getReimbursement(api_url, info.id);
     </script>
     <!-- Front End JavaScript -->
     <script>
