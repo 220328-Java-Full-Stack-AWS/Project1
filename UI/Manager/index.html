@@ -53,11 +53,11 @@
         <h2>ERSystems</h2>
         <span class="copyright">Copyright &copy; <script>document.write(new Date().getFullYear())</script>, ERSystems Inc.</span>
     </footer>    
-    <!-- API -->
+    <!-- Backend JavaScript -->
     <script>
         const api_url = "http://localhost:8080/api/reimbursements/finance_manager";
 
-        async function getReimbursement(url){
+        async function getReimbursements(url){
             const response = await fetch(url,
             {
                 method: "GET",
@@ -147,7 +147,7 @@
                 const column8 = document.createElement("th");
                 let resolved = reimbursement.resolved;
                 if(resolved === null){
-                    column8.innerHTML = `<a href="./index.html">Process</a>`;
+                    column8.innerHTML = `<button id="process" onclick="processPage(${reimbursement.id})">Process</button>`;
                 }else{
                     var date = new Date(reimbursement.resolved).toLocaleDateString("en-US");
                     column8.innerHTML = date;
@@ -163,7 +163,12 @@
         const username = document.getElementById('username');
         username.innerHTML = info.username;
         
-        window.onload = getReimbursement(api_url);
+        window.onload = getReimbursements(api_url);
+
+        function processPage(id){
+            localStorage.setItem('reimbursement_id', id);
+            window.location.href = "../Process/index.html";
+        }
     </script>
     <!-- Front End JavaScript -->
     <script>

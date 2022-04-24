@@ -36,7 +36,7 @@
         <servlet-class>com.revature.servlets.LoginServlet</servlet-class>
     </servlet>
 
-    <!--user servlet-->
+    <!-- register servlet-->
     <servlet-mapping>
         <servlet-name>registerServlet</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -67,6 +67,17 @@
     <servlet>
         <servlet-name>userReimbursementServlet</servlet-name>
         <servlet-class>com.revature.servlets.UserReimbursementServlet</servlet-class>
+    </servlet>
+
+    <!--reimbursement-->
+    <servlet-mapping>
+        <servlet-name>reimbursementServlet</servlet-name>
+        <url-pattern>/reimbursement</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>reimbursementServlet</servlet-name>
+        <servlet-class>com.revature.servlets.ReimbursementServlet</servlet-class>
     </servlet>
 
     <!-- CORS FILTER -->

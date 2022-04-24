@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Reimbursment System | Process</title>
+    <!-- notification package-->
+    <script src="../notification/index.js"></script> 
+    <!-- description -->
+    <meta name="description" content="The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL.">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../assets/iconmonstr-banknote-15-240.png" type="image/x-icon">
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" href="../Styles/Style.css">
+</head>
+<body>
+    <div class="main">
+        <div class="main-header">
+            <h2>Employee Reimbursment System</h2>
+            <span><p id="username"></p><i class="fa fa-user-circle" aria-hidden="true" onclick="toggleNavbar()"></i></span>
+        </div>
+        <nav>
+            <p>Finance Manager</p>
+            <span>Settings</span>
+            <span id="logout">Logout</span>
+        </nav>
+        <section class="main-page">
+            <h2>Process Reimbursment</h2>
+            <div class="reimbursement-info">
+                <div class="id">
+                    <p>Reimbursment Id:</p>
+                    <span id="id">1</span>
+                </div>
+                <div class="amount">
+                    <p>Reimbursment Amount:</p>
+                    <span id="amount">500</span>
+                </div>
+                <div class="description">
+                    <p>Reimbursment Description:</p>
+                    <span id="description">I love Emily</span>
+                </div>
+                <div class="type">
+                    <p>Reimbursment Type:</p>
+                    <span id="type">Lodging</span>
+                </div>
+                <div class="author">
+                    <p>Reimbursment Author:</p>
+                    <span id="author">Me</span>
+                </div>
+                <div class="submitted">
+                    <p>Submission Date:</p>
+                    <span id="submitted">12/18/1997</span>
+                </div>
+                <div class="status">
+                    <p>Status:</p>
+                    <select name="status" id="status">
+                        <option value="pending" selected>Pending</option>
+                        <option value="denied">Deny</option>
+                        <option value="approved">Approve</option>
+                    </select>
+                </div>
+                <div class="submit">
+                    <button>Submit</button>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <h2>ERSystems</h2>
+        <span class="copyright">Copyright &copy; <script>document.write(new Date().getFullYear())</script>, ERSystems Inc.</span>
+    </footer>
+    
+    <!-- Back End JavaScript -->
+    <script>
+           async function getReimbursement(id){
+                const response = await fetch("http://localhost:8080/api/reimbursement",
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "reimbursement_id": id
+                    }
+                }
+                );
+                let json = await response.json();
+                let reimbursement = json;
+                // console.log(reimbursement);
+                
+                // dom elements
+                const idText = document.getElementById("id");
+                idText.textContent = reimbursement.id;
+                
+                const amount = document.getElementById("amount");
+                amount.textContent = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
+                
+                const descriptionText = document.getElementById("description");
+                descriptionText.textContent = reimbursement.description;
+                
+                const typeText = document.getElementById("type");
+                let reimbursementType = reimbursement.reimbursementType;
+                if(reimbursementType === 1){
+                    typeText.textContent = "Lodging";
+                }else if(reimbursementType === 2){
+                    typeText.textContent = "Food";
+                }else if(reimbursementType === 3){
+                    typeText.textContent = "Travel";
+                }else if(reimbursementType === 4){
+                    typeText.textContent = "Entertainment";
+                }else if(reimbursementType === 5){
+                    typeText.textContent = "Shopping";
+                }else if(reimbursementType === 6){
+                    typeText.textContent = "Other";
+                }else{
+                    typeText.textContent = "error";
+                }
+
+                const authorText = document.getElementById("author");
+                authorText.textContent = reimbursement.author.first_name + " " + reimbursement.author.last_name;
+
+                const submitText = document.getElementById("submitted");
+                submitText.textContent = new Date(reimbursement.submitted).toLocaleDateString("en-US");
+            }
+
+            // Retrieve the reimbursement id from storage
+            var data = localStorage.getItem('reimbursement_id');
+            // console.log(data);
+            window.onload = getReimbursement(data);
+        
+            // Retrieve the object from storage
+        var retrievedObject = localStorage.getItem('user');
+        var info =  JSON.parse(retrievedObject);
+        const username = document.getElementById('username');
+        username.innerHTML = info.username;
+    </script>
+    <!-- Front End JavaScript -->
+    <script>
+        // Notifier Package
+        var notifier = new AWN();
+        function toggleNavbar() {
+            const nav = document.querySelector('nav');
+            if(getComputedStyle(nav).display === "none"){
+                nav.style.display = "flex";
+            }else{
+                nav.style.display = "none";
+            }
+        }
+
+        // logout
+        const logoutBtn = document.getElementById('logout');
+        logoutBtn.addEventListener('click', ()=>{
+            localStorage.removeItem('user');
+            window.location.href = "../index.html";
+        });
+    </script>
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -528,7 +528,7 @@ nav span:hover {
   border-spacing: 0;
   width: 95%;
   border: 1px solid #90E0EF;
-  color: black;
+  color: #393939;
 }
 
 .main-page th, .main-page td {
@@ -646,6 +646,139 @@ nav span:hover {
 
 .main-page #receipt {
   color: black;
+}
+
+.main-page #process {
+  color: white;
+  text-decoration: none;
+  border: none;
+  padding: .2rem .4rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 1rem;
+  background-color: #0077B6;
+}
+
+.main-page #process:hover {
+  background-color: #023E8A;
+}
+
+.reimbursement-info {
+  width: 60%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #ade8f4;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.reimbursement-info div {
+  background-color: #90e0ef;
+  padding: .5rem 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.reimbursement-info div p {
+  font-size: 1.4rem;
+  color: #262626;
+}
+
+.reimbursement-info div span {
+  font-size: 1.2rem;
+  color: #262626;
+  background-color: whitesmoke;
+  padding: .25rem .5rem;
+  border-radius: 4px;
+}
+
+.reimbursement-info .status {
+  background-color: #90e0ef;
+  padding: .5rem 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.reimbursement-info .status p {
+  font-size: 1.4rem;
+  color: #262626;
+}
+
+.reimbursement-info .status select {
+  border: none;
+  font-size: 1rem;
+  color: #262626;
+  background-color: whitesmoke;
+  padding: .25rem .5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reimbursement-info .amount, .reimbursement-info .type, .reimbursement-info .submitted {
+  margin: 1rem 0rem;
+}
+
+.reimbursement-info .description span {
+  width: 50%;
+}
+
+.reimbursement-info .submit {
+  margin-top: 1rem;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.reimbursement-info .submit button {
+  width: 50%;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  padding: .25rem .5rem;
+  background-color: #023E8A;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+}
+
+.reimbursement-info .submit button:hover {
+  background-color: #03045E;
 }
 
 @-webkit-keyframes awn-fade-in {
