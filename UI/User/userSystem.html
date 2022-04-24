@@ -177,15 +177,14 @@
                     table.appendChild(reimbursementRow);
                 });
 
-                const username = document.getElementById('username');
-                username.innerHTML = reimbursements[0].author.username;
-
             }
  
         }
         // Retrieve the object from storage
         var retrievedObject = localStorage.getItem('user');
         var info =  JSON.parse(retrievedObject);
+        const username = document.getElementById('username');
+        username.innerHTML = info.username;
         window.onload = getReimbursement(api_url, info.id);
     </script>
     <!-- Front End JavaScript -->
