@@ -28,7 +28,7 @@
         <nav>
             <p>User Account</p>
             <span>Settings</span>
-            <span>Logout</span>
+            <span id="logout">Logout</span>
         </nav>
         <section class="main-page">
     
@@ -200,6 +200,13 @@
                 nav.style.display = "none";
             }
         }
+
+        // logout
+        const logoutBtn = document.getElementById('logout');
+        logoutBtn.addEventListener('click', ()=>{
+            localStorage.removeItem('user');
+            window.location.href = "../index.html";
+        })
     </script>
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>

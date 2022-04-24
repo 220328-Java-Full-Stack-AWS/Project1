@@ -47,8 +47,6 @@
     <!-- BackEnd JavaScript -->
     <script>
         const api_url = "http://localhost:8080/api/login";
-        const error = document.getElementById('error');
-        
         async function login(url){
             const response = await fetch(url,
             {
@@ -93,6 +91,10 @@
     <script>
         // Notifier Package
         var notifier = new AWN();
+        const error = document.getElementById('error');
+        let email = document.getElementById('user_email');
+        let password = document.getElementById('ers_password');
+        // show password function
         const showPassword = document.querySelector(".showPassword");
         var x = document.getElementById("ers_password");
         showPassword.addEventListener("click", () => {
@@ -104,6 +106,12 @@
             showPassword.textContent = "Show Password";
         }
         });
+
+        // ensure user fill outs the form
+        if(password === "" || email === ""){
+            error.textContent = "Please fill out the form";
+        }
+
     </script>
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>
