@@ -25,17 +25,6 @@
         <servlet-class>com.revature.servlets.HealthServlet</servlet-class>
     </servlet>
 
-    <!--authentication-->
-    <servlet-mapping>
-        <servlet-name>authenticationServlet</servlet-name>
-        <url-pattern>/auth</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>authenticationServlet</servlet-name>
-        <servlet-class>com.revature.servlets.AuthenticationServlet</servlet-class>
-    </servlet>
-
     <!--login-->
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
@@ -45,6 +34,17 @@
     <servlet>
         <servlet-name>loginServlet</servlet-name>
         <servlet-class>com.revature.servlets.LoginServlet</servlet-class>
+    </servlet>
+
+    <!--user servlet-->
+    <servlet-mapping>
+        <servlet-name>registerServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>registerServlet</servlet-name>
+        <servlet-class>com.revature.servlets.RegisterServlet</servlet-class>
     </servlet>
 
     <!--reimbursements for finance manager-->

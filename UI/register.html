@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Reimbursment System | Register</title>
+    <!-- notification package-->
+    <script src="./scripts/index.js"></script>  
     <!-- description -->
     <meta name="description" content="The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL.">
     <!-- favicon -->
@@ -22,29 +24,28 @@
             <h2>Employee Reimbursment System</h2>
         </header>
         <section class="register-page">
-            <form class="register-form">
-                <span id="error"></span>
+            <div class="register-form">
                 <h2>Register</h2>
                 <div class="register-form-card">
                     <div class="card">
-                        <input type="text" name="firstName" id="firstName" placeholder="Enter your first name" required > 
+                        <input type="text" name="user_first_name" id="user_first_name" placeholder="Enter your first name" required > 
                     </div>
                     <div class="card">
-                        <input type="text" name="lastName" id="lastName" placeholder="Enter your last name" required> 
+                        <input type="text" name="user_last_name" id="user_last_name" placeholder="Enter your last name" required> 
                     </div>
                 </div>
-                <input type="text" name="email" required id="email" placeholder="Enter a valid email address" required>
+                <input type="email" name="user_email" id="user_email" placeholder="Enter a valid email address" autocomplete="email" required>
                 <div class="register-form-card">
                     <div class="card">
-                        <input type="text" name="username" id="username" placeholder="Create a username" required>
+                        <input type="text" name="ers_username" id="ers_username" placeholder="Create a username" required>
                     </div>
                     <div class="card">
-                        <input type="tel" name="user_phone" id="user_phone" placeholder="Enter a phone number" required>
+                        <input type="tel" name="user_phone" id="user_phone" placeholder="Enter a phone number">
                     </div>
                 </div>
                 <div class="register-form-password">
                     <div class="card">
-                        <input type="password" name="password" id="input" required placeholder="Enter a Strong Password">
+                        <input type="password" name="ers_password" id="ers_password" required placeholder="Enter a Strong Password">
                         <span class="showPassword">Show Password</span>
                     </div>
                     <div class="card">
@@ -52,8 +53,9 @@
                         <span class="confirmPassword">Show Password</span>
                     </div>
                 </div>
-                <input type="submit" value="Register" class="register-submit">
-            </form>
+                <span id="password-tip"><i class="fa-solid fa-circle-exclamation"></i>Strong Password: minimum of 8 characters</span>
+                <button class="register-submit" id="registerBtn">Register</button>
+            </div>
             <span>Already have an account? <a href="./index.html">Login</a></span> 
         </section>
     </div>
@@ -67,10 +69,68 @@
         </div>
     </footer>
 
-    <!-- showPassword -->
+    <!-- Back end -->
     <script>
+        
+        let usernameList = [];
+        //  function to ensure usernames are unique
+        async function usernames(){
+            const response = await fetch("http://localhost:8080/api/register",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+            let json = await response.json();
+            usernameList = json;
+        }
+        window.onload = usernames(); // get usernames on register page
+
+        document.getElementById("registerBtn").addEventListener("click", ()=>{
+            // dom elements
+            var email = document.getElementById("user_email").value;
+            var firstName = document.getElementById("user_first_name").value;
+            var lastName = document.getElementById("user_last_name").value;
+            var password = document.getElementById("ers_password").value;
+            var phone = document.getElementById("user_phone").value;
+            var username = document.getElementById("ers_username").value;
+            var confirmPassword = document.getElementById("confirmInput").value;
+            // email regex
+            var validEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            // phone regex
+            var validPhoneRegex = /(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4})(\s?(([E|e]xt[:|.|]?)|x|X)(\s?\d+))?/g;
+            // validation before sending data
+            if(email === "" || firstName === "" || lastName === "" || password === "" || username === "" || confirmPassword === ""){
+                notifier.alert("Please complete the form."); // checks for all input fields are empty
+            } else if(firstName.length < 2){
+                notifier.alert("Please enter a valid first name");
+            }else if(lastName.length < 2){
+                notifier.alert("Please enter a valid last name"); 
+            }else if(!email.match(validEmailRegex)){
+                notifier.alert("Please enter a valid email!");
+            } else if(!phone.match(validPhoneRegex)){
+                // phone number validation
+                notifier.alert("Please enter a valid phone number!");
+            } else if(password.length < 8){
+                notifier.warning("Please enter a strong password, minimum of 8 characters."); 
+            }else if(password !== confirmPassword){
+                notifier.alert("Password did not match");
+            }else if(usernameList.includes(username)){
+                notifier.alert("Username already exists");
+            }else{
+                notifier.success("Complete");
+            }
+            
+
+        });
+    </script>
+    <!-- Front end -->
+    <script>
+        // Notifier Package
+        var notifier = new AWN();
         const showPassword = document.querySelector(".showPassword");
-        var x = document.getElementById("input");
+        var x = document.getElementById("ers_password");
         showPassword.addEventListener("click", () => {
         if (showPassword.textContent === "Show Password") {
             x.type = "text";
@@ -94,5 +154,7 @@
         }
         });
     </script>
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>
 </body>
 </html>

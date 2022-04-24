@@ -313,7 +313,7 @@ footer .footer-options span {
 }
 
 .register-page .register-form .register-form-password .card input {
-  margin: 0 0 .3rem 0;
+  margin: 0;
 }
 
 .register-page .register-form .register-form-password .card .showPassword, .register-page .register-form .register-form-password .card .confirmPassword {
@@ -326,7 +326,15 @@ footer .footer-options span {
   text-decoration: underline;
 }
 
-.register-page .register-form .register-submit {
+.register-page .register-form #password-tip {
+  font-size: .9rem;
+}
+
+.register-page .register-form #password-tip i {
+  margin-right: .5rem;
+}
+
+.register-page .register-form button {
   margin-top: .5rem;
   border: none;
   border-radius: 3px;
@@ -339,11 +347,12 @@ footer .footer-options span {
   transition: all .5s ease;
 }
 
-.register-page .register-form .register-submit:hover {
+.register-page .register-form button:hover {
   background-color: #03045E;
 }
 
 .register-page span {
+  margin-top: .5rem;
   color: #03045E;
 }
 
@@ -462,6 +471,56 @@ nav span:hover {
   color: #023E8A;
   text-decoration: underline;
   margin: 1rem 0rem;
+}
+
+.main-page .filter_sort {
+  margin-bottom: 1rem;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.main-page .filter_sort .filter, .main-page .filter_sort .sort {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #90e0ef;
+  padding: .5rem;
+  border-radius: 10px;
+  border: 2px solid #ade8f4;
+}
+
+.main-page .filter_sort .filter h3, .main-page .filter_sort .sort h3 {
+  font-size: 1.4rem;
+  color: #3e3e3e;
+}
+
+.main-page .filter_sort .filter .filter-card, .main-page .filter_sort .filter .sort-card, .main-page .filter_sort .sort .filter-card, .main-page .filter_sort .sort .sort-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .main-page table {

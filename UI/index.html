@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Reimbursment System | Login</title>
     <!-- notification package-->
-    <script src="../notification/index.js"></script> 
+    <script src="./scripts/index.js"></script> 
     <!-- description -->
     <meta name="description" content="The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL.">
     <!-- favicon -->
@@ -25,7 +25,6 @@
         </header>
         <section class="login-page">
             <div class="login-form">
-                <span id="error"></span>
                 <h2>Login</h2>
                 <input type="text" name="email" required id="user_email" class="form-input-email" placeholder="Enter email address">
                 <input type="password" name="password" id="ers_password" required class="form-input-password" placeholder="Enter password">
@@ -82,7 +81,24 @@
             }
         }
         document.getElementById('login-btn').addEventListener('click',()=>{
-            login(api_url);
+            var email = document.getElementById('user_email').value;
+            var password = document.getElementById('ers_password').value;
+            var validEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            // validation before login
+            if(email === "" && password === ""){
+                notifier.alert("Email & Password is empty.");
+            }
+            else if(email === ""){
+                notifier.alert("Email is required");
+            }else if(!email.match(validEmailRegex)){
+                notifier.alert("Invalid Email Address!");
+            }
+            else if( password === ""){
+                notifier.alert("Password is required!");
+            }else{
+                login(api_url);
+            }
+            
         });
 
     </script>
@@ -106,11 +122,6 @@
             showPassword.textContent = "Show Password";
         }
         });
-
-        // ensure user fill outs the form
-        if(password === "" || email === ""){
-            error.textContent = "Please fill out the form";
-        }
 
     </script>
     <!-- FontAwesome -->

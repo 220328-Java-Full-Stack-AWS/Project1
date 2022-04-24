@@ -71,6 +71,33 @@ nav{
         text-decoration: underline;
         margin: 1rem 0rem;
     }
+    // filter and sort
+    .filter_sort{
+        margin-bottom: 1rem;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+
+        .filter, .sort{
+            flex-direction: column;
+            background-color: #90e0ef;
+            padding: .5rem;
+            border-radius: 10px;
+            border: 2px solid #ade8f4;
+            h3{
+                font-size: 1.4rem;
+                color:rgb(62, 62, 62);
+            }
+            .filter-card, .sort-card{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+    }
     // table content
     table {
         border-collapse: collapse;
