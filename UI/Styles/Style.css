@@ -411,7 +411,7 @@ nav {
   width: 20%;
   position: absolute;
   right: 0;
-  background-color: #023E8A;
+  background-color: #0096c7;
   display: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -445,7 +445,7 @@ nav span i {
 }
 
 nav span:hover {
-  background-color: #022f6a;
+  background-color: #0077b6;
 }
 
 .main-page {
@@ -557,34 +557,34 @@ nav span:hover {
   border-radius: 6px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
           box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  width: 60%;
+  width: 40%;
 }
 
-.main-page .sort-filter-dropdown .sort .options, .main-page .sort-filter-dropdown .filter .options {
+.main-page .sort-filter-dropdown .filter .options {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
-.main-page .sort-filter-dropdown .sort h3, .main-page .sort-filter-dropdown .filter h3 {
+.main-page .sort-filter-dropdown .filter .options h3 {
   font-size: 1.4rem;
   text-decoration: underline;
   margin-left: 1rem;
 }
 
-.main-page .sort-filter-dropdown .sort div, .main-page .sort-filter-dropdown .filter div {
-  margin: 0 .5rem;
-}
-
-.main-page .sort-filter-dropdown .sort div p, .main-page .sort-filter-dropdown .filter div p {
+.main-page .sort-filter-dropdown .filter .options div p {
   text-decoration: underline;
-  margin-left: 1rem;
 }
 
-.main-page .sort-filter-dropdown .sort div button, .main-page .sort-filter-dropdown .filter div button {
+.main-page .sort-filter-dropdown .filter .options div button {
   border: none;
   cursor: pointer;
   background-color: #023e8a;
@@ -595,16 +595,8 @@ nav span:hover {
   margin: .5rem;
 }
 
-.main-page .sort-filter-dropdown .sort div button:hover, .main-page .sort-filter-dropdown .filter div button:hover {
+.main-page .sort-filter-dropdown .filter .options div button:hover {
   background-color: #022f6a;
-}
-
-.main-page .sort-filter-dropdown .sort .filter-type button, .main-page .sort-filter-dropdown .filter .filter-type button {
-  margin-bottom: .5rem;
-}
-
-.main-page .sort-filter-dropdown .filter {
-  margin-top: .5rem;
 }
 
 .main-page table {

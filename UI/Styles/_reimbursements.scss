@@ -31,7 +31,7 @@ nav {
     width: 20%;
     position: absolute;
     right: 0;
-    background-color: #023E8A;
+    background-color: #0096c7;
     display: none;
     flex-direction: column;
     padding: .5rem;
@@ -60,7 +60,7 @@ nav {
         }
 
         &:hover {
-            background-color: #022f6a;
+            background-color: #0077b6;
         }
     }
 }
@@ -142,46 +142,37 @@ nav {
         padding: 1rem;
         border-radius: 6px;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        width: 60%;
-        .sort,.filter{
+        width: 40%;
+        .filter{
             .options{
                 width: 100%;
                 display: flex;
-                flex-wrap: wrap;
-            }
-            h3{
-                font-size: 1.4rem;
-                text-decoration: underline;
-                margin-left: 1rem;
-            }
-            div{
-                margin: 0 .5rem;
-                p{
+                flex-direction: column;
+                justify-content: flex-start;
+                h3{
+                    font-size: 1.4rem;
                     text-decoration: underline;
                     margin-left: 1rem;
                 }
-                button{
-                    border: none;
-                    cursor: pointer;
-                    background-color: #023e8a;
-                    border-radius: 5px;
-                    padding: .3rem .6rem;
-                    color: white;
-                    font-size: .8rem;
-                    margin: .5rem;
-                    &:hover{
-                        background-color: #022f6a;
+                div{
+                    p{
+                        text-decoration: underline;
+                    }
+                    button{
+                        border: none;
+                        cursor: pointer;
+                        background-color: #023e8a;
+                        border-radius: 5px;
+                        padding: .3rem .6rem;
+                        color: white;
+                        font-size: .8rem;
+                        margin: .5rem;
+                        &:hover{
+                            background-color: #022f6a;
+                        }
                     }
                 }
             }
-            .filter-type{
-                button{
-                    margin-bottom: .5rem;
-                }
-            }
-        }
-        .filter{
-            margin-top: .5rem;
         }
     }
 

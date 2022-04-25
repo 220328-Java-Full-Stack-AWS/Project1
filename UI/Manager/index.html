@@ -33,40 +33,20 @@
         <section class="main-page">
             <h2>All Reimbursements</h2>
             <div class="menu">
-                <button id="sort-filter">Sort & Filter<i id="dropIcon" class="fa-solid fa-sort-down"></i></button>
+                <button id="sort-filter">Filter<i id="dropIcon" class="fa-solid fa-sort-down"></i></button>
             </div>
             <div class="sort-filter-dropdown">
-                <div class="sort">
-                    <h3><i class="fa-solid fa-arrow-down-arrow-up"></i>Sort</h3>
-                    <div class="options">
-                        <div class="byId">
-                            <p>Sort Id</p>
-                            <button><i class="fa-solid fa-arrow-down-1-9"></i> Id</button>
-                            <button><i class="fa-solid fa-arrow-up-9-1"></i> Id</button>
-                        </div>
-                        <div class="byAmount">
-                            <p>Sort Amount</p>
-                            <button><i class="fa-solid fa-arrow-down-1-9"></i> Amount</button>
-                            <button><i class="fa-solid fa-arrow-up-9-1"></i> Amount</button>
-                        </div>
-                        <div class="byDate">
-                            <p>Sort Date</p>
-                            <button><i class="fa-solid fa-arrow-down-1-9"></i> Date</button>
-                            <button><i class="fa-solid fa-arrow-up-9-1"></i> Date</button>
-                        </div>
-                    </div>
-                </div>
                 <div class="filter">
                     <h3><i class="fa-solid fa-filters"></i>Filter</h3>
                     <div class="options">
                         <div class="filter-status">
-                            <p>Filter Status</p>
+                            <p>Filter By Status</p>
                             <button onclick="filterStatus('pending')">Pending</button>
                             <button onclick="filterStatus('approved')">Approved</button>
                             <button onclick="filterStatus('denied')">Denied</button>
                         </div>
                         <div class="filter-type">
-                            <p>Filter Type</p>
+                            <p>Filter By Type</p>
                             <button onclick="filterType('Lodging')">Lodging</button>
                             <button onclick="filterType('Food')">Food</button>
                             <button onclick="filterType('Travel')">Travel</button>
