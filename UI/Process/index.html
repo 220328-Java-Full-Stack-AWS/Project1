@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Reimbursement System | Process</title>
     <!-- notification package-->
-    <script src="../notification/index.js"></script> 
+    <script src="../scripts/index.js"></script> 
     <!-- description -->
     <meta name="description" content="The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL.">
     <!-- favicon -->
@@ -69,7 +69,7 @@
                     </select>
                 </div>
                 <div class="submit">
-                    <button id="cancel">Cancel</button>
+                    <button id="cancel" onclick="location.href ='../Manager/index.html'">Cancel</button>
                     <button id="submit">Submit</button>
                 </div>
             </div>
@@ -82,12 +82,11 @@
     
     <!-- Back End JavaScript -->
     <script>
-
         // update reimbursement
         async function updateReimbursement(reimbursement){
-            let response = await fetch("http://localhost:8080/api//reimbursements/finance_manager",
+            let response = await fetch("http://localhost:8080/api/reimbursements/finance_manager",
             {
-                method: "POST",
+                method: "PUT",
                 headers: {     
                     "Content-Type": "application/json"
                 },
@@ -96,6 +95,8 @@
             );
             if(response.status !== 201){
                 notifier.alert("Error Processeing!");
+            }else{
+                notifier.success("Reimbursement proccess successfully");''
             }
             return response;
         }
@@ -148,19 +149,94 @@
 
             const submitText = document.getElementById("submitted");
             submitText.textContent = new Date(reimbursement.submitted).toLocaleDateString("en-US");
+            
+            // console.log(reimbursement);
+            let reimbursementObject = {
+                    "id": reimbursement.id,
+                    "status": reimbursement.status,
+                    "author": {
+                        "id": reimbursement.author.id,
+                        "username": reimbursement.author.username,
+                        "password": "password",
+                        "first_name": reimbursement.author.first_name,
+                        "last_name": reimbursement.author.last_name,
+                        "email": reimbursement.author.email,
+                        "phone":  reimbursement.author.phone,
+                        "role": reimbursement.author.role,
+                    },
+                    "resolver": {
+                        "id": 6,
+                        "username": null,
+                        "password": null,
+                        "first_name": null,
+                        "last_name": null,
+                        "email": null,
+                        "phone": null,
+                        "role": null
+                    },
+                    "amount": reimbursement.amount,
+                    "submitted": reimbursement.submitted,
+                    "resolved": null,
+                    "description": reimbursement.description,
+                    "reimbursementType": reimbursement.reimbursementType,
+                    "receipt": null
+                };
+                localStorage.setItem('reimbursement', JSON.stringify(reimbursementObject));            
         }
-
         
         // Retrieve the reimbursement id from storage
         var data = localStorage.getItem('reimbursement_id');
         // console.log(data);
         window.onload = getReimbursement(data);
-    
-        // Retrieve the username from storage
-        var retrievedObject = localStorage.getItem('user');
-        var info =  JSON.parse(retrievedObject);
-        const username = document.getElementById('username');
-        username.innerHTML = info.username;
+
+        // submit button
+        const submitBtn = document.getElementById("submit");
+        submitBtn.addEventListener('click',() => {
+            // console.log('working');
+
+            // Retrieve the reimbursement object from storage
+            var retrievedReimbursement = localStorage.getItem('reimbursement');
+            var data =  JSON.parse(retrievedReimbursement);
+
+            // Retrieve the resolver from storage
+            var resolverObject = localStorage.getItem('user');
+            var resolver =  JSON.parse(resolverObject);
+            
+            let updatedReimbursement = {
+                "id": data.id,
+                    "status": document.getElementById('status').value,
+                    "author": {
+                        "id": data.author.id,
+                        "username": data.author.username,
+                        "password": "password",
+                        "first_name": data.author.firstName,
+                        "last_name": data.author.lastName,
+                        "email": data.author.email,
+                        "phone": data.author.phone,
+                        "role": data.author.role,
+                    },
+                    "resolver": {
+                        "id": resolver.id,
+                        "username": resolver.username,
+                        "password": "password",
+                        "first_name": resolver.first_name,
+                        "last_name": resolver.last_name,
+                        "email": resolver.email,
+                        "phone": resolver.phone,
+                        "role": resolver.role
+                    },
+                    "amount": data.amount,
+                    "submitted": data.submitted,
+                    "resolved": null,
+                    "description": data.description,
+                    "reimbursementType": data.reimbursementType,
+                    "receipt": null
+            };
+            updateReimbursement(updatedReimbursement);
+            localStorage.removeItem('reimbursment');
+        });
+
+        // console.log(document.getElementById('status').value);
     </script>
     <!-- Front End JavaScript -->
     <script>
@@ -182,20 +258,11 @@
             window.location.href = "../index.html";
         });
 
-        // submit btn
-        const submitBTN = document.getElementById("submit");
-        submitBTN.addEventListener('click', ()=>{
-            var selectedStatus = document.getElementById('status');
-            console.log(selectedStatus.value);
-            register(reimbursement);
-        })
-
-
-        // cancel btn
-        const cancelBTN = document.getElementById('cancel');
-        cancelBTN.addEventListener('click', ()=>{
-            window.location.href = "../Manager/index.html";     
-        })
+        // Retrieve the username from storage
+        var retrievedObject = localStorage.getItem('user');
+        var info =  JSON.parse(retrievedObject);
+        const username = document.getElementById('username');
+        username.innerHTML = info.username;
     </script>
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>

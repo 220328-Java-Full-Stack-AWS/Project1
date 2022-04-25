@@ -182,6 +182,7 @@
         // Retrieve the object from storage
         var retrievedObject = localStorage.getItem('user');
         var info =  JSON.parse(retrievedObject);
+        
         // Display the username on the nav bar
         const username = document.getElementById('username');
         username.innerHTML = info.username;
@@ -202,7 +203,7 @@
                 notifier.alert("Error deleting reimbursement");
             }
             notifier.success("Reimbursement #" + id + " deleted successfully, page will refresh automatically.");
-            setTimeout(function() { window.location.reload(); }, 4000);
+            setTimeout(function() { window.location.reload(); }, 4000); // reloads page, ajax would be better
             return response;
         }
 
