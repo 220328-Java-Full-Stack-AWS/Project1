@@ -466,6 +466,36 @@ nav span:hover {
           justify-content: center;
 }
 
+.main-page .breadcrumb {
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  font-size: 1rem;
+  color: #474646;
+}
+
+.main-page .breadcrumb a {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #474646;
+}
+
+.main-page .breadcrumb a:hover {
+  text-decoration: underline;
+  color: #022f6a;
+}
+
 .main-page h2 {
   font-size: 2.5rem;
   color: #023E8A;
@@ -519,6 +549,7 @@ nav span:hover {
   width: 95%;
   border: 1px solid #90E0EF;
   color: #393939;
+  background-color: #ade8f4;
 }
 
 .main-page th, .main-page td {
@@ -572,7 +603,7 @@ nav span:hover {
 }
 
 .main-page .nothing {
-  width: 60%;
+  width: 90%;
   padding: 1rem 0rem;
   font-size: 2rem;
   color: #023E8A;

@@ -64,7 +64,24 @@ nav{
     flex-direction: column;
     align-items: center;
     justify-content:center;
-
+    .breadcrumb{
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 1rem;
+        color: rgb(71, 70, 70);
+        a{
+            text-decoration: none;
+            font-size: 1rem;
+            color: rgb(71, 70, 70);
+            &:hover{
+                text-decoration: underline;
+                color:#022f6a;
+            }
+        }
+    }
     h2{
         font-size: 2.5rem;
         color: #023E8A;
@@ -103,6 +120,7 @@ nav{
         width: 95%;
         border: 1px solid #90E0EF;
         color: rgb(57, 57, 57);
+        background-color: #ade8f4;
       }
       
       th, td {
@@ -148,7 +166,7 @@ nav{
 
       // For user with no reimbuserments
       .nothing{
-        width: 60%;
+        width: 90%;
         padding: 1rem 0rem;
         font-size: 2rem;
         color: #023E8A;

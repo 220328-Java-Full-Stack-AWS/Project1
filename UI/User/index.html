@@ -78,9 +78,6 @@
             const table = document.getElementById('table');
             if(reimbursements.length === 0 ){
                 table.innerHTML = "No Reimbursements";
-                const addBtn = document.createElement("button");
-                addBtn.innerHTML = "Add";
-                table.appendChild(addBtn);
                 table.classList.add("nothing");
             }else{
                 reimbursements.forEach(function (reimbursement) {

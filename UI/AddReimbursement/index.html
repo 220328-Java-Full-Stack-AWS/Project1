@@ -30,6 +30,10 @@
             <span id="logout">Logout</span>
         </nav>
         <section class="main-page">
+            <div class="breadcrumb">
+                <a href="../User/index.html">Home/</a>
+                <span>Add Reimbursment</span>
+            </div>
             <h2>Add Reimbursment</h2>
             <div class="add-reimbursement">
                 <div class="amount">
@@ -110,7 +114,7 @@
                     "author": {
                         "id": author.id,
                         "username": author.username,
-                        "password": author.password,
+                        "password": "password",
                         "first_name": author.firstName,
                         "last_name": author.lastName,
                         "email": author.email,
@@ -135,9 +139,10 @@
                         "receipt": null
                 }
                 newReimbursement(reimbursement);
-                window.location.href = "../User/index.html";
+                notifier.success("Reimbursement added successfully!");
+                // window.location.href = "../User/index.html";
             }
-        })
+        });
         // cancel btn
         const cancelBTN = document.getElementById('cancel');
         cancelBTN.addEventListener('click', ()=>{
