@@ -49,15 +49,6 @@
                     <th>Manage</th>
                 </tr>
             </table>
-            <div class="confirm-delete">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                <h3>Confirmation Required</h3>
-                <p>Are you sure you want to delete?</p>
-                <div>
-                    <button id="confirmDelete">Confirm</button>
-                    <button id="cancelDelete">Cancel</button>
-                </div>
-            </div>
         </section>
     </div>
 
@@ -173,7 +164,7 @@
                     const column8 = document.createElement("th");
                     let getStatus = reimbursement.status;
                     if(status === "PENDING"){
-                        column8.innerHTML = `<button id="edit">Edit</button> <button id="delete" onclick="deleteReimbursementById(${reimbursement.id})">Delete</button>`;
+                        column8.innerHTML = `<button id="edit" onclick="editPage(${reimbursement.id})">Edit</button> <button id="delete" onclick="deleteReimbursementById(${reimbursement.id})">Delete</button>`;
                         column8.classList.add("available");
                     }else{
                         column8.innerHTML = "<button>Edit</button> <button>Delete</button>";
@@ -213,6 +204,12 @@
             notifier.success("Reimbursement #" + id + " deleted successfully, page will refresh automatically.");
             setTimeout(function() { window.location.reload(); }, 4000);
             return response;
+        }
+
+        // edit function
+        function editPage(id){
+            localStorage.setItem('reimbursement_id', id);
+            window.location.href = "../Edit/index.html";
         }
 
     </script>

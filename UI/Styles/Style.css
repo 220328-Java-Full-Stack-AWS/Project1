@@ -487,13 +487,17 @@ nav span:hover {
 
 .main-page .breadcrumb a {
   text-decoration: none;
+  margin-right: .25rem;
   font-size: 1rem;
   color: #474646;
 }
 
 .main-page .breadcrumb a:hover {
-  text-decoration: underline;
   color: #022f6a;
+}
+
+.main-page .breadcrumb span {
+  text-decoration: underline;
 }
 
 .main-page h2 {

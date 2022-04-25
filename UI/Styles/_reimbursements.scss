@@ -74,12 +74,15 @@ nav{
         color: rgb(71, 70, 70);
         a{
             text-decoration: none;
+            margin-right: .25rem;
             font-size: 1rem;
             color: rgb(71, 70, 70);
             &:hover{
-                text-decoration: underline;
                 color:#022f6a;
             }
+        }
+        span{
+            text-decoration: underline;
         }
     }
     h2{
