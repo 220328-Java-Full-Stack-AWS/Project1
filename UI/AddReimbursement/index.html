@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Reimbursment System | Add Reimbursment</title>
+    <title>Employee Reimbursement System | Add Reimbursement</title>
     <!-- notification package-->
     <script src="../scripts/index.js"></script> 
     <!-- description -->
@@ -21,7 +21,7 @@
 <body>
     <div class="main">
         <div class="main-header">
-            <h2>Employee Reimbursment System</h2>
+            <h2>Employee Reimbursement System</h2>
             <span><p id="username"></p><i class="fa fa-user-circle" aria-hidden="true" onclick="toggleNavbar()"></i></span>
         </div>
         <nav>
@@ -32,23 +32,23 @@
         <section class="main-page">
             <div class="breadcrumb">
                 <a href="../User/index.html">Home /</a>
-                <span>Add Reimbursment</span>
+                <span>Add Reimbursement</span>
             </div>
-            <h2>Add Reimbursment</h2>
+            <h2>Add Reimbursement</h2>
             <div class="add-reimbursement">
                 <div class="amount">
-                    <p>Reimbursment Amount:</p>
+                    <p>Reimbursement Amount:</p>
                     <div class="amount-input">
                         <input type="text" name="reimb_amount" id="reimb_amount" placeholder="$0.00" required>
                         <p>Ex. $10.20</p>
                     </div>
                 </div>
                 <div class="description">
-                    <p>Reimbursment Description:</p>
+                    <p>Reimbursement Description:</p>
                     <textarea name="reimb_description" id="reimb_description" rows="5" required></textarea>
                 </div>
                 <div class="type">
-                    <p>Reimbursment Type:</p>
+                    <p>Reimbursement Type:</p>
                     <select name="reimb_type_id" id="reimb_type_id" required>
                         <option value="1">Lodging</option>
                         <option value="2">Food</option>
@@ -84,6 +84,8 @@
             );
             if(response.status !== 201){
                 notifier.alert("Error creating new reimbursement request");
+            }else{
+                notifier.success("Reimbursement added successfully!");
             }
             return response;
         }
@@ -102,7 +104,7 @@
             }else if(!amountInput.match(validMoney)){
                 notifier.alert("Please enter valid money");
             }else if(descriptionInput.length < 15){
-                notifier.alert("Please enter a well-explained description");
+                notifier.alert("Please enter a detailed description");
             }else{
                 // Retrieve the username from storage
                 var authorObject = localStorage.getItem('user');
@@ -139,7 +141,6 @@
                         "receipt": null
                 }
                 newReimbursement(reimbursement);
-                notifier.success("Reimbursement added successfully!");
                 // window.location.href = "../User/index.html";
             }
         });

@@ -3,6 +3,7 @@ package com.revature.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
+import com.revature.repositories.ReimbursementDAO;
 import com.revature.services.ReimbursementService;
 import com.revature.services.UserService;
 
@@ -50,10 +51,10 @@ public class UserReimbursementServlet extends HttpServlet {
     // update
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Reimbursement reimbursement = mapper.readValue(req.getReader().toString(), Reimbursement.class);
-        service.update(reimbursement);
-        String json = mapper.writeValueAsString(reimbursement);
-        resp.setStatus(201); // Object successfully persisted
+        Reimbursement model = mapper.readValue(req.getInputStream(), Reimbursement.class);
+        service.update(model);
+        String json = mapper.writeValueAsString(model);
+        resp.setStatus(201); //status code 201: created says that we have successfully persisted this object
         resp.getWriter().print(json);
     }
 
