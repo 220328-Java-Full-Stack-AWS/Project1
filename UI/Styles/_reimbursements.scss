@@ -1,4 +1,4 @@
-.main-header{
+.main-header {
     color: #fff;
     font-size: .9rem;
     padding: 1rem 2rem;
@@ -7,40 +7,46 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    span{
+
+    span {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        i{
-            margin-left:.5rem;
+
+        i {
+            margin-left: .5rem;
             font-size: 1.5rem;
             cursor: pointer;
-            &:hover{
+
+            &:hover {
                 color: lightgray;
             }
         }
     }
 }
-nav{
+
+nav {
     border-top: #0077B6 1px solid;
     width: 20%;
     position: absolute;
-    right:0;
+    right: 0;
     background-color: #023E8A;
     display: none;
     flex-direction: column;
     padding: .5rem;
     border-bottom-left-radius: 6px;
-    p{
+
+    p {
         font-weight: 200;
         text-align: center;
         color: white;
         font-size: 1rem;
         width: 100%;
-        margin-bottom: .3rem;        
+        margin-bottom: .3rem;
     }
-    span{
+
+    span {
         font-weight: 200;
         text-align: center;
         color: white;
@@ -48,23 +54,26 @@ nav{
         width: 100%;
         margin-bottom: .3rem;
         cursor: pointer;
-        i{
+
+        i {
             margin-right: .5rem;
         }
-        &:hover{
+
+        &:hover {
             background-color: #022f6a;
         }
     }
 }
 
-.main-page{
+.main-page {
     width: 100%;
     margin: 2rem 0rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content:center;
-    .breadcrumb{
+    justify-content: center;
+
+    .breadcrumb {
         width: 90%;
         display: flex;
         flex-direction: row;
@@ -72,34 +81,40 @@ nav{
         justify-content: flex-start;
         font-size: 1rem;
         color: rgb(71, 70, 70);
-        a{
+
+        a {
             text-decoration: none;
             margin-right: .25rem;
             font-size: 1rem;
             color: rgb(71, 70, 70);
-            &:hover{
-                color:#022f6a;
+
+            &:hover {
+                color: #022f6a;
             }
         }
-        span{
+
+        span {
             text-decoration: underline;
         }
     }
-    h2{
+
+    h2 {
         font-size: 2.5rem;
         color: #023E8A;
         text-decoration: underline;
     }
-    .menu{
+
+    .menu {
         width: 95%;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
         margin-bottom: .2rem;
-        button{
+
+        button {
             border: none;
-            background-color: #0096c7;
+            background-color: #023e8a;
             color: white;
             width: fit-content;
             padding: .5rem 1rem;
@@ -107,15 +122,69 @@ nav{
             font-size: 1.1rem;
             border-radius: 3px;
             transition: background-color .5s ease-out;
-            &:hover{
-                background-color: #023E8A;
+
+            &:hover {
+                background-color: #03045e;
             }
-            i{
+
+            i {
                 margin: 0 .5rem;
             }
         }
-
     }
+
+    .sort-filter-dropdown {
+        position: absolute;
+        left: 2rem;
+        top: 12rem;
+        display: none;
+        background-color: white;
+        padding: 1rem;
+        border-radius: 6px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        width: 60%;
+        .sort,.filter{
+            .options{
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            h3{
+                font-size: 1.4rem;
+                text-decoration: underline;
+                margin-left: 1rem;
+            }
+            div{
+                margin: 0 .5rem;
+                p{
+                    text-decoration: underline;
+                    margin-left: 1rem;
+                }
+                button{
+                    border: none;
+                    cursor: pointer;
+                    background-color: #023e8a;
+                    border-radius: 5px;
+                    padding: .3rem .6rem;
+                    color: white;
+                    font-size: .8rem;
+                    margin: .5rem;
+                    &:hover{
+                        background-color: #022f6a;
+                    }
+                }
+            }
+            .filter-type{
+                button{
+                    margin-bottom: .5rem;
+                }
+            }
+        }
+        .filter{
+            margin-top: .5rem;
+        }
+    }
+
     // table content
     table {
         border-collapse: collapse;
@@ -124,51 +193,62 @@ nav{
         border: 1px solid #90E0EF;
         color: rgb(57, 57, 57);
         background-color: #ade8f4;
-      }
-      
-      th, td {
+    }
+
+    th,
+    td {
         text-align: left;
         padding: 12px;
         font-weight: 300;
-      }
-      
-      tr:nth-child(even) {
+    }
+
+    tr:nth-child(even) {
         background-color: #f2f2f2;
-      }
-      #categories{
-          background-color: #023E8A;
-          color: white;
-          font-weight: 600;
-      }
-      i{
-          margin-left:.25rem;
-          font-size: 1rem;
-          cursor: pointer;
-      }
+    }
+
+    #categories {
+        background-color: #023E8A;
+        color: white;
+        font-weight: 600;
+    }
+    .categories{
+        background-color: #023E8A;
+        color: white;
+        font-weight: 600;
+    }
+
+    i {
+        margin-left: .25rem;
+        font-size: 1rem;
+        cursor: pointer;
+    }
 
     //   For manager status column
-      .status{
-          display: flex;
-          flex-direction: column;
-          margin: 0;
-          button{
-              border: none;
-              background-color: #0077B6;
-              color: white;
-              width: fit-content;
-              padding: .2rem .4rem;
-              cursor: pointer;
-              font-size: .9rem;
-              border-radius: 3px;
-              &:hover{
-                  background-color: #023E8A;
-              }
-          }
-      }
-      // end
+    .status {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
 
-      // For user with no reimbuserments
-      .nothing{
+        button {
+            border: none;
+            background-color: #0077B6;
+            color: white;
+            width: fit-content;
+            padding: .2rem .4rem;
+            cursor: pointer;
+            font-size: .9rem;
+            border-radius: 3px;
+
+            &:hover {
+                background-color: #023E8A;
+            }
+        }
+    }
+
+    // end
+
+    // For user with no reimbuserments
+    .nothing {
         width: 90%;
         padding: 1rem 0rem;
         font-size: 2rem;
@@ -178,7 +258,8 @@ nav{
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        button{
+
+        button {
             width: 10%;
             cursor: pointer;
             background-color: #0077B6;
@@ -188,15 +269,16 @@ nav{
             padding: .3rem 1rem;
             border-radius: 7px;
             transition: all .7s ease;
-            &:hover{
+
+            &:hover {
                 background-color: #023E8A;
             }
         }
-      }
+    }
 
-      // For managing the reimbuserments
-      .unavailable{
-        button{
+    // For managing the reimbuserments
+    .unavailable {
+        button {
             border: none;
             padding: .2rem .4rem;
             border-radius: 3px;
@@ -204,28 +286,32 @@ nav{
             background-color: lightgrey;
             color: rgb(157, 156, 156);
         }
-      }
-      .available{
-        button{
+    }
+
+    .available {
+        button {
             color: white;
             border: none;
             padding: .2rem .4rem;
             border-radius: 3px;
             cursor: pointer;
         }
-        #edit{
+
+        #edit {
             background-color: #0077B6;
         }
-        #delete{
+
+        #delete {
             background-color: red;
         }
-      }
-      #receipt{
-          color: black;
-      }
+    }
 
-     // Manager system process button
-    #process{
+    #receipt {
+        color: black;
+    }
+
+    // Manager system process button
+    #process {
         color: white;
         text-decoration: none;
         border: none;
@@ -234,7 +320,8 @@ nav{
         cursor: pointer;
         font-size: 1rem;
         background-color: #0077B6;
-        &:hover{
+
+        &:hover {
             background-color: #023E8A;
         }
     }

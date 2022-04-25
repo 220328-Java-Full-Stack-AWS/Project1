@@ -58,6 +58,36 @@
         <servlet-class>com.revature.servlets.FinanceReimbursementServlet</servlet-class>
     </servlet>
 
+<!--    filter servlets-->
+    <servlet-mapping>
+        <servlet-name>filterByStatusServlet</servlet-name>
+        <url-pattern>/reimbursements/filter/status</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>filterByStatusServlet</servlet-name>
+        <servlet-class>com.revature.servlets.FilterServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>filterByTypeServlet</servlet-name>
+        <url-pattern>/reimbursements/filter/type</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>filterByTypeServlet</servlet-name>
+        <servlet-class>com.revature.servlets.FilterByTypeServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>filterByResolverServlet</servlet-name>
+        <url-pattern>/reimbursements/filter/resolver</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>filterByResolverServlet</servlet-name>
+        <servlet-class>com.revature.servlets.GetByResolverServlet</servlet-class>
+    </servlet>
+
     <!--reimbursements for user-->
     <servlet-mapping>
         <servlet-name>userReimbursementServlet</servlet-name>

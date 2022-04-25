@@ -33,19 +33,55 @@
         <section class="main-page">
             <h2>All Reimbursements</h2>
             <div class="menu">
-                <button id="sort-filter">Sort & Filter<i class="fa-solid fa-sort-down"></i></button>
+                <button id="sort-filter">Sort & Filter<i id="dropIcon" class="fa-solid fa-sort-down"></i></button>
+            </div>
+            <div class="sort-filter-dropdown">
+                <div class="sort">
+                    <h3><i class="fa-solid fa-arrow-down-arrow-up"></i>Sort</h3>
+                    <div class="options">
+                        <div class="byId">
+                            <p>Sort Id</p>
+                            <button><i class="fa-solid fa-arrow-down-1-9"></i> Id</button>
+                            <button><i class="fa-solid fa-arrow-up-9-1"></i> Id</button>
+                        </div>
+                        <div class="byAmount">
+                            <p>Sort Amount</p>
+                            <button><i class="fa-solid fa-arrow-down-1-9"></i> Amount</button>
+                            <button><i class="fa-solid fa-arrow-up-9-1"></i> Amount</button>
+                        </div>
+                        <div class="byDate">
+                            <p>Sort Date</p>
+                            <button><i class="fa-solid fa-arrow-down-1-9"></i> Date</button>
+                            <button><i class="fa-solid fa-arrow-up-9-1"></i> Date</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter">
+                    <h3><i class="fa-solid fa-filters"></i>Filter</h3>
+                    <div class="options">
+                        <div class="filter-status">
+                            <p>Filter Status</p>
+                            <button onclick="filterStatus('pending')">Pending</button>
+                            <button onclick="filterStatus('approved')">Approved</button>
+                            <button onclick="filterStatus('denied')">Denied</button>
+                        </div>
+                        <div class="filter-type">
+                            <p>Filter Type</p>
+                            <button onclick="filterType('Lodging')">Lodging</button>
+                            <button onclick="filterType('Food')">Food</button>
+                            <button onclick="filterType('Travel')">Travel</button>
+                            <button onclick="filterType('Entertainment')">Entertainment</button>
+                            <button onclick="filterType('Shopping')">Shopping</button>
+                            <button onclick="filterType('Other')">Other</button>
+                        </div>
+                        <div class="filter-resolver">
+                            <p>Processed by you</p>
+                            <button onclick="GetReimbursementsByResolver()">By me</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <table id="table">
-                <tr id="categories">
-                    <th>Id</th>
-                    <th>Amount</th>
-                    <th>Description</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <th>Author</th>
-                    <th>Submitted</th>
-                    <th>Resolved</th>
-                </tr>
             </table>
     
         </section>
@@ -72,6 +108,33 @@
             let reimbursements = json;
             // console.log(reimbursements);
             const table = document.getElementById('table');
+            const titleRow = document.createElement('tr');
+            titleRow.classList.add("categories")
+            const column1 = document.createElement("th");
+            column1.innerHTML = "Id";
+            titleRow.appendChild(column1);
+            const column2 = document.createElement("th");
+            column2.innerHTML = "Amount";
+            titleRow.appendChild(column2);
+            const column3 = document.createElement("th");
+            column3.innerHTML = "Description";
+            titleRow.appendChild(column3);
+            const column4 = document.createElement("th");
+            column4.innerHTML = "Type";
+            titleRow.appendChild(column4);
+            const column5 = document.createElement("th");
+            column5.innerHTML = "Status";
+            titleRow.appendChild(column5);
+            const column6 = document.createElement("th");
+            column6.innerHTML = "Author";
+            titleRow.appendChild(column6);
+            const column7 = document.createElement("th");
+            column7.innerHTML = "Submitted";
+            titleRow.appendChild(column7);
+            const column8 = document.createElement("th");
+            column8.innerHTML = "Resolved";
+            titleRow.appendChild(column8);
+            table.appendChild(titleRow);
             reimbursements.forEach(function (reimbursement) {
                 const reimbursementRow = document.createElement("tr");
                 // column 1
@@ -191,6 +254,438 @@
             localStorage.removeItem('user');
             window.location.href = "../index.html";
         });
+
+        // filter and sort javascript 
+        const filterMenu = document.querySelector(".sort-filter-dropdown");
+        const dropdownIcon = document.getElementById("dropIcon");
+        filterDropdownBtn = document.getElementById('sort-filter');
+        filterDropdownBtn.addEventListener('click', ()=>{
+            if(getComputedStyle(filterMenu).display === 'none'){
+                filterMenu.style.display = 'flex';
+                dropdownIcon.style.transform = "rotate(180deg)";
+            }else{
+                filterMenu.style.display = 'none';
+                dropdownIcon.style.transform = "rotate(360deg)";
+            }
+        });
+
+        // by status
+        async function filterStatus(status){
+            let response = await fetch(
+                "http://localhost:8080/api/reimbursements/filter/status",
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "status": status
+                    }
+                }
+            );
+            let json = await response.json();
+            let reimbursements = json;
+            // console.log(reimbursements);
+            
+            // delete old table
+            const table = document.getElementById('table');
+            table.innerHTML = "";
+
+            // add new table
+            const titleRow = document.createElement('tr');
+            titleRow.classList.add("categories")
+            const column1 = document.createElement("th");
+            column1.innerHTML = "Id";
+            titleRow.appendChild(column1);
+            const column2 = document.createElement("th");
+            column2.innerHTML = "Amount";
+            titleRow.appendChild(column2);
+            const column3 = document.createElement("th");
+            column3.innerHTML = "Description";
+            titleRow.appendChild(column3);
+            const column4 = document.createElement("th");
+            column4.innerHTML = "Type";
+            titleRow.appendChild(column4);
+            const column5 = document.createElement("th");
+            column5.innerHTML = "Status";
+            titleRow.appendChild(column5);
+            const column6 = document.createElement("th");
+            column6.innerHTML = "Author";
+            titleRow.appendChild(column6);
+            const column7 = document.createElement("th");
+            column7.innerHTML = "Submitted";
+            titleRow.appendChild(column7);
+            const column8 = document.createElement("th");
+            column8.innerHTML = "Resolved";
+            titleRow.appendChild(column8);
+            table.appendChild(titleRow);
+
+            reimbursements.forEach(function (reimbursement) {
+                const reimbursementRow = document.createElement("tr");
+                // column 1
+                const column1 = document.createElement("th");
+                column1.innerHTML = reimbursement.id;
+                reimbursementRow.appendChild(column1);
+                // column 2
+                const column2 = document.createElement("th");
+                column2.innerHTML = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
+                reimbursementRow.appendChild(column2);
+                // column 3
+                const column3 = document.createElement("th");
+                column3.style.width="30%";
+                column3.innerHTML = reimbursement.description;
+                reimbursementRow.appendChild(column3);
+                // column 4
+                const column4 = document.createElement("th");
+                let type = reimbursement.reimbursementType;
+                var typeText;
+                    if(type === 1){
+                        column4.innerHTML = "Lodging";
+                        typeText = "Lodging";
+                    }else if(type === 2){
+                        column4.innerHTML = "Food";
+                        typeText = "Food";
+                    }else if(type === 3){
+                        column4.innerHTML = "Travel";
+                        typeText = "Travel";
+                    }else if(type === 4){
+                        column4.innerHTML = "Entertainment";
+                        typeText = "Entertainment";
+                    }else if(type === 5){
+                        column4.innerHTML = "Shopping";
+                        typeText = "Shopping";
+                    }else if(type === 6){
+                        column4.innerHTML = "Other";
+                        typeText = "Other";
+                    }else{
+                        column4.innerHTML = "NULL";
+                        typeText = "NULL";
+                    }
+                reimbursementRow.appendChild(column4);
+
+                // column 5
+                const column5 = document.createElement("th");
+                let status = reimbursement.status;
+                if(status === "PENDING"){
+                    column5.style.color = "#0077B6";
+                    column5.innerHTML = reimbursement.status;
+                }else if(status === "DENIED"){
+                    column5.style.color = "red";
+                    column5.classList.add("status");
+                    column5.innerHTML = reimbursement.status + ` 
+                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
+                }else{
+                    column5.style.color = "green";
+                    column5.classList.add("status");
+                    column5.innerHTML = reimbursement.status + ` 
+                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
+                }
+                reimbursementRow.appendChild(column5);
+
+                // column6
+                const column6 = document.createElement("th");
+                column6.innerHTML = reimbursement.author.username;
+                reimbursementRow.appendChild(column6);
+                
+                // column7
+                const column7 = document.createElement("th");
+                var date = new Date(reimbursement.submitted).toLocaleDateString("en-US");
+                column7.innerHTML = date;
+                reimbursementRow.appendChild(column7);
+
+                // column8
+                const column8 = document.createElement("th");
+                let resolved = reimbursement.resolved;
+                if(resolved === null){
+                    column8.innerHTML = `<button id="process" onclick="processPage(${reimbursement.id})">Process</button>`;
+                }else{
+                    var date = new Date(reimbursement.resolved).toLocaleDateString("en-US");
+                    column8.innerHTML = date;
+                }
+                reimbursementRow.appendChild(column8);
+
+                table.appendChild(reimbursementRow);
+            });
+        }
+
+        // filter by type
+        async function filterType(type){
+            let response = await fetch(
+                "http://localhost:8080/api/reimbursements/filter/type",
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "type": type
+                    }
+                }
+            );
+            let json = await response.json();
+            let reimbursements = json;
+            // console.log(reimbursements);
+            
+            // delete old table
+            const table = document.getElementById('table');
+            table.innerHTML = "";
+
+            // add new table
+            const titleRow = document.createElement('tr');
+            titleRow.classList.add("categories")
+            const column1 = document.createElement("th");
+            column1.innerHTML = "Id";
+            titleRow.appendChild(column1);
+            const column2 = document.createElement("th");
+            column2.innerHTML = "Amount";
+            titleRow.appendChild(column2);
+            const column3 = document.createElement("th");
+            column3.innerHTML = "Description";
+            titleRow.appendChild(column3);
+            const column4 = document.createElement("th");
+            column4.innerHTML = "Type";
+            titleRow.appendChild(column4);
+            const column5 = document.createElement("th");
+            column5.innerHTML = "Status";
+            titleRow.appendChild(column5);
+            const column6 = document.createElement("th");
+            column6.innerHTML = "Author";
+            titleRow.appendChild(column6);
+            const column7 = document.createElement("th");
+            column7.innerHTML = "Submitted";
+            titleRow.appendChild(column7);
+            const column8 = document.createElement("th");
+            column8.innerHTML = "Resolved";
+            titleRow.appendChild(column8);
+            table.appendChild(titleRow);
+
+            reimbursements.forEach(function (reimbursement) {
+                const reimbursementRow = document.createElement("tr");
+                // column 1
+                const column1 = document.createElement("th");
+                column1.innerHTML = reimbursement.id;
+                reimbursementRow.appendChild(column1);
+                // column 2
+                const column2 = document.createElement("th");
+                column2.innerHTML = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
+                reimbursementRow.appendChild(column2);
+                // column 3
+                const column3 = document.createElement("th");
+                column3.style.width="30%";
+                column3.innerHTML = reimbursement.description;
+                reimbursementRow.appendChild(column3);
+                // column 4
+                const column4 = document.createElement("th");
+                let type = reimbursement.reimbursementType;
+                var typeText;
+                    if(type === 1){
+                        column4.innerHTML = "Lodging";
+                        typeText = "Lodging";
+                    }else if(type === 2){
+                        column4.innerHTML = "Food";
+                        typeText = "Food";
+                    }else if(type === 3){
+                        column4.innerHTML = "Travel";
+                        typeText = "Travel";
+                    }else if(type === 4){
+                        column4.innerHTML = "Entertainment";
+                        typeText = "Entertainment";
+                    }else if(type === 5){
+                        column4.innerHTML = "Shopping";
+                        typeText = "Shopping";
+                    }else if(type === 6){
+                        column4.innerHTML = "Other";
+                        typeText = "Other";
+                    }else{
+                        column4.innerHTML = "NULL";
+                        typeText = "NULL";
+                    }
+                reimbursementRow.appendChild(column4);
+
+                // column 5
+                const column5 = document.createElement("th");
+                let status = reimbursement.status;
+                if(status === "PENDING"){
+                    column5.style.color = "#0077B6";
+                    column5.innerHTML = reimbursement.status;
+                }else if(status === "DENIED"){
+                    column5.style.color = "red";
+                    column5.classList.add("status");
+                    column5.innerHTML = reimbursement.status + ` 
+                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
+                }else{
+                    column5.style.color = "green";
+                    column5.classList.add("status");
+                    column5.innerHTML = reimbursement.status + ` 
+                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
+                }
+                reimbursementRow.appendChild(column5);
+
+                // column6
+                const column6 = document.createElement("th");
+                column6.innerHTML = reimbursement.author.username;
+                reimbursementRow.appendChild(column6);
+                
+                // column7
+                const column7 = document.createElement("th");
+                var date = new Date(reimbursement.submitted).toLocaleDateString("en-US");
+                column7.innerHTML = date;
+                reimbursementRow.appendChild(column7);
+
+                // column8
+                const column8 = document.createElement("th");
+                let resolved = reimbursement.resolved;
+                if(resolved === null){
+                    column8.innerHTML = `<button id="process" onclick="processPage(${reimbursement.id})">Process</button>`;
+                }else{
+                    var date = new Date(reimbursement.resolved).toLocaleDateString("en-US");
+                    column8.innerHTML = date;
+                }
+                reimbursementRow.appendChild(column8);
+
+                table.appendChild(reimbursementRow);
+            });
+        }
+
+        // filter by resolver
+        async function filterResolver(email){
+            let response = await fetch(
+                "http://localhost:8080/api/reimbursements/filter/resolver",
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "email": email
+                    }
+                }
+            );
+            let json = await response.json();
+            let reimbursements = json;
+            // console.log(reimbursements);
+            
+            // delete old table
+            const table = document.getElementById('table');
+            table.innerHTML = "";
+
+            // add new table
+            const titleRow = document.createElement('tr');
+            titleRow.classList.add("categories")
+            const column1 = document.createElement("th");
+            column1.innerHTML = "Id";
+            titleRow.appendChild(column1);
+            const column2 = document.createElement("th");
+            column2.innerHTML = "Amount";
+            titleRow.appendChild(column2);
+            const column3 = document.createElement("th");
+            column3.innerHTML = "Description";
+            titleRow.appendChild(column3);
+            const column4 = document.createElement("th");
+            column4.innerHTML = "Type";
+            titleRow.appendChild(column4);
+            const column5 = document.createElement("th");
+            column5.innerHTML = "Status";
+            titleRow.appendChild(column5);
+            const column6 = document.createElement("th");
+            column6.innerHTML = "Author";
+            titleRow.appendChild(column6);
+            const column7 = document.createElement("th");
+            column7.innerHTML = "Submitted";
+            titleRow.appendChild(column7);
+            const column8 = document.createElement("th");
+            column8.innerHTML = "Resolved";
+            titleRow.appendChild(column8);
+            table.appendChild(titleRow);
+
+            reimbursements.forEach(function (reimbursement) {
+                const reimbursementRow = document.createElement("tr");
+                // column 1
+                const column1 = document.createElement("th");
+                column1.innerHTML = reimbursement.id;
+                reimbursementRow.appendChild(column1);
+                // column 2
+                const column2 = document.createElement("th");
+                column2.innerHTML = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
+                reimbursementRow.appendChild(column2);
+                // column 3
+                const column3 = document.createElement("th");
+                column3.style.width="30%";
+                column3.innerHTML = reimbursement.description;
+                reimbursementRow.appendChild(column3);
+                // column 4
+                const column4 = document.createElement("th");
+                let type = reimbursement.reimbursementType;
+                var typeText;
+                    if(type === 1){
+                        column4.innerHTML = "Lodging";
+                        typeText = "Lodging";
+                    }else if(type === 2){
+                        column4.innerHTML = "Food";
+                        typeText = "Food";
+                    }else if(type === 3){
+                        column4.innerHTML = "Travel";
+                        typeText = "Travel";
+                    }else if(type === 4){
+                        column4.innerHTML = "Entertainment";
+                        typeText = "Entertainment";
+                    }else if(type === 5){
+                        column4.innerHTML = "Shopping";
+                        typeText = "Shopping";
+                    }else if(type === 6){
+                        column4.innerHTML = "Other";
+                        typeText = "Other";
+                    }else{
+                        column4.innerHTML = "NULL";
+                        typeText = "NULL";
+                    }
+                reimbursementRow.appendChild(column4);
+
+                // column 5
+                const column5 = document.createElement("th");
+                let status = reimbursement.status;
+                if(status === "PENDING"){
+                    column5.style.color = "#0077B6";
+                    column5.innerHTML = reimbursement.status;
+                }else if(status === "DENIED"){
+                    column5.style.color = "red";
+                    column5.classList.add("status");
+                    column5.innerHTML = reimbursement.status + ` 
+                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
+                }else{
+                    column5.style.color = "green";
+                    column5.classList.add("status");
+                    column5.innerHTML = reimbursement.status + ` 
+                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
+                }
+                reimbursementRow.appendChild(column5);
+
+                // column6
+                const column6 = document.createElement("th");
+                column6.innerHTML = reimbursement.author.username;
+                reimbursementRow.appendChild(column6);
+                
+                // column7
+                const column7 = document.createElement("th");
+                var date = new Date(reimbursement.submitted).toLocaleDateString("en-US");
+                column7.innerHTML = date;
+                reimbursementRow.appendChild(column7);
+
+                // column8
+                const column8 = document.createElement("th");
+                let resolved = reimbursement.resolved;
+                if(resolved === null){
+                    column8.innerHTML = `<button id="process" onclick="processPage(${reimbursement.id})">Process</button>`;
+                }else{
+                    var date = new Date(reimbursement.resolved).toLocaleDateString("en-US");
+                    column8.innerHTML = date;
+                }
+                reimbursementRow.appendChild(column8);
+
+                table.appendChild(reimbursementRow);
+            });
+        }
+
+        function GetReimbursementsByResolver(){
+            // Retrieve the object from storage
+            var resolver = localStorage.getItem('user');
+            var data =  JSON.parse(resolver);
+            filterResolver(data.email);
+        }
     </script>
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>

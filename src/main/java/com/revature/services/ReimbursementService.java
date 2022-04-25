@@ -100,6 +100,15 @@ public class ReimbursementService {
         }
     }
 
+    public List<Reimbursement> getReimbursementsByType(String type) {
+        List<Reimbursement> result = reimbDAO.getByType(type);
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return result;
+        }
+    }
+
     /**
      * Get a reimbursement by its id.
      * @param id the reimbursement we are looking for.
