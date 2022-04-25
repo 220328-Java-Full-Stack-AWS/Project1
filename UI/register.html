@@ -73,7 +73,7 @@
     <script>
 
         async function register(newUser){
-            const response = await fetch("http://localhost:8080/api/register",
+            let response = await fetch("http://localhost:8080/api/register",
             {
                 method: "POST",
                 headers: {     
@@ -91,7 +91,7 @@
         //  function to ensure usernames are unique
         let usernameList = [];
         async function usernames(){
-            const response = await fetch("http://localhost:8080/api/register",
+            let response = await fetch("http://localhost:8080/api/register",
             {
                 method: "GET",
                 headers: {

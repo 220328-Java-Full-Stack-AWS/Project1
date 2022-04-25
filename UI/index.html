@@ -47,7 +47,7 @@
     <script>
         const api_url = "http://localhost:8080/api/login";
         async function login(url){
-            const response = await fetch(url,
+            let response = await fetch(url,
             {
                 method: "GET",
                 headers: {

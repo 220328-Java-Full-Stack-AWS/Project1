@@ -49,7 +49,15 @@
                     <th>Manage</th>
                 </tr>
             </table>
-    
+            <div class="confirm-delete">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <h3>Confirmation Required</h3>
+                <p>Are you sure you want to delete?</p>
+                <div>
+                    <button id="confirmDelete">Confirm</button>
+                    <button id="cancelDelete">Cancel</button>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -62,7 +70,7 @@
         const api_url = "http://localhost:8080/api/reimbursements/user";
 
         async function getReimbursement(url, id){
-            const response = await fetch(url,
+            let response = await fetch(url,
             {
                 method: "GET",
                 headers: {
@@ -165,7 +173,7 @@
                     const column8 = document.createElement("th");
                     let getStatus = reimbursement.status;
                     if(status === "PENDING"){
-                        column8.innerHTML = "<button id='edit'>Edit</button> <button id='delete'>Delete</button>";
+                        column8.innerHTML = `<button id="edit">Edit</button> <button id="delete" onclick="deleteReimbursementById(${reimbursement.id})">Delete</button>`;
                         column8.classList.add("available");
                     }else{
                         column8.innerHTML = "<button>Edit</button> <button>Delete</button>";
@@ -183,10 +191,32 @@
         // Retrieve the object from storage
         var retrievedObject = localStorage.getItem('user');
         var info =  JSON.parse(retrievedObject);
+        // Display the username on the nav bar
         const username = document.getElementById('username');
         username.innerHTML = info.username;
         window.onload = getReimbursement(api_url, info.id);
+
+        // delete feature
+        async function deleteReimbursementById(id){
+            let response = await fetch(
+                "http://localhost:8080/api/reimbursements/user",
+                {
+                    method: "DELETE",
+                    headers: {
+                        "reimb_id": id
+                    },
+                }
+            );
+            if(response.status != 200){
+                notifier.alert("Error deleting reimbursement");
+            }
+            notifier.success("Reimbursement #" + id + " deleted successfully, page will refresh automatically.");
+            setTimeout(function() { window.location.reload(); }, 4000);
+            return response;
+        }
+
     </script>
+
     <!-- Front End JavaScript -->
     <script>
         // Notifier Package

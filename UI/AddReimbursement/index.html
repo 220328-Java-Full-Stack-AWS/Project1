@@ -73,7 +73,7 @@
     <!-- Back End JavaScript -->
     <script>
         async function newReimbursement(reimbursement){
-            const response = await fetch("http://localhost:8080/api/reimbursements/user",
+            let response = await fetch("http://localhost:8080/api/reimbursements/user",
                 {
                     method: "POST",
                     headers: {     

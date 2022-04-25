@@ -85,7 +85,7 @@
 
         // update reimbursement
         async function updateReimbursement(reimbursement){
-            const response = await fetch("http://localhost:8080/api//reimbursements/finance_manager",
+            let response = await fetch("http://localhost:8080/api//reimbursements/finance_manager",
             {
                 method: "POST",
                 headers: {     
@@ -102,7 +102,7 @@
 
         // Gettting reimbursement data by id
         async function getReimbursement(id){
-            const response = await fetch("http://localhost:8080/api/reimbursement",
+            let response = await fetch("http://localhost:8080/api/reimbursement",
             {
                 method: "GET",
                 headers: {
