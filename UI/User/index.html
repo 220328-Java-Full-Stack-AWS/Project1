@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Reimbursment System</title>
     <!-- notification package-->
-    <script src="../notification/index.js"></script> 
+    <script src="../scripts/index.js"></script> 
     <!-- description -->
     <meta name="description" content="The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL.">
     <!-- favicon -->
@@ -26,14 +26,17 @@
             <span><p id="username"></p><i class="fa fa-user-circle" aria-hidden="true" onclick="toggleNavbar()"></i></span>
         </div>
         <nav>
-            <p>User Account</p>
+            <p>Employee</p>
             <span>Settings</span>
             <span id="logout">Logout</span>
         </nav>
         <section class="main-page">
-    
+            
             <h2>All Reimbursments</h2>
-    
+            <div class="menu">
+                <button id="addReimbursement" onclick="location.href = '../AddReimbursement/index.html'" ><i class="fa-solid fa-plus"></i>Add Reimbursement</button>
+                <button id="sort-filter">Sort & Filter<i class="fa-solid fa-sort-down"></i></button>
+            </div>
             <table id="table">
                 <tr id="categories">
                     <th>Id</th>

@@ -69,34 +69,32 @@ nav{
         font-size: 2.5rem;
         color: #023E8A;
         text-decoration: underline;
-        margin: 1rem 0rem;
     }
-    // filter and sort
-    .filter_sort{
-        margin-bottom: 1rem;
-        width: 100%;
+    .menu{
+        width: 95%;
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: flex-start;
-
-        .filter, .sort{
-            flex-direction: column;
-            background-color: #90e0ef;
-            padding: .5rem;
-            border-radius: 10px;
-            border: 2px solid #ade8f4;
-            h3{
-                font-size: 1.4rem;
-                color:rgb(62, 62, 62);
+        justify-content: space-between;
+        margin-bottom: .2rem;
+        button{
+            border: none;
+            background-color: #0096c7;
+            color: white;
+            width: fit-content;
+            padding: .5rem 1rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+            border-radius: 3px;
+            transition: background-color .5s ease-out;
+            &:hover{
+                background-color: #023E8A;
             }
-            .filter-card, .sort-card{
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
+            i{
+                margin: 0 .5rem;
             }
         }
+
     }
     // table content
     table {

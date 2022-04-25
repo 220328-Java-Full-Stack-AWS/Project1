@@ -34,38 +34,39 @@
             <div class="reimbursement-info">
                 <div class="id">
                     <p>Reimbursment Id:</p>
-                    <span id="id">1</span>
+                    <span id="id"></span>
                 </div>
                 <div class="amount">
                     <p>Reimbursment Amount:</p>
-                    <span id="amount">500</span>
+                    <span id="amount"></span>
                 </div>
                 <div class="description">
                     <p>Reimbursment Description:</p>
-                    <span id="description">I love Emily</span>
+                    <span id="description"></span>
                 </div>
                 <div class="type">
                     <p>Reimbursment Type:</p>
-                    <span id="type">Lodging</span>
+                    <span id="type"></span>
                 </div>
                 <div class="author">
                     <p>Reimbursment Author:</p>
-                    <span id="author">Me</span>
+                    <span id="author"></span>
                 </div>
                 <div class="submitted">
                     <p>Submission Date:</p>
-                    <span id="submitted">12/18/1997</span>
+                    <span id="submitted"></span>
                 </div>
                 <div class="status">
                     <p>Status:</p>
                     <select name="status" id="status">
-                        <option value="pending" selected>Pending</option>
-                        <option value="denied">Deny</option>
-                        <option value="approved">Approve</option>
+                        <option value="1" selected>Pending</option>
+                        <option value="2">Approved</option>
+                        <option value="3">Denied</option>
                     </select>
                 </div>
                 <div class="submit">
-                    <button>Submit</button>
+                    <button id="cancel">Cancel</button>
+                    <button id="submit">Submit</button>
                 </div>
             </div>
         </section>
@@ -77,61 +78,81 @@
     
     <!-- Back End JavaScript -->
     <script>
-           async function getReimbursement(id){
-                const response = await fetch("http://localhost:8080/api/reimbursement",
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "reimbursement_id": id
-                    }
-                }
-                );
-                let json = await response.json();
-                let reimbursement = json;
-                // console.log(reimbursement);
-                
-                // dom elements
-                const idText = document.getElementById("id");
-                idText.textContent = reimbursement.id;
-                
-                const amount = document.getElementById("amount");
-                amount.textContent = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
-                
-                const descriptionText = document.getElementById("description");
-                descriptionText.textContent = reimbursement.description;
-                
-                const typeText = document.getElementById("type");
-                let reimbursementType = reimbursement.reimbursementType;
-                if(reimbursementType === 1){
-                    typeText.textContent = "Lodging";
-                }else if(reimbursementType === 2){
-                    typeText.textContent = "Food";
-                }else if(reimbursementType === 3){
-                    typeText.textContent = "Travel";
-                }else if(reimbursementType === 4){
-                    typeText.textContent = "Entertainment";
-                }else if(reimbursementType === 5){
-                    typeText.textContent = "Shopping";
-                }else if(reimbursementType === 6){
-                    typeText.textContent = "Other";
-                }else{
-                    typeText.textContent = "error";
-                }
 
-                const authorText = document.getElementById("author");
-                authorText.textContent = reimbursement.author.first_name + " " + reimbursement.author.last_name;
+        // update reimbursement
+        async function updateReimbursement(reimbursement){
+            const response = await fetch("http://localhost:8080/api//reimbursements/finance_manager",
+            {
+                method: "POST",
+                headers: {     
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(reimbursement)
+            }
+            );
+            if(response.status !== 201){
+                notifier.alert("Error Processeing!");
+            }
+            return response;
+        }
 
-                const submitText = document.getElementById("submitted");
-                submitText.textContent = new Date(reimbursement.submitted).toLocaleDateString("en-US");
+        // Gettting reimbursement data by id
+        async function getReimbursement(id){
+            const response = await fetch("http://localhost:8080/api/reimbursement",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "reimbursement_id": id
+                }
+            }
+            );
+            let json = await response.json();
+            let reimbursement = json;
+            // console.log(reimbursement);
+            
+            // dom elements
+            const idText = document.getElementById("id");
+            idText.textContent = reimbursement.id;
+            
+            const amount = document.getElementById("amount");
+            amount.textContent = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
+            
+            const descriptionText = document.getElementById("description");
+            descriptionText.textContent = reimbursement.description;
+            
+            const typeText = document.getElementById("type");
+            let reimbursementType = reimbursement.reimbursementType;
+            if(reimbursementType === 1){
+                typeText.textContent = "Lodging";
+            }else if(reimbursementType === 2){
+                typeText.textContent = "Food";
+            }else if(reimbursementType === 3){
+                typeText.textContent = "Travel";
+            }else if(reimbursementType === 4){
+                typeText.textContent = "Entertainment";
+            }else if(reimbursementType === 5){
+                typeText.textContent = "Shopping";
+            }else if(reimbursementType === 6){
+                typeText.textContent = "Other";
+            }else{
+                typeText.textContent = "error";
             }
 
-            // Retrieve the reimbursement id from storage
-            var data = localStorage.getItem('reimbursement_id');
-            // console.log(data);
-            window.onload = getReimbursement(data);
+            const authorText = document.getElementById("author");
+            authorText.textContent = reimbursement.author.first_name + " " + reimbursement.author.last_name;
+
+            const submitText = document.getElementById("submitted");
+            submitText.textContent = new Date(reimbursement.submitted).toLocaleDateString("en-US");
+        }
+
         
-            // Retrieve the object from storage
+        // Retrieve the reimbursement id from storage
+        var data = localStorage.getItem('reimbursement_id');
+        // console.log(data);
+        window.onload = getReimbursement(data);
+    
+        // Retrieve the username from storage
         var retrievedObject = localStorage.getItem('user');
         var info =  JSON.parse(retrievedObject);
         const username = document.getElementById('username');
@@ -156,6 +177,21 @@
             localStorage.removeItem('user');
             window.location.href = "../index.html";
         });
+
+        // submit btn
+        const submitBTN = document.getElementById("submit");
+        submitBTN.addEventListener('click', ()=>{
+            var selectedStatus = document.getElementById('status');
+            console.log(selectedStatus.value);
+            register(reimbursement);
+        })
+
+
+        // cancel btn
+        const cancelBTN = document.getElementById('cancel');
+        cancelBTN.addEventListener('click', ()=>{
+            window.location.href = "../Manager/index.html";     
+        })
     </script>
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>
