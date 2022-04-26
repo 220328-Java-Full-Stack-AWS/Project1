@@ -105,6 +105,10 @@
                     font-size: 1rem;
                     flex-direction: row;
                     justify-content: flex-end;
+                    span{
+                        font-size: 1.2rem;
+                        margin-right: .3rem;
+                    }
                     .yes{
                         width: 25%;
                         border: none;

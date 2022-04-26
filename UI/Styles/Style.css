@@ -1892,6 +1892,11 @@ nav span:hover {
           justify-content: flex-end;
 }
 
+.settings .settings-container .account div .confirmDelete span {
+  font-size: 1.2rem;
+  margin-right: .3rem;
+}
+
 .settings .settings-container .account div .confirmDelete .yes {
   width: 25%;
   border: none;

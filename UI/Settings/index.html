@@ -68,11 +68,11 @@
                 <div class="account">
                     <span>Delete account</span>
                     <div>
-                        <button>Delete</button>
+                        <button id="deleteBtn" onclick="openDelete()">Delete</button>
                         <div class="confirmDelete">
                             <span>Are you sure?</span>
-                            <button class="yes">Yes</button>
-                            <button class="no">No</button>
+                            <button class="yes" onclick="deleteAccount()">Yes</button>
+                            <button class="no" onclick="closeDelete()">No</button>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,6 @@
     <!-- BackEnd JavaScript -->
     <script>     
         //get user data
-        let tempP;
         async function userPass(id) {
             let response = await fetch("http://localhost:8080/api/user",
             {
@@ -150,7 +149,45 @@
                 var data =  JSON.parse(user);
                 userPass(data.id);
             }
-        })
+        });
+
+        // delete Account
+        const deletePrompt = document.querySelector('.confirmDelete');
+        const deleteBtn = document.getElementById('deleteBtn');
+        function openDelete(){
+            if(getComputedStyle(deletePrompt).display === "none"){
+                deletePrompt.style.display = "flex";
+                deleteBtn.style.pointerEvents = "none";
+                deleteBtn.style.background = "lightgrey"
+            }
+        }
+        function closeDelete(){
+            if(getComputedStyle(deletePrompt).display === "flex"){
+                deletePrompt.style.display = "none";
+                deleteBtn.style.pointerEvents = "auto";
+                deleteBtn.style.background = "rgb(214, 26, 26)";
+            }
+        }
+
+        async function deleteAccount(){ 
+            var user = localStorage.getItem('user');
+            var data =  JSON.parse(user);
+            let response = await fetch("http://localhost:8080/api/user",
+            {
+                method: "DELETE",
+                headers: {     
+                    "id": data.id,
+                },
+            }
+            );
+            if(response.status != 200){
+                notifier.alert("Error deleting your account");
+            }
+            notifier.success("Account successfully deleted, page will refresh automatically.");
+            setTimeout(function() { window.location.href ='../index.html'; }, 4000); // reloads page, ajax would be better
+            return response;
+        }
+
     </script>
     <!-- FrontEnd JavaScript -->
     <script>

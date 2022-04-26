@@ -85,6 +85,8 @@
             if(response.status !== 201){
                 notifier.alert("Error registering!");
             }
+            notifier.success("Registration completed successfully.");
+            setTimeout(function() { window.location.href = "./index.html"; }, 5000); // reloads page, ajax would be better
             return response;
         }
         
@@ -145,7 +147,6 @@
                     role: "EMPLOYEE" 
                 }
                 register(newUser);
-                window.location.href = "./index.html";
             }
             
         });
