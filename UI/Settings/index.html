@@ -167,18 +167,40 @@
                 }else if(userName.length < 2){
                     notifier.alert("Please a better username");
                 }else{
-                    let account = {
-                        "id": json.id,
-                        "username": userName,
-                        "password": json.password,
-                        "first_name": firstName,
-                        "last_name": lastName,
-                        "email": email,
-                        "phone": phone,
-                        "role": "EMPLOYEE"
+                    if(password === ""){
+                        let account = {
+                            "id": json.id,
+                            "username": userName,
+                            "password": json.password,
+                            "first_name": firstName,
+                            "last_name": lastName,
+                            "email": email,
+                            "phone": phone,
+                            "role": "EMPLOYEE"
+                        }
+                        updateAccount(account);
+                    }else{
+                        if(password.length < 8){
+                            notifier.alert("Please enter a strong password");
+                        } else if(password !== confirmPassword){
+                            notifier.alert("Passwords did not match");
+                        }else if(oldPassword !== json.password){
+                            notifier.alert("Wrong password");
+                        }else{
+                            let account = {
+                                "id": json.id,
+                                "username": userName,
+                                "password": password,
+                                "first_name": firstName,
+                                "last_name": lastName,
+                                "email": email,
+                                "phone": phone,
+                                "role": "EMPLOYEE"
+                            }
+                            updateAccount(account);                            
+                        }
                     }
-                    
-                    updateAccount(account);
+
                 }
             })
         }
