@@ -47,6 +47,17 @@
         <servlet-class>com.revature.servlets.RegisterServlet</servlet-class>
     </servlet>
 
+    <!-- get user servlet-->
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>com.revature.servlets.UserServlet</servlet-class>
+    </servlet>
+
     <!--reimbursements for finance manager-->
     <servlet-mapping>
         <servlet-name>financeReimbursementServlet</servlet-name>

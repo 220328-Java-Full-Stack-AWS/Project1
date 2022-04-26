@@ -27,7 +27,7 @@
         </div>
         <nav>
             <p>Finance Manager</p>
-            <span>Settings</span>
+            <span onclick="location.href='../Settings/index.html'">Settings</span>
             <span id="logout">Logout</span>
         </nav>
         <section class="main-page">
@@ -265,6 +265,9 @@
             let reimbursements = json;
             // console.log(reimbursements);
             
+            filterMenu.style.display = 'none';
+            dropdownIcon.style.transform = "rotate(360deg)";
+
             // delete old table
             const table = document.getElementById('table');
             table.innerHTML = "";
@@ -401,7 +404,10 @@
             let json = await response.json();
             let reimbursements = json;
             // console.log(reimbursements);
-            
+
+            filterMenu.style.display = 'none';
+            dropdownIcon.style.transform = "rotate(360deg)";
+
             // delete old table
             const table = document.getElementById('table');
             table.innerHTML = "";
@@ -538,7 +544,9 @@
             let json = await response.json();
             let reimbursements = json;
             // console.log(reimbursements);
-            
+
+            filterMenu.style.display = 'none';
+            dropdownIcon.style.transform = "rotate(360deg)";
             // delete old table
             const table = document.getElementById('table');
             table.innerHTML = "";

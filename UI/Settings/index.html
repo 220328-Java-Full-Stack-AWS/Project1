@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Reimbursement System | Settings</title>
+    <!-- notification package-->
+    <script src="../scripts/index.js"></script> 
+    <!-- description -->
+    <meta name="description" content="The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL.">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../assets/iconmonstr-banknote-15-240.png" type="image/x-icon">
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" href="../Styles/Style.css">
+</head>
+<body>
+    <div class="main">
+        <div class="main-header">
+            <h2>Employee Reimbursement System</h2>
+            <span><p id="username"></p><i class="fa fa-user-circle" aria-hidden="true" onclick="toggleNavbar()"></i></span>
+        </div>
+        <nav>
+            <p>Employee</p>
+            <span onclick="location.href='../Settings/index.html'">Settings</span>
+            <span id="logout">Logout</span>
+        </nav>
+
+        <section class="settings">
+            <div class="breadcrumb">
+                <a href="../User/index.html">Home /</a>
+                <span>Settings</span>
+            </div>
+            <h2>Settings</h2>
+
+            <div class="settings-container">
+                <div class="username">
+                    <span>Change your username</span>
+                    <p contenteditable="true" id="userName"></p>
+                </div>
+                <div class="email">
+                    <span>Change your email</span>
+                    <p contenteditable="true" id="email"></p>
+                </div>
+                <div class="password">
+                    <span>Change your password</span>
+                    <div>
+                        <input type="password" name="oldPassword" id="oldPassword" placeholder="Enter old password">
+                        <input type="password" name="password" id="password" placeholder="Enter password">
+                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password">
+                    </div>
+                </div>
+                <div class="name">
+                    <span>Edit your name</span>
+                    <div>
+                        <p contenteditable="true" id="firstName"></p>
+                        <p contenteditable="true" id="lastName"></p>
+                    </div>
+                </div>
+                <div class="phone">
+                    <span>Edit your phone number</span>
+                    <p contenteditable="true" id="phone"></p>
+                </div>
+                <div class="account">
+                    <span>Delete account</span>
+                    <div>
+                        <button>Delete</button>
+                        <div class="confirmDelete">
+                            <span>Are you sure?</span>
+                            <button class="yes">Yes</button>
+                            <button class="no">No</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit">
+                    <button id="cancel" onclick="location.href ='../User/index.html'">Cancel</button>
+                    <button id="submit">Submit</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <h2>ERSystems</h2>
+        <span class="copyright">Copyright &copy; <script>document.write(new Date().getFullYear())</script>, ERSystems Inc.</span>
+    </footer>
+    
+    <!-- BackEnd JavaScript -->
+    <script>     
+        //get user data
+        let tempP;
+        async function userPass(id) {
+            let response = await fetch("http://localhost:8080/api/user",
+            {
+                method: "GET",
+                headers: {     
+                    "Content-Type": "application/json",
+                    "id": id
+                },
+            }
+            );
+            let json = await response.json();
+            let user = json;
+
+            var oldPassword = document.getElementById("oldPassword").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            if(oldPassword !== ""){
+                if(oldPassword !== user.password) {
+                    notifier.alert("Incorrect Password");
+                }
+            }
+        }     
+
+        // submit button 
+        document.getElementById('submit').addEventListener('click', ()=>{
+            // dom elements
+            var email = document.getElementById("email").textContent;
+            var firstName = document.getElementById("firstName").textContent;
+            var lastName = document.getElementById("lastName").textContent;
+            var phone = document.getElementById("phone").textContent;
+            var oldPassword = document.getElementById("oldPassword").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            // email regex
+            var validEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            // phone regex
+            var validPhoneRegex = /(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4})(\s?(([E|e]xt[:|.|]?)|x|X)(\s?\d+))?/g;
+
+            if(email === "" || firstName === "" || lastName === "" || username === "" || phone === "" ){
+                notifier.alert("Please don't leave blanks");
+            }else if(firstName.length < 2){
+                notifier.alert("Please enter a valid first name");
+            }else if(lastName.length < 2){
+                notifier.alert("Please enter a valid last name");
+            }else if(!email.match(validEmailRegex)){
+                notifier.alert("Please enter a valid email");
+            }else if(!phone.match(validPhoneRegex)){
+                notifier.alert("Please enter a valid phone number");
+            }else if(confirmPassword !== password){
+                notifier.alert("Passwords did not match");
+            }else if(password.length < 8){
+                notifier.alert("Please make a stronger password");
+            }else{
+                var user = localStorage.getItem('user');
+                var data =  JSON.parse(user);
+                userPass(data.id);
+            }
+        })
+    </script>
+    <!-- FrontEnd JavaScript -->
+    <script>
+        // Notifier Package
+        var notifier = new AWN();
+       
+       // navbar toggle
+        function toggleNavbar() {
+            const nav = document.querySelector('nav');
+            if(getComputedStyle(nav).display === "none"){
+                nav.style.display = "flex";
+            }else{
+                nav.style.display = "none";
+            }
+        }
+
+        // logout
+        const logoutBtn = document.getElementById('logout');
+        logoutBtn.addEventListener('click', ()=>{
+            localStorage.removeItem('user');
+            window.location.href = "../index.html";
+        });
+
+        // display data
+        
+        // Retrieve the user object from storage
+        var retrievedObject = localStorage.getItem('user');
+        var info =  JSON.parse(retrievedObject);
+        
+        // dom elements
+        const usernameText = document.getElementById("userName");
+        usernameText.textContent = info.username;
+        const emailText = document.getElementById("email");
+        emailText.textContent = info.email;
+        const firstNameText = document.getElementById("firstName");
+        firstNameText.textContent = info.firstName;
+        const lastNameText = document.getElementById("lastName");
+        lastNameText.textContent = info.lastName;
+        const phoneText = document.getElementById("phone");
+        phoneText.textContent = info.phone;
+
+        // Display the username on the nav bar
+        const username = document.getElementById('username');
+        username.innerHTML = info.username;
+    </script>
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>
+</body>
+</html>

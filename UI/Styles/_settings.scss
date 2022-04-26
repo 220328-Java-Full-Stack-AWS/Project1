@@ -1,0 +1,236 @@
+.settings{
+    width: 100%;
+    margin: 2rem 0rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h2 {
+        font-size: 2.5rem;
+        color: #023E8A;
+        text-decoration: underline;
+    }
+
+    .breadcrumb {
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 1rem;
+        color: rgb(71, 70, 70);
+
+        a {
+            text-decoration: none;
+            margin-right: .25rem;
+            font-size: 1rem;
+            color: rgb(71, 70, 70);
+
+            &:hover {
+                color: #022f6a;
+            }
+        }
+
+        span {
+            text-decoration: underline;
+        }
+    }
+
+    .settings-container{
+        width: 60%;
+        background-color: white;
+        border-radius:10px;
+        padding:2rem;
+        border: #ade8f4ca solid 3px;
+        .username,.email,.phone{
+            display:flex;
+            flex-direction:row;
+            align-items:center;
+            justify-content: space-between;
+            background-color: rgb(222, 222, 222);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 3px;
+            span{
+                font-size:1.5rem;
+            }
+            p{
+                width:35%;
+                overflow: hidden;
+                padding: .3rem .6rem;
+                background-color: white;
+                border: whitesmoke solid 1px;
+                border-radius: 5px;
+                &:focus{
+                    border: dashed grey 1px;
+                }
+            }
+        }
+        .account{
+            display:flex;
+            flex-direction:row;
+            align-items:center;
+            justify-content: space-between;
+            background-color: rgb(222, 222, 222);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 3px;
+            span{
+                font-size:1.5rem;
+            }
+            div{
+                width:50%;
+                display: flex;
+                flex-direction: column;
+                align-items:flex-end;
+                button{
+                    width: 50%;
+                    border:  none;
+                    border-radius: 3px;
+                    font-size: 1rem;
+                    padding: .25rem .5rem;
+                    background-color: rgb(214, 26, 26);
+                    color: white;
+                    cursor: pointer;
+                    transition: all .5s ease;
+                    &:hover{
+                        background-color: rgb(138, 19, 19);
+                    }
+                }
+                .confirmDelete{
+                    display: none;
+                    margin: .5rem 0;
+                    width: 100%;
+                    font-size: 1rem;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    .yes{
+                        width: 25%;
+                        border: none;
+                        border-radius: 3px;
+                        font-size: 1rem;
+                        padding: .25rem;
+                        background-color: rgb(214, 26, 26);
+                        color: white;
+                        cursor: pointer;
+                        transition: all .5s ease;
+                        &:hover{
+                            background-color: rgb(138, 19, 19);
+                        }
+                    }
+                    .no{
+                        margin-left: .5rem;
+                        width: 25%;
+                        border: none;
+                        border-radius: 3px;
+                        font-size: 1rem;
+                        padding: .25rem;
+                        background-color: #023E8A;
+                        color: white;
+                        cursor: pointer;
+                        transition: all .5s ease;
+                        &:hover{
+                            background-color: #03045E;
+                        }
+                    }
+                }
+            }
+        }
+
+        .password{
+            display:flex;
+            flex-direction:row;
+            align-items:center;
+            justify-content: space-between;
+            background-color: rgb(222, 222, 222);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 3px;
+            span{
+                font-size:1.5rem;
+            }
+            div{
+                width:35%;
+                display:flex;
+                flex-direction:column;
+                input{
+                    padding: .3rem .6rem;
+                    background-color: white;
+                    border: whitesmoke solid 1px;
+                    border-radius: 5px; 
+                    outline: none;
+                    margin-bottom: .5rem;
+                    font-size: 1rem;
+                    &:focus{
+                        border: dashed grey 1px;
+                    }
+                }
+            }
+        }
+        .name{
+            display:flex;
+            flex-direction:row;
+            align-items:center;
+            justify-content: space-between;
+            background-color: rgb(222, 222, 222);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 3px;
+            span{
+                font-size:1.5rem;
+            }
+            div{
+                width: 50%;
+                display: flex;
+                flex-direction:row;
+                align-items: center;
+                justify-content:space-between;
+                p{
+                    width: 48%;
+                    overflow: hidden;
+                    padding: .3rem .6rem;
+                    background-color: white;
+                    border: whitesmoke solid 1px;
+                    border-radius: 5px;
+                }
+            }
+        }
+        .submit{
+            margin-top: 1rem;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+            #submit{
+                width: 30%;
+                border:  none;
+                border-radius: 3px;
+                font-size: 1rem;
+                padding: .25rem .5rem;
+                background-color: #023E8A;
+                color: white;
+                cursor: pointer;
+                transition: all .5s ease;
+                &:hover{
+                    background-color: #03045E;
+                }
+            }
+            #cancel{
+                width: 30%;
+                border:  none;
+                border-radius: 3px;
+                font-size: 1rem;
+                padding: .25rem .5rem;
+                background-color: rgb(214, 26, 26);
+                color: white;
+                cursor: pointer;
+                transition: all .5s ease;
+                &:hover{
+                    background-color: rgb(138, 19, 19);
+                }
+            }
+        }
+    }
+}

@@ -1719,4 +1719,362 @@ nav span:hover {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
+
+.settings {
+  width: 100%;
+  margin: 2rem 0rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.settings h2 {
+  font-size: 2.5rem;
+  color: #023E8A;
+  text-decoration: underline;
+}
+
+.settings .breadcrumb {
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  font-size: 1rem;
+  color: #474646;
+}
+
+.settings .breadcrumb a {
+  text-decoration: none;
+  margin-right: .25rem;
+  font-size: 1rem;
+  color: #474646;
+}
+
+.settings .breadcrumb a:hover {
+  color: #022f6a;
+}
+
+.settings .breadcrumb span {
+  text-decoration: underline;
+}
+
+.settings .settings-container {
+  width: 60%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  border: #ade8f4ca solid 3px;
+}
+
+.settings .settings-container .username, .settings .settings-container .email, .settings .settings-container .phone {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #dedede;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+}
+
+.settings .settings-container .username span, .settings .settings-container .email span, .settings .settings-container .phone span {
+  font-size: 1.5rem;
+}
+
+.settings .settings-container .username p, .settings .settings-container .email p, .settings .settings-container .phone p {
+  width: 35%;
+  overflow: hidden;
+  padding: .3rem .6rem;
+  background-color: white;
+  border: whitesmoke solid 1px;
+  border-radius: 5px;
+}
+
+.settings .settings-container .username p:focus, .settings .settings-container .email p:focus, .settings .settings-container .phone p:focus {
+  border: dashed grey 1px;
+}
+
+.settings .settings-container .account {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #dedede;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+}
+
+.settings .settings-container .account span {
+  font-size: 1.5rem;
+}
+
+.settings .settings-container .account div {
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.settings .settings-container .account div button {
+  width: 50%;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  padding: .25rem .5rem;
+  background-color: #d61a1a;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+}
+
+.settings .settings-container .account div button:hover {
+  background-color: #8a1313;
+}
+
+.settings .settings-container .account div .confirmDelete {
+  display: none;
+  margin: .5rem 0;
+  width: 100%;
+  font-size: 1rem;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.settings .settings-container .account div .confirmDelete .yes {
+  width: 25%;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  padding: .25rem;
+  background-color: #d61a1a;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+}
+
+.settings .settings-container .account div .confirmDelete .yes:hover {
+  background-color: #8a1313;
+}
+
+.settings .settings-container .account div .confirmDelete .no {
+  margin-left: .5rem;
+  width: 25%;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  padding: .25rem;
+  background-color: #023E8A;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+}
+
+.settings .settings-container .account div .confirmDelete .no:hover {
+  background-color: #03045E;
+}
+
+.settings .settings-container .password {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #dedede;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+}
+
+.settings .settings-container .password span {
+  font-size: 1.5rem;
+}
+
+.settings .settings-container .password div {
+  width: 35%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.settings .settings-container .password div input {
+  padding: .3rem .6rem;
+  background-color: white;
+  border: whitesmoke solid 1px;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: .5rem;
+  font-size: 1rem;
+}
+
+.settings .settings-container .password div input:focus {
+  border: dashed grey 1px;
+}
+
+.settings .settings-container .name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #dedede;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+}
+
+.settings .settings-container .name span {
+  font-size: 1.5rem;
+}
+
+.settings .settings-container .name div {
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.settings .settings-container .name div p {
+  width: 48%;
+  overflow: hidden;
+  padding: .3rem .6rem;
+  background-color: white;
+  border: whitesmoke solid 1px;
+  border-radius: 5px;
+}
+
+.settings .settings-container .submit {
+  margin-top: 1rem;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.settings .settings-container .submit #submit {
+  width: 30%;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  padding: .25rem .5rem;
+  background-color: #023E8A;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+}
+
+.settings .settings-container .submit #submit:hover {
+  background-color: #03045E;
+}
+
+.settings .settings-container .submit #cancel {
+  width: 30%;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  padding: .25rem .5rem;
+  background-color: #d61a1a;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+}
+
+.settings .settings-container .submit #cancel:hover {
+  background-color: #8a1313;
+}
 /*# sourceMappingURL=Style.css.map */
