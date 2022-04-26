@@ -137,23 +137,29 @@ nav {
         left: 2rem;
         top: 12rem;
         display: none;
+        flex-direction: column;
         background-color: white;
         padding: 1rem;
         border-radius: 6px;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        width: 40%;
+        width: 45%;
         .filter{
+            h3{
+                font-size: 1.4rem;
+                color: black;
+            }
             .options{
                 width: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
                 h3{
-                    font-size: 1.4rem;
+                    font-size: 1.5rem;
                     text-decoration: underline;
                     margin-left: 1rem;
                 }
                 div{
+                    background-color: whitesmoke;
                     p{
                         text-decoration: underline;
                     }
@@ -166,6 +172,40 @@ nav {
                         color: white;
                         font-size: .8rem;
                         margin: .5rem;
+                        &:hover{
+                            background-color: #022f6a;
+                        }
+                    }
+                }
+            }
+        }
+        .sort{
+            h3{
+                font-size: 1.4rem;
+                color: black;
+            }
+            .options{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                div{
+                    margin: .5rem 0;
+                    background-color: whitesmoke;
+                    padding: .5rem;
+                    p{
+                        text-decoration: underline;
+                    }
+                    button{
+                        border: none;
+                        cursor: pointer;
+                        background-color: #023e8a;
+                        border-radius: 5px;
+                        padding: .3rem .6rem;
+                        color: white;
+                        font-size: .8rem;
                         &:hover{
                             background-color: #022f6a;
                         }

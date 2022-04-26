@@ -26,7 +26,7 @@
             <span><p id="username"></p><i class="fa fa-user-circle" aria-hidden="true" onclick="toggleNavbar()"></i></span>
         </div>
         <nav>
-            <p>Employee</p>
+            <p id="userRole"></p>
             <span onclick="location.href='../Settings/index.html'">Settings</span>
             <span id="logout">Logout</span>
         </nav>
@@ -39,22 +39,42 @@
             </div>
             <div class="sort-filter-dropdown">
                 <div class="filter">
-                    <h3><i class="fa-solid fa-filters"></i>Filter</h3>
+                    <h3>Filter</h3>
                     <div class="options">
                         <div class="filter-status">
-                            <p>Filter By Status</p>
+                            <p>Reimbursement Status</p>
                             <button onclick="filterStatus('pending')">Pending</button>
                             <button onclick="filterStatus('approved')">Approved</button>
                             <button onclick="filterStatus('denied')">Denied</button>
                         </div>
                         <div class="filter-type">
-                            <p>Filter By Type</p>
+                            <p>Reimbursement Type</p>
                             <button onclick="filterType('Lodging')">Lodging</button>
                             <button onclick="filterType('Food')">Food</button>
                             <button onclick="filterType('Travel')">Travel</button>
                             <button onclick="filterType('Entertainment')">Entertainment</button>
                             <button onclick="filterType('Shopping')">Shopping</button>
                             <button onclick="filterType('Other')">Other</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="sort">
+                    <h3>Sort</h3>
+                    <div class="options">
+                        <div class="sort-id">
+                            <p>Reimbursement Id</p>
+                            <button onclick="sort('asc-id')">Id<i class="fa-solid fa-arrow-down-1-9"></i></button>
+                            <button onclick="sort('desc-id')">Id<i class="fa-solid fa-arrow-down-9-1"></i></button>
+                        </div>
+                        <div class="sort-date">
+                            <p>Reimbursement Date</p>
+                            <button onclick="sort('asc-date')">Date<i class="fa-solid fa-arrow-down-1-9"></i></button>
+                            <button onclick="sort('desc-date')">Date<i class="fa-solid fa-arrow-down-9-1"></i></button>
+                        </div>
+                        <div class="sort-amount">
+                            <p>Reimbursement Amount</p>
+                            <button onclick="sort('asc-amount')">Amount<i class="fa-solid fa-arrow-down-1-9"></i></button>
+                            <button onclick="sort('desc-amount')">Amount<i class="fa-solid fa-arrow-down-9-1"></i></button>
                         </div>
                     </div>
                 </div>
@@ -91,132 +111,8 @@
                 table.innerHTML = "No Reimbursements";
                 table.classList.add("nothing");
             }else{
-                const table = document.getElementById('table');
-                const titleRow = document.createElement('tr');
-                titleRow.classList.add("categories")
-                const column1 = document.createElement("th");
-                column1.innerHTML = "Id";
-                titleRow.appendChild(column1);
-                const column2 = document.createElement("th");
-                column2.innerHTML = "Amount";
-                titleRow.appendChild(column2);
-                const column3 = document.createElement("th");
-                column3.innerHTML = "Description";
-                titleRow.appendChild(column3);
-                const column4 = document.createElement("th");
-                column4.innerHTML = "Type";
-                titleRow.appendChild(column4);
-                const column5 = document.createElement("th");
-                column5.innerHTML = "Status";
-                titleRow.appendChild(column5);
-                const column6 = document.createElement("th");
-                column6.innerHTML = "Author";
-                titleRow.appendChild(column6);
-                const column7 = document.createElement("th");
-                column7.innerHTML = "Submitted";
-                titleRow.appendChild(column7);
-                const column8 = document.createElement("th");
-                column8.innerHTML = "Resolved";
-                titleRow.appendChild(column8);
-                table.appendChild(titleRow);
-                
-                reimbursements.forEach(function (reimbursement) {
-                    const reimbursementRow = document.createElement("tr");
-                    // column 1
-                    const column1 = document.createElement("th");
-                    column1.innerHTML = reimbursement.id;
-                    reimbursementRow.appendChild(column1);
-                    // column 2
-                    const column2 = document.createElement("th");
-                    column2.innerHTML = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
-                    reimbursementRow.appendChild(column2);
-                    // column 3
-                    const column3 = document.createElement("th");
-                    column3.style.width="30%";
-                    column3.innerHTML = reimbursement.description;
-                    reimbursementRow.appendChild(column3);
-                    // column 4
-                    const column4 = document.createElement("th");
-                    let type = reimbursement.reimbursementType;
-                    var typeText;
-                    if(type === 1){
-                        column4.innerHTML = "Lodging";
-                        typeText = "Lodging";
-                    }else if(type === 2){
-                        column4.innerHTML = "Food";
-                        typeText = "Food";
-                    }else if(type === 3){
-                        column4.innerHTML = "Travel";
-                        typeText = "Travel";
-                    }else if(type === 4){
-                        column4.innerHTML = "Entertainment";
-                        typeText = "Entertainment";
-                    }else if(type === 5){
-                        column4.innerHTML = "Shopping";
-                        typeText = "Shopping";
-                    }else if(type === 6){
-                        column4.innerHTML = "Other";
-                        typeText = "Other";
-                    }else{
-                        column4.innerHTML = "NULL";
-                        typeText = "NULL";
-                    }
-                    reimbursementRow.appendChild(column4);
 
-                    // column 5
-                    const column5 = document.createElement("th");
-                    let status = reimbursement.status;
-                    if(status === "PENDING"){
-                        column5.style.color = "#0077B6";
-                        column5.innerHTML = reimbursement.status;
-                    }else if(status === "DENIED"){
-                        column5.style.color = "red";
-                        column5.classList.add("status");
-                        let typeNum = reimbursement.reimbursementType;
-                        column5.innerHTML = reimbursement.status + ` 
-                        <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
-                    }else{
-                        column5.style.color = "green";
-                        column5.classList.add("status");
-                        column5.innerHTML = reimbursement.status + ` 
-                        <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
-                    }
-                    reimbursementRow.appendChild(column5);
-
-                    // column6
-                    const column6 = document.createElement("th");
-                    var date = new Date(reimbursement.submitted).toLocaleDateString("en-US");
-                    column6.innerHTML = date;
-                    reimbursementRow.appendChild(column6);
-                    
-
-                    // column7
-                    const column7 = document.createElement("th");
-                    let resolved = reimbursement.resolved;
-                    if(resolved === null){
-                        column7.innerHTML = '<i class="fa fa-clock-o"></i>'+ " wait";
-                    }else{
-                        var date = new Date(reimbursement.resolved).toLocaleDateString("en-US");
-                        column7.innerHTML = date;
-                    }
-                    reimbursementRow.appendChild(column7);
-
-                    // column8
-                    const column8 = document.createElement("th");
-                    let getStatus = reimbursement.status;
-                    if(status === "PENDING"){
-                        column8.innerHTML = `<button id="edit" onclick="editPage(${reimbursement.id})">Edit</button> <button id="delete" onclick="deleteReimbursementById(${reimbursement.id})">Delete</button>`;
-                        column8.classList.add("available");
-                    }else{
-                        column8.innerHTML = "<button>Edit</button> <button>Delete</button>";
-                        column8.classList.add("unavailable");
-                    }
-                    
-                    reimbursementRow.appendChild(column8);
-
-                    table.appendChild(reimbursementRow);
-                });
-
+                createTable(reimbursements);
             }
  
         }
@@ -227,6 +123,10 @@
         // Display the username on the nav bar
         const username = document.getElementById('username');
         username.innerHTML = info.username;
+        // role on nav menu
+        const userRole = document.getElementById('userRole');
+        userRole.textContent = info.role;
+        
         window.onload = getReimbursement(api_url, info.id);
 
         // delete feature
@@ -286,6 +186,56 @@
             
             filterMenu.style.display = 'none';
             dropdownIcon.style.transform = "rotate(360deg)";
+
+            createTable(reimbursements);
+
+        }
+
+        // filter by type
+        async function filterType(type){
+            let response = await fetch(
+                "http://localhost:8080/api/reimbursements/filter/type",
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "type": type
+                    }
+                }
+            );
+            let json = await response.json();
+            let reimbursements = json;
+            // console.log(reimbursements);
+
+            filterMenu.style.display = 'none';
+            dropdownIcon.style.transform = "rotate(360deg)";
+            createTable(reimbursements);
+        }
+
+                // by status
+                async function sort(sortBy){
+            let response = await fetch(
+                "http://localhost:8080/api/reimbursements/sort",
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "sortBy": sortBy
+                    }
+                }
+            );
+            let json = await response.json();
+            let reimbursements = json;
+            // console.log(reimbursements);
+            
+            filterMenu.style.display = 'none';
+            dropdownIcon.style.transform = "rotate(360deg)";
+
+            createTable(reimbursements);
+            
+        }
+        
+        function createTable(reimbursements){
             // delete old table
             const table = document.getElementById('table');
             table.innerHTML = "";
@@ -414,147 +364,6 @@
 
                     table.appendChild(reimbursementRow);
                 });
-
-        }
-
-        // filter by type
-        async function filterType(type){
-            let response = await fetch(
-                "http://localhost:8080/api/reimbursements/filter/type",
-                {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "type": type
-                    }
-                }
-            );
-            let json = await response.json();
-            let reimbursements = json;
-            // console.log(reimbursements);
-
-            filterMenu.style.display = 'none';
-            dropdownIcon.style.transform = "rotate(360deg)";
-            
-            // delete old table
-            const table = document.getElementById('table');
-            table.innerHTML = "";
-
-            // add new table
-            const titleRow = document.createElement('tr');
-            titleRow.classList.add("categories")
-            const column1 = document.createElement("th");
-            column1.innerHTML = "Id";
-            titleRow.appendChild(column1);
-            const column2 = document.createElement("th");
-            column2.innerHTML = "Amount";
-            titleRow.appendChild(column2);
-            const column3 = document.createElement("th");
-            column3.innerHTML = "Description";
-            titleRow.appendChild(column3);
-            const column4 = document.createElement("th");
-            column4.innerHTML = "Type";
-            titleRow.appendChild(column4);
-            const column5 = document.createElement("th");
-            column5.innerHTML = "Status";
-            titleRow.appendChild(column5);
-            const column6 = document.createElement("th");
-            column6.innerHTML = "Author";
-            titleRow.appendChild(column6);
-            const column7 = document.createElement("th");
-            column7.innerHTML = "Submitted";
-            titleRow.appendChild(column7);
-            const column8 = document.createElement("th");
-            column8.innerHTML = "Resolved";
-            titleRow.appendChild(column8);
-            table.appendChild(titleRow);
-
-            reimbursements.forEach(function (reimbursement) {
-                const reimbursementRow = document.createElement("tr");
-                // column 1
-                const column1 = document.createElement("th");
-                column1.innerHTML = reimbursement.id;
-                reimbursementRow.appendChild(column1);
-                // column 2
-                const column2 = document.createElement("th");
-                column2.innerHTML = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
-                reimbursementRow.appendChild(column2);
-                // column 3
-                const column3 = document.createElement("th");
-                column3.style.width="30%";
-                column3.innerHTML = reimbursement.description;
-                reimbursementRow.appendChild(column3);
-                // column 4
-                const column4 = document.createElement("th");
-                let type = reimbursement.reimbursementType;
-                var typeText;
-                    if(type === 1){
-                        column4.innerHTML = "Lodging";
-                        typeText = "Lodging";
-                    }else if(type === 2){
-                        column4.innerHTML = "Food";
-                        typeText = "Food";
-                    }else if(type === 3){
-                        column4.innerHTML = "Travel";
-                        typeText = "Travel";
-                    }else if(type === 4){
-                        column4.innerHTML = "Entertainment";
-                        typeText = "Entertainment";
-                    }else if(type === 5){
-                        column4.innerHTML = "Shopping";
-                        typeText = "Shopping";
-                    }else if(type === 6){
-                        column4.innerHTML = "Other";
-                        typeText = "Other";
-                    }else{
-                        column4.innerHTML = "NULL";
-                        typeText = "NULL";
-                    }
-                reimbursementRow.appendChild(column4);
-
-                // column 5
-                const column5 = document.createElement("th");
-                let status = reimbursement.status;
-                if(status === "PENDING"){
-                    column5.style.color = "#0077B6";
-                    column5.innerHTML = reimbursement.status;
-                }else if(status === "DENIED"){
-                    column5.style.color = "red";
-                    column5.classList.add("status");
-                    column5.innerHTML = reimbursement.status + ` 
-                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
-                }else{
-                    column5.style.color = "green";
-                    column5.classList.add("status");
-                    column5.innerHTML = reimbursement.status + ` 
-                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
-                }
-                reimbursementRow.appendChild(column5);
-
-                // column6
-                const column6 = document.createElement("th");
-                column6.innerHTML = reimbursement.author.username;
-                reimbursementRow.appendChild(column6);
-                
-                // column7
-                const column7 = document.createElement("th");
-                var date = new Date(reimbursement.submitted).toLocaleDateString("en-US");
-                column7.innerHTML = date;
-                reimbursementRow.appendChild(column7);
-
-                // column8
-                const column8 = document.createElement("th");
-                let resolved = reimbursement.resolved;
-                if(resolved === null){
-                    column8.innerHTML = `<button id="process" onclick="processPage(${reimbursement.id})">Process</button>`;
-                }else{
-                    var date = new Date(reimbursement.resolved).toLocaleDateString("en-US");
-                    column8.innerHTML = date;
-                }
-                reimbursementRow.appendChild(column8);
-
-                table.appendChild(reimbursementRow);
-            });
         }
 
     </script>

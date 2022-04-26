@@ -552,12 +552,21 @@ nav span:hover {
   left: 2rem;
   top: 12rem;
   display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   background-color: white;
   padding: 1rem;
   border-radius: 6px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
           box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  width: 40%;
+  width: 45%;
+}
+
+.main-page .sort-filter-dropdown .filter h3 {
+  font-size: 1.4rem;
+  color: black;
 }
 
 .main-page .sort-filter-dropdown .filter .options {
@@ -575,9 +584,13 @@ nav span:hover {
 }
 
 .main-page .sort-filter-dropdown .filter .options h3 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   text-decoration: underline;
   margin-left: 1rem;
+}
+
+.main-page .sort-filter-dropdown .filter .options div {
+  background-color: whitesmoke;
 }
 
 .main-page .sort-filter-dropdown .filter .options div p {
@@ -596,6 +609,53 @@ nav span:hover {
 }
 
 .main-page .sort-filter-dropdown .filter .options div button:hover {
+  background-color: #022f6a;
+}
+
+.main-page .sort-filter-dropdown .sort h3 {
+  font-size: 1.4rem;
+  color: black;
+}
+
+.main-page .sort-filter-dropdown .sort .options {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.main-page .sort-filter-dropdown .sort .options div {
+  margin: .5rem 0;
+  background-color: whitesmoke;
+  padding: .5rem;
+}
+
+.main-page .sort-filter-dropdown .sort .options div p {
+  text-decoration: underline;
+}
+
+.main-page .sort-filter-dropdown .sort .options div button {
+  border: none;
+  cursor: pointer;
+  background-color: #023e8a;
+  border-radius: 5px;
+  padding: .3rem .6rem;
+  color: white;
+  font-size: .8rem;
+}
+
+.main-page .sort-filter-dropdown .sort .options div button:hover {
   background-color: #022f6a;
 }
 

@@ -162,11 +162,10 @@ public class ReimbursementService {
      * This gets all reimbursements in the database
      * @return A linkedList of all reimbursements.
      */
-    public List<Reimbursement> getAllReimbursements(){
+    public List<Reimbursement> getAllReimbursements() {
         List<Reimbursement> AllReimbursements = reimbDAO.getAllReimbursements();
         return AllReimbursements;
     }
-
     public void update(Reimbursement model){
         reimbDAO.update(model);
     }

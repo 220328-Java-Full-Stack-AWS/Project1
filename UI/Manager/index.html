@@ -26,27 +26,27 @@
             <span><p id="username"></p><i class="fa fa-user-circle" aria-hidden="true" onclick="toggleNavbar()"></i></span>
         </div>
         <nav>
-            <p>Finance Manager</p>
+            <p id="userRole"></p>
             <span onclick="location.href='../Settings/index.html'">Settings</span>
             <span id="logout">Logout</span>
         </nav>
         <section class="main-page">
             <h2>All Reimbursements</h2>
             <div class="menu">
-                <button id="sort-filter">Filter<i id="dropIcon" class="fa-solid fa-sort-down"></i></button>
+                <button id="sort-filter">Filter & Sort<i id="dropIcon" class="fa-solid fa-sort-down"></i></button>
             </div>
             <div class="sort-filter-dropdown">
                 <div class="filter">
-                    <h3><i class="fa-solid fa-filters"></i>Filter</h3>
+                    <h3>Filter</h3>
                     <div class="options">
                         <div class="filter-status">
-                            <p>Filter By Status</p>
+                            <p>Status</p>
                             <button onclick="filterStatus('pending')">Pending</button>
                             <button onclick="filterStatus('approved')">Approved</button>
                             <button onclick="filterStatus('denied')">Denied</button>
                         </div>
                         <div class="filter-type">
-                            <p>Filter By Type</p>
+                            <p>Reimbursement Type</p>
                             <button onclick="filterType('Lodging')">Lodging</button>
                             <button onclick="filterType('Food')">Food</button>
                             <button onclick="filterType('Travel')">Travel</button>
@@ -55,8 +55,28 @@
                             <button onclick="filterType('Other')">Other</button>
                         </div>
                         <div class="filter-resolver">
-                            <p>Processed by you</p>
+                            <p>Resolver</p>
                             <button onclick="GetReimbursementsByResolver()">By me</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="sort">
+                    <h3>Sort</h3>
+                    <div class="options">
+                        <div class="sort-id">
+                            <p>Reimbursement Id</p>
+                            <button onclick="sort('asc-id')">Id<i class="fa-solid fa-arrow-down-1-9"></i></button>
+                            <button onclick="sort('desc-id')">Id<i class="fa-solid fa-arrow-down-9-1"></i></button>
+                        </div>
+                        <div class="sort-date">
+                            <p>Reimbursement Date</p>
+                            <button onclick="sort('asc-date')">Date<i class="fa-solid fa-arrow-down-1-9"></i></button>
+                            <button onclick="sort('desc-date')">Date<i class="fa-solid fa-arrow-down-9-1"></i></button>
+                        </div>
+                        <div class="sort-amount">
+                            <p>Reimbursement Amount</p>
+                            <button onclick="sort('asc-amount')">Amount<i class="fa-solid fa-arrow-down-1-9"></i></button>
+                            <button onclick="sort('desc-amount')">Amount<i class="fa-solid fa-arrow-down-9-1"></i></button>
                         </div>
                     </div>
                 </div>
@@ -73,10 +93,9 @@
     </footer>    
     <!-- Backend JavaScript -->
     <script>
-        const api_url = "http://localhost:8080/api/reimbursements/finance_manager";
 
-        async function getReimbursements(url){
-            let response = await fetch(url,
+        async function getReimbursements(){
+            let response = await fetch("http://localhost:8080/api/reimbursements/finance_manager",
             {
                 method: "GET",
                 headers: {
@@ -87,7 +106,163 @@
             let json = await response.json();
             let reimbursements = json;
             // console.log(reimbursements);
+            createTable(reimbursements);
+
+        }
+
+        // Retrieve the object from storage
+        var retrievedObject = localStorage.getItem('user');
+        var info =  JSON.parse(retrievedObject);
+        // username on navbar
+        const username = document.getElementById('username');
+        username.innerHTML = info.username;
+        // role on nav menu
+        const userRole = document.getElementById('userRole');
+        userRole.textContent = info.role;
+        
+        window.onload = getReimbursements();
+
+        // send manager to process page
+        function processPage(id){
+            localStorage.setItem('reimbursement_id', id);
+            window.location.href = "../Process/index.html";
+        }
+    </script>
+    <!-- Front End JavaScript -->
+    <script>
+        // Notifier Package
+        var notifier = new AWN();
+        function toggleNavbar() {
+            const nav = document.querySelector('nav');
+            if(getComputedStyle(nav).display === "none"){
+                nav.style.display = "flex";
+            }else{
+                nav.style.display = "none";
+            }
+        }
+
+        // logout
+        const logoutBtn = document.getElementById('logout');
+        logoutBtn.addEventListener('click', ()=>{
+            localStorage.removeItem('user');
+            window.location.href = "../index.html";
+        });
+
+        // filter and sort javascript 
+        const filterMenu = document.querySelector(".sort-filter-dropdown");
+        const dropdownIcon = document.getElementById("dropIcon");
+        filterDropdownBtn = document.getElementById('sort-filter');
+        filterDropdownBtn.addEventListener('click', ()=>{
+            if(getComputedStyle(filterMenu).display === 'none'){
+                filterMenu.style.display = 'flex';
+                dropdownIcon.style.transform = "rotate(180deg)";
+            }else{
+                filterMenu.style.display = 'none';
+                dropdownIcon.style.transform = "rotate(360deg)";
+            }
+        });
+
+        // by status
+        async function filterStatus(status){
+            let response = await fetch(
+                "http://localhost:8080/api/reimbursements/filter/status",
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "status": status
+                    }
+                }
+            );
+            let json = await response.json();
+            let reimbursements = json;
+            // console.log(reimbursements);
+            
+            filterMenu.style.display = 'none';
+            dropdownIcon.style.transform = "rotate(360deg)";
+            
+            createTable(reimbursements);
+        }
+
+        // filter by type
+        async function filterType(type){
+            let response = await fetch(
+                "http://localhost:8080/api/reimbursements/filter/type",
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "type": type
+                    }
+                }
+            );
+            let json = await response.json();
+            let reimbursements = json;
+            // console.log(reimbursements);
+
+            filterMenu.style.display = 'none';
+            dropdownIcon.style.transform = "rotate(360deg)";
+
+            createTable(reimbursements);
+        }
+
+        // filter by resolver
+        async function filterResolver(email){
+            let response = await fetch(
+                "http://localhost:8080/api/reimbursements/filter/resolver",
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "email": email
+                    }
+                }
+            );
+            let json = await response.json();
+            let reimbursements = json;
+            // console.log(reimbursements);
+
+            filterMenu.style.display = 'none';
+            dropdownIcon.style.transform = "rotate(360deg)";
+ 
+            createTable(reimbursements);
+        }
+
+        function GetReimbursementsByResolver(){
+            // Retrieve the object from storage
+            var resolver = localStorage.getItem('user');
+            var data =  JSON.parse(resolver);
+            filterResolver(data.email);
+        }
+
+        // by status
+        async function sort(sortBy){
+            let response = await fetch(
+                "http://localhost:8080/api/reimbursements/sort",
+                {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "sortBy": sortBy
+                    }
+                }
+            );
+            let json = await response.json();
+            let reimbursements = json;
+            // console.log(reimbursements);
+            
+            filterMenu.style.display = 'none';
+            dropdownIcon.style.transform = "rotate(360deg)";
+
+            createTable(reimbursements);
+        }      
+        
+        function createTable(reimbursements){
+            
+            // delete old table
             const table = document.getElementById('table');
+            table.innerHTML = "";
+
             const titleRow = document.createElement('tr');
             titleRow.classList.add("categories")
             const column1 = document.createElement("th");
@@ -201,478 +376,6 @@
 
                 table.appendChild(reimbursementRow);
             });
-        }
-        // Retrieve the object from storage
-        var retrievedObject = localStorage.getItem('user');
-        var info =  JSON.parse(retrievedObject);
-        const username = document.getElementById('username');
-        username.innerHTML = info.username;
-        
-        window.onload = getReimbursements(api_url);
-
-        function processPage(id){
-            localStorage.setItem('reimbursement_id', id);
-            window.location.href = "../Process/index.html";
-        }
-    </script>
-    <!-- Front End JavaScript -->
-    <script>
-        // Notifier Package
-        var notifier = new AWN();
-        function toggleNavbar() {
-            const nav = document.querySelector('nav');
-            if(getComputedStyle(nav).display === "none"){
-                nav.style.display = "flex";
-            }else{
-                nav.style.display = "none";
-            }
-        }
-
-        // logout
-        const logoutBtn = document.getElementById('logout');
-        logoutBtn.addEventListener('click', ()=>{
-            localStorage.removeItem('user');
-            window.location.href = "../index.html";
-        });
-
-        // filter and sort javascript 
-        const filterMenu = document.querySelector(".sort-filter-dropdown");
-        const dropdownIcon = document.getElementById("dropIcon");
-        filterDropdownBtn = document.getElementById('sort-filter');
-        filterDropdownBtn.addEventListener('click', ()=>{
-            if(getComputedStyle(filterMenu).display === 'none'){
-                filterMenu.style.display = 'flex';
-                dropdownIcon.style.transform = "rotate(180deg)";
-            }else{
-                filterMenu.style.display = 'none';
-                dropdownIcon.style.transform = "rotate(360deg)";
-            }
-        });
-
-        // by status
-        async function filterStatus(status){
-            let response = await fetch(
-                "http://localhost:8080/api/reimbursements/filter/status",
-                {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "status": status
-                    }
-                }
-            );
-            let json = await response.json();
-            let reimbursements = json;
-            // console.log(reimbursements);
-            
-            filterMenu.style.display = 'none';
-            dropdownIcon.style.transform = "rotate(360deg)";
-
-            // delete old table
-            const table = document.getElementById('table');
-            table.innerHTML = "";
-
-            // add new table
-            const titleRow = document.createElement('tr');
-            titleRow.classList.add("categories")
-            const column1 = document.createElement("th");
-            column1.innerHTML = "Id";
-            titleRow.appendChild(column1);
-            const column2 = document.createElement("th");
-            column2.innerHTML = "Amount";
-            titleRow.appendChild(column2);
-            const column3 = document.createElement("th");
-            column3.innerHTML = "Description";
-            titleRow.appendChild(column3);
-            const column4 = document.createElement("th");
-            column4.innerHTML = "Type";
-            titleRow.appendChild(column4);
-            const column5 = document.createElement("th");
-            column5.innerHTML = "Status";
-            titleRow.appendChild(column5);
-            const column6 = document.createElement("th");
-            column6.innerHTML = "Author";
-            titleRow.appendChild(column6);
-            const column7 = document.createElement("th");
-            column7.innerHTML = "Submitted";
-            titleRow.appendChild(column7);
-            const column8 = document.createElement("th");
-            column8.innerHTML = "Resolved";
-            titleRow.appendChild(column8);
-            table.appendChild(titleRow);
-
-            reimbursements.forEach(function (reimbursement) {
-                const reimbursementRow = document.createElement("tr");
-                // column 1
-                const column1 = document.createElement("th");
-                column1.innerHTML = reimbursement.id;
-                reimbursementRow.appendChild(column1);
-                // column 2
-                const column2 = document.createElement("th");
-                column2.innerHTML = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
-                reimbursementRow.appendChild(column2);
-                // column 3
-                const column3 = document.createElement("th");
-                column3.style.width="30%";
-                column3.innerHTML = reimbursement.description;
-                reimbursementRow.appendChild(column3);
-                // column 4
-                const column4 = document.createElement("th");
-                let type = reimbursement.reimbursementType;
-                var typeText;
-                    if(type === 1){
-                        column4.innerHTML = "Lodging";
-                        typeText = "Lodging";
-                    }else if(type === 2){
-                        column4.innerHTML = "Food";
-                        typeText = "Food";
-                    }else if(type === 3){
-                        column4.innerHTML = "Travel";
-                        typeText = "Travel";
-                    }else if(type === 4){
-                        column4.innerHTML = "Entertainment";
-                        typeText = "Entertainment";
-                    }else if(type === 5){
-                        column4.innerHTML = "Shopping";
-                        typeText = "Shopping";
-                    }else if(type === 6){
-                        column4.innerHTML = "Other";
-                        typeText = "Other";
-                    }else{
-                        column4.innerHTML = "NULL";
-                        typeText = "NULL";
-                    }
-                reimbursementRow.appendChild(column4);
-
-                // column 5
-                const column5 = document.createElement("th");
-                let status = reimbursement.status;
-                if(status === "PENDING"){
-                    column5.style.color = "#0077B6";
-                    column5.innerHTML = reimbursement.status;
-                }else if(status === "DENIED"){
-                    column5.style.color = "red";
-                    column5.classList.add("status");
-                    column5.innerHTML = reimbursement.status + ` 
-                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
-                }else{
-                    column5.style.color = "green";
-                    column5.classList.add("status");
-                    column5.innerHTML = reimbursement.status + ` 
-                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
-                }
-                reimbursementRow.appendChild(column5);
-
-                // column6
-                const column6 = document.createElement("th");
-                column6.innerHTML = reimbursement.author.username;
-                reimbursementRow.appendChild(column6);
-                
-                // column7
-                const column7 = document.createElement("th");
-                var date = new Date(reimbursement.submitted).toLocaleDateString("en-US");
-                column7.innerHTML = date;
-                reimbursementRow.appendChild(column7);
-
-                // column8
-                const column8 = document.createElement("th");
-                let resolved = reimbursement.resolved;
-                if(resolved === null){
-                    column8.innerHTML = `<button id="process" onclick="processPage(${reimbursement.id})">Process</button>`;
-                }else{
-                    var date = new Date(reimbursement.resolved).toLocaleDateString("en-US");
-                    column8.innerHTML = date;
-                }
-                reimbursementRow.appendChild(column8);
-
-                table.appendChild(reimbursementRow);
-            });
-        }
-
-        // filter by type
-        async function filterType(type){
-            let response = await fetch(
-                "http://localhost:8080/api/reimbursements/filter/type",
-                {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "type": type
-                    }
-                }
-            );
-            let json = await response.json();
-            let reimbursements = json;
-            // console.log(reimbursements);
-
-            filterMenu.style.display = 'none';
-            dropdownIcon.style.transform = "rotate(360deg)";
-
-            // delete old table
-            const table = document.getElementById('table');
-            table.innerHTML = "";
-
-            // add new table
-            const titleRow = document.createElement('tr');
-            titleRow.classList.add("categories")
-            const column1 = document.createElement("th");
-            column1.innerHTML = "Id";
-            titleRow.appendChild(column1);
-            const column2 = document.createElement("th");
-            column2.innerHTML = "Amount";
-            titleRow.appendChild(column2);
-            const column3 = document.createElement("th");
-            column3.innerHTML = "Description";
-            titleRow.appendChild(column3);
-            const column4 = document.createElement("th");
-            column4.innerHTML = "Type";
-            titleRow.appendChild(column4);
-            const column5 = document.createElement("th");
-            column5.innerHTML = "Status";
-            titleRow.appendChild(column5);
-            const column6 = document.createElement("th");
-            column6.innerHTML = "Author";
-            titleRow.appendChild(column6);
-            const column7 = document.createElement("th");
-            column7.innerHTML = "Submitted";
-            titleRow.appendChild(column7);
-            const column8 = document.createElement("th");
-            column8.innerHTML = "Resolved";
-            titleRow.appendChild(column8);
-            table.appendChild(titleRow);
-
-            reimbursements.forEach(function (reimbursement) {
-                const reimbursementRow = document.createElement("tr");
-                // column 1
-                const column1 = document.createElement("th");
-                column1.innerHTML = reimbursement.id;
-                reimbursementRow.appendChild(column1);
-                // column 2
-                const column2 = document.createElement("th");
-                column2.innerHTML = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
-                reimbursementRow.appendChild(column2);
-                // column 3
-                const column3 = document.createElement("th");
-                column3.style.width="30%";
-                column3.innerHTML = reimbursement.description;
-                reimbursementRow.appendChild(column3);
-                // column 4
-                const column4 = document.createElement("th");
-                let type = reimbursement.reimbursementType;
-                var typeText;
-                    if(type === 1){
-                        column4.innerHTML = "Lodging";
-                        typeText = "Lodging";
-                    }else if(type === 2){
-                        column4.innerHTML = "Food";
-                        typeText = "Food";
-                    }else if(type === 3){
-                        column4.innerHTML = "Travel";
-                        typeText = "Travel";
-                    }else if(type === 4){
-                        column4.innerHTML = "Entertainment";
-                        typeText = "Entertainment";
-                    }else if(type === 5){
-                        column4.innerHTML = "Shopping";
-                        typeText = "Shopping";
-                    }else if(type === 6){
-                        column4.innerHTML = "Other";
-                        typeText = "Other";
-                    }else{
-                        column4.innerHTML = "NULL";
-                        typeText = "NULL";
-                    }
-                reimbursementRow.appendChild(column4);
-
-                // column 5
-                const column5 = document.createElement("th");
-                let status = reimbursement.status;
-                if(status === "PENDING"){
-                    column5.style.color = "#0077B6";
-                    column5.innerHTML = reimbursement.status;
-                }else if(status === "DENIED"){
-                    column5.style.color = "red";
-                    column5.classList.add("status");
-                    column5.innerHTML = reimbursement.status + ` 
-                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
-                }else{
-                    column5.style.color = "green";
-                    column5.classList.add("status");
-                    column5.innerHTML = reimbursement.status + ` 
-                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
-                }
-                reimbursementRow.appendChild(column5);
-
-                // column6
-                const column6 = document.createElement("th");
-                column6.innerHTML = reimbursement.author.username;
-                reimbursementRow.appendChild(column6);
-                
-                // column7
-                const column7 = document.createElement("th");
-                var date = new Date(reimbursement.submitted).toLocaleDateString("en-US");
-                column7.innerHTML = date;
-                reimbursementRow.appendChild(column7);
-
-                // column8
-                const column8 = document.createElement("th");
-                let resolved = reimbursement.resolved;
-                if(resolved === null){
-                    column8.innerHTML = `<button id="process" onclick="processPage(${reimbursement.id})">Process</button>`;
-                }else{
-                    var date = new Date(reimbursement.resolved).toLocaleDateString("en-US");
-                    column8.innerHTML = date;
-                }
-                reimbursementRow.appendChild(column8);
-
-                table.appendChild(reimbursementRow);
-            });
-        }
-
-        // filter by resolver
-        async function filterResolver(email){
-            let response = await fetch(
-                "http://localhost:8080/api/reimbursements/filter/resolver",
-                {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "email": email
-                    }
-                }
-            );
-            let json = await response.json();
-            let reimbursements = json;
-            // console.log(reimbursements);
-
-            filterMenu.style.display = 'none';
-            dropdownIcon.style.transform = "rotate(360deg)";
-            // delete old table
-            const table = document.getElementById('table');
-            table.innerHTML = "";
-
-            // add new table
-            const titleRow = document.createElement('tr');
-            titleRow.classList.add("categories")
-            const column1 = document.createElement("th");
-            column1.innerHTML = "Id";
-            titleRow.appendChild(column1);
-            const column2 = document.createElement("th");
-            column2.innerHTML = "Amount";
-            titleRow.appendChild(column2);
-            const column3 = document.createElement("th");
-            column3.innerHTML = "Description";
-            titleRow.appendChild(column3);
-            const column4 = document.createElement("th");
-            column4.innerHTML = "Type";
-            titleRow.appendChild(column4);
-            const column5 = document.createElement("th");
-            column5.innerHTML = "Status";
-            titleRow.appendChild(column5);
-            const column6 = document.createElement("th");
-            column6.innerHTML = "Author";
-            titleRow.appendChild(column6);
-            const column7 = document.createElement("th");
-            column7.innerHTML = "Submitted";
-            titleRow.appendChild(column7);
-            const column8 = document.createElement("th");
-            column8.innerHTML = "Resolved";
-            titleRow.appendChild(column8);
-            table.appendChild(titleRow);
-
-            reimbursements.forEach(function (reimbursement) {
-                const reimbursementRow = document.createElement("tr");
-                // column 1
-                const column1 = document.createElement("th");
-                column1.innerHTML = reimbursement.id;
-                reimbursementRow.appendChild(column1);
-                // column 2
-                const column2 = document.createElement("th");
-                column2.innerHTML = "$" + (Math.round(reimbursement.amount * 100) / 100).toFixed(2);
-                reimbursementRow.appendChild(column2);
-                // column 3
-                const column3 = document.createElement("th");
-                column3.style.width="30%";
-                column3.innerHTML = reimbursement.description;
-                reimbursementRow.appendChild(column3);
-                // column 4
-                const column4 = document.createElement("th");
-                let type = reimbursement.reimbursementType;
-                var typeText;
-                    if(type === 1){
-                        column4.innerHTML = "Lodging";
-                        typeText = "Lodging";
-                    }else if(type === 2){
-                        column4.innerHTML = "Food";
-                        typeText = "Food";
-                    }else if(type === 3){
-                        column4.innerHTML = "Travel";
-                        typeText = "Travel";
-                    }else if(type === 4){
-                        column4.innerHTML = "Entertainment";
-                        typeText = "Entertainment";
-                    }else if(type === 5){
-                        column4.innerHTML = "Shopping";
-                        typeText = "Shopping";
-                    }else if(type === 6){
-                        column4.innerHTML = "Other";
-                        typeText = "Other";
-                    }else{
-                        column4.innerHTML = "NULL";
-                        typeText = "NULL";
-                    }
-                reimbursementRow.appendChild(column4);
-
-                // column 5
-                const column5 = document.createElement("th");
-                let status = reimbursement.status;
-                if(status === "PENDING"){
-                    column5.style.color = "#0077B6";
-                    column5.innerHTML = reimbursement.status;
-                }else if(status === "DENIED"){
-                    column5.style.color = "red";
-                    column5.classList.add("status");
-                    column5.innerHTML = reimbursement.status + ` 
-                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
-                }else{
-                    column5.style.color = "green";
-                    column5.classList.add("status");
-                    column5.innerHTML = reimbursement.status + ` 
-                    <button onclick="notifier.modal('<h5>Receipt</h5><br><p>Id: ${reimbursement.id}</p><p>Amount: $${(Math.round(reimbursement.amount * 100) / 100).toFixed(2)}</p><p>Description: ${reimbursement.description}</p><p>Reimbursement type: ${typeText}</p><p>Submitted: ${new Date(reimbursement.submitted).toLocaleDateString("en-US")}</p><p>Resolved: ${new Date(reimbursement.resolved).toLocaleDateString("en-US")}</p><p>Status: ${reimbursement.status}</p><p>Finance Manager: ${reimbursement.resolver.username}</p><p>Overview: ${reimbursement.receipt}.</p><br><b>Click outside the modal window to close it.</b>')";>Receipt</button>`;
-                }
-                reimbursementRow.appendChild(column5);
-
-                // column6
-                const column6 = document.createElement("th");
-                column6.innerHTML = reimbursement.author.username;
-                reimbursementRow.appendChild(column6);
-                
-                // column7
-                const column7 = document.createElement("th");
-                var date = new Date(reimbursement.submitted).toLocaleDateString("en-US");
-                column7.innerHTML = date;
-                reimbursementRow.appendChild(column7);
-
-                // column8
-                const column8 = document.createElement("th");
-                let resolved = reimbursement.resolved;
-                if(resolved === null){
-                    column8.innerHTML = `<button id="process" onclick="processPage(${reimbursement.id})">Process</button>`;
-                }else{
-                    var date = new Date(reimbursement.resolved).toLocaleDateString("en-US");
-                    column8.innerHTML = date;
-                }
-                reimbursementRow.appendChild(column8);
-
-                table.appendChild(reimbursementRow);
-            });
-        }
-
-        function GetReimbursementsByResolver(){
-            // Retrieve the object from storage
-            var resolver = localStorage.getItem('user');
-            var data =  JSON.parse(resolver);
-            filterResolver(data.email);
         }
     </script>
     <!-- FontAwesome -->

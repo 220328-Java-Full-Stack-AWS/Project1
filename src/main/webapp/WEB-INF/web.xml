@@ -69,7 +69,7 @@
         <servlet-class>com.revature.servlets.FinanceReimbursementServlet</servlet-class>
     </servlet>
 
-<!--    filter servlets-->
+    <!--filter servlets-->
     <servlet-mapping>
         <servlet-name>filterByStatusServlet</servlet-name>
         <url-pattern>/reimbursements/filter/status</url-pattern>
@@ -97,6 +97,17 @@
     <servlet>
         <servlet-name>filterByResolverServlet</servlet-name>
         <servlet-class>com.revature.servlets.GetByResolverServlet</servlet-class>
+    </servlet>
+
+    <!--sort servlet-->
+    <servlet-mapping>
+        <servlet-name>sortServlet</servlet-name>
+        <url-pattern>/reimbursements/sort</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>sortServlet</servlet-name>
+        <servlet-class>com.revature.servlets.SortServlet</servlet-class>
     </servlet>
 
     <!--reimbursements for user-->
