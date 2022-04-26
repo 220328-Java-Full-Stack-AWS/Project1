@@ -729,7 +729,7 @@ nav span:hover {
 }
 
 .main-page #receipt {
-  color: black;
+  color: #353434;
 }
 
 .main-page #process {
@@ -745,6 +745,15 @@ nav span:hover {
 
 .main-page #process:hover {
   background-color: #023E8A;
+}
+
+#usernameHover {
+  color: #03045e;
+  cursor: pointer;
+}
+
+#usernameHover:hover {
+  text-decoration: underline;
 }
 
 .process-reimbursement-info {

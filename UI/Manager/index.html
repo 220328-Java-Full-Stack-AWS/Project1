@@ -179,7 +179,7 @@
 
                 // column6
                 const column6 = document.createElement("th");
-                column6.innerHTML = reimbursement.author.username;
+                column6.innerHTML = `<p id='usernameHover' onclick="notifier.modal('<h3>${reimbursement.author.username}</h3><br><p>Full name: ${reimbursement.author.first_name} ${reimbursement.author.last_name}</p><p>Email: ${reimbursement.author.email}</p><p>Phone: ${reimbursement.author.phone}</p><br><b>Click outside the box window to close it.</b>')">${reimbursement.author.username}</p>`;
                 reimbursementRow.appendChild(column6);
                 
                 // column7

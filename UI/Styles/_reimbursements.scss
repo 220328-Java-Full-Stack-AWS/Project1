@@ -298,7 +298,7 @@ nav {
     }
 
     #receipt {
-        color: black;
+        color: rgb(53, 52, 52);
     }
 
     // Manager system process button
@@ -315,5 +315,13 @@ nav {
         &:hover {
             background-color: #023E8A;
         }
+    }
+}
+
+#usernameHover{
+    color: #03045e;
+    cursor: pointer;
+    &:hover{
+        text-decoration: underline;
     }
 }
