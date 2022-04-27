@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
 public class AuthServiceTest {
 
 	private static User GENERIC_EMPLOYEE_1;
-	private static User GENERIC_FINANCE_MANAGER_1;
 	private static UserService userService;
 	private static AuthService authService;
 

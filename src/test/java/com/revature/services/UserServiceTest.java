@@ -1,7 +1,6 @@
 package com.revature.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -27,7 +26,7 @@ public class UserServiceTest {
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         userService = new UserService();
-        userDAO = mock(UserDAO.class);
+        userDAO = new UserDAO();
     }
 
     @Before
@@ -35,12 +34,44 @@ public class UserServiceTest {
         GENERIC_EMPLOYEE_1 = new User(1, "genericEmployee1", "genericPassword", "genericFirstname", "genericLastname", "genericEmail", "genericPhone", Role.EMPLOYEE);
     }
 
-//    @Test
-//    public void testGetByUsernamePassesWhenUsernameExists() {
-//        when(userDAO.getByUsername(anyString())).thenReturn(Optional.of(GENERIC_EMPLOYEE_1));
-//
-//        assertEquals(Optional.of(GENERIC_EMPLOYEE_1), userService.getByUsername(GENERIC_EMPLOYEE_1.getUsername()));
-//
-//        verify(userDAO).getByUsername(GENERIC_EMPLOYEE_1.getUsername());
-//    }
+    @Test
+    public void testGetByEmailPassesWhenEmailExists() {
+        User user = userService.getByEmail("leobarrientos02@gmail.com");
+        assertNotNull(user);
+    }
+
+    @Test
+    public void testGetByEmailPassesWhenEmailDoesNotExists() {
+        User user = userService.getByEmail("fake@email.com");
+        // will return a user with an id of 0 and all fields null
+        assertEquals(0, user.getId() );
+        assertEquals(null, user.getUsername());
+    }
+
+    @Test //deletes the test data from the database
+    public void testDelete(){
+        // get the test user
+        User test = userService.getByEmail(GENERIC_EMPLOYEE_1.getEmail());
+        // delete the test user by their id
+        userService.deleteUser(test.getId());
+    }
+
+    @Test
+    public void updateUserRole(){
+        // get test data
+        User test = userService.getByEmail(GENERIC_EMPLOYEE_1.getEmail());
+        // uses the id and the role wanted(1=Employee & 2=Finance)
+        userService.updateUserRole(test.getId(), 2);
+
+        User updatedUser = userService.getByEmail(GENERIC_EMPLOYEE_1.getEmail());
+        assertEquals(updatedUser.getRole(), Role.FINANCE_MANAGER);
+    }
+
+    @Test
+    public void updateUserTest(){
+        User test = userService.getByEmail(GENERIC_EMPLOYEE_1.getEmail());
+        test.setUsername("testPassed");
+        User updatedUser = userService.updateUser(test);
+        assertNotNull(updatedUser);
+    }
 }

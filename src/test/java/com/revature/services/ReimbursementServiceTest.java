@@ -21,51 +21,60 @@ public class ReimbursementServiceTest {
 
 	private static ReimbursementService reimbursementService;
 	private static ReimbursementDAO reimbursementDAO;
-	
-	private Reimbursement REIMBURSEMENT_TO_PROCESS;
-	private Reimbursement GENERIC_REIMBURSEMENT_1;
-	private Reimbursement GENERIC_REIMBURSEMENT_2;
-	private List<Reimbursement> GENERIC_ALL_PENDING_REIMBURSEMENTS;
-	private User GENERIC_EMPLOYEE_1;
-	private User GENERIC_FINANCE_MANAGER_1;
+	private static UserService userService;
+	public static User employee;
+	public static User finance;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		reimbursementService = new ReimbursementService();
-		reimbursementDAO = mock(ReimbursementDAO.class);
+		reimbursementDAO = new ReimbursementDAO();
+		userService = new UserService();
 	}
 	
 	@Before
 	public void setUp() throws Exception {
-		GENERIC_EMPLOYEE_1 = new User(1, "genericEmployee1", "genericPassword", "genericFirstname", "genericLastname", "genericEmail", "genericPhone", Role.EMPLOYEE);
-		GENERIC_EMPLOYEE_1 = new User(1, "genericEmployee1", "genericPassword", "genericFirstname", "genericLastname", "genericEmail", "genericPhone", Role.FINANCE_MANAGER);
-		
-		REIMBURSEMENT_TO_PROCESS = new Reimbursement(2, Status.PENDING, GENERIC_EMPLOYEE_1, null, 150.00);
-		
-		GENERIC_REIMBURSEMENT_1 = new Reimbursement(1, Status.PENDING, GENERIC_EMPLOYEE_1, null, 100.00);
-		GENERIC_REIMBURSEMENT_2 = new Reimbursement(2, Status.APPROVED, GENERIC_EMPLOYEE_1, GENERIC_FINANCE_MANAGER_1, 150.00);
-		
-		GENERIC_ALL_PENDING_REIMBURSEMENTS = new ArrayList<Reimbursement>();
-		GENERIC_ALL_PENDING_REIMBURSEMENTS.add(GENERIC_REIMBURSEMENT_1);
+		employee = userService.getById(1); // A employee
+		finance = userService.getById(27); // A finance manager
 	}
-	
-//	@Test
-//	public void testProcessPassesWhenUserIsFinanceManagerAndReimbursementExistsAndUpdateSuccessful() {
-//		when(reimbursementDAO.getById(anyInt())).thenReturn(Optional.of(GENERIC_REIMBURSEMENT_1));
-//		when(reimbursementDAO.update(any())).thenReturn(GENERIC_REIMBURSEMENT_2);
-//
-//		assertEquals(GENERIC_REIMBURSEMENT_2, reimbursementService.process(REIMBURSEMENT_TO_PROCESS, Status.APPROVED, GENERIC_FINANCE_MANAGER_1));
-//
-//		verify(reimbursementDAO).getById(REIMBURSEMENT_TO_PROCESS.getId());
-//		verify(reimbursementDAO).update(REIMBURSEMENT_TO_PROCESS);
-//	}
-	
+
 	@Test
-	public void testGetReimbursementByStatusPassesWhenReimbursementsAreSuccessfullyReturned() {
-		when(reimbursementDAO.getByStatus(any())).thenReturn(GENERIC_ALL_PENDING_REIMBURSEMENTS);
-		
-		assertEquals(GENERIC_ALL_PENDING_REIMBURSEMENTS, reimbursementService.getReimbursementsByStatus(Status.PENDING));
-		
-		verify(reimbursementDAO).getByStatus(Status.PENDING);
+	public void testGetAllReimbursements(){
+		List<Reimbursement> test = reimbursementService.getAllReimbursements();
+		assertNotNull(test);
 	}
+
+	@Test
+	public void testGetAllReimbursementsByStatus(){
+		List<Reimbursement> test = reimbursementService.getReimbursementsByStatus(Status.PENDING);
+		assertNotNull(test);
+	}
+
+	@Test
+	public void testGetByAuthor(){
+		List<Reimbursement> test = reimbursementService.getByAuthor(employee);
+		assertNotNull(test);
+	}
+
+	@Test
+	public void testNewRequestReimbursement(){
+		Reimbursement test = new Reimbursement(0, Status.PENDING, employee, null, 15.00);
+       	Reimbursement created = reimbursementService.NewRequest(test, "This is a test", 6);
+		assertNotNull(created);
+	}
+
+	@Test
+	public void unprocessedReimbursement(){
+		Reimbursement test = reimbursementService.getById(41);
+		Reimbursement processed = reimbursementService.process(test, Status.APPROVED, finance);
+		assertEquals(processed.getStatus(), Status.APPROVED);
+	}
+
+	@Test
+	public void testDeleteReimbursement(){
+		reimbursementService.deleteReimbursement(41); // the id of the test data
+		Reimbursement test = reimbursementService.getById(41);
+		assertEquals(test.getId(),0); // if 0 = does not exist;
+	}
+
 }
