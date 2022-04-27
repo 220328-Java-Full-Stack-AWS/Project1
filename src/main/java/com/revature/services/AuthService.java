@@ -24,8 +24,8 @@ public class AuthService {
 
     UserDAO dao = new UserDAO();
 
-    public User login(String username, String password) {
-        User user = dao.getUserByEmail(username);
+    public User login(String email, String password) {
+        User user = dao.getUserByEmail(email);
         User invalid = new User();
         if(user.getId() == 0) {
             System.out.println("Email not found");

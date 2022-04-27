@@ -1,6 +1,5 @@
 package com.revature.util;
 
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
