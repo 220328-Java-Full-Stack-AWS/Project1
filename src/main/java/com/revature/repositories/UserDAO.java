@@ -509,46 +509,13 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
-    public void updateUserRole2(User user){
-        String sql = "UPDATE ers_users SET ers_username = ?, user_first_name = ?, user_last_name = ?, ers_password = ?, user_email = ?, user_phone = ?, user_role_id = ? WHERE ers_users_id = ?";
-        try{
-            PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
-            pstmt.setString(1, user.getUsername());
-            pstmt.setString(2, user.getFirst_name());
-            pstmt.setString(3, user.getLast_name());
-            pstmt.setString(4, user.getPassword());
-            pstmt.setString(5, user.getEmail());
-            pstmt.setString(6, user.getPhone());
-            pstmt.setInt(7, 2);
-            pstmt.setInt(8, user.getId());
-            pstmt.executeUpdate();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Updates the userRole
-     * @param user
-     */
-    public void updateUserRole(User user){
-        String sql = "UPDATE ers_users SET user_role_id = 2 WHERE id = ?";
+    
+    public void updateUserRole2(int id, int role){
+        String sql = "UPDATE ers_users SET user_role_id = ? WHERE ers_users_id = ?";
         try {
             PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
-            pstmt.setInt(1, user.getId());
-
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void updateUserRole2(int id){
-        String sql = "UPDATE ers_users SET user_role_id = 2 WHERE ers_users_id = ?";
-        try {
-            PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, role);
+            pstmt.setInt(2, id);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {

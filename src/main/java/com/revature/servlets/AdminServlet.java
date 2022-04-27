@@ -81,7 +81,8 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getHeader("id"));
-        service.updateUserRole(id);
+        int role = Integer.parseInt(req.getHeader("roleId"));
+        service.updateUserRole(id, role);
         resp.setStatus(201); //status code 201: created says that we have successfully persisted this object
     }
 }

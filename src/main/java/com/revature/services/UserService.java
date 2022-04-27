@@ -61,8 +61,8 @@ public class UserService {
 		dao.update(user);
 	}
 
-	public void updateUserRole(int id){
-		dao.updateUserRole2(id);
+	public void updateUserRole(int id, int role){
+		dao.updateUserRole2(id, role);
 	}
 
 

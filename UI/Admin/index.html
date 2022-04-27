@@ -26,7 +26,7 @@
         </div>
         <nav>
             <p id="userRole"></p>
-            <span id="systemUsers" onclick="location.href='../Admin/index.html'">System's Users</span>
+            <span id="systemUsers" onclick="location.href='../Admin/index.html'">Admin</span>
             <span onclick="location.href='../Settings/index.html'">Settings</span>
             <span id="logout">Logout</span>
         </nav>
@@ -36,7 +36,7 @@
                 <a href="../Manager/index.html">Home /</a>
                 <span>Admin</span>
             </div>
-            <h2>All Users</h2>
+            <h2>All Employees</h2>
             <div class="menu">
                 <button id="sort-filter">Filter & Sort<i id="dropIcon" class="fa-solid fa-angle-down"></i></button>
             </div>
@@ -103,7 +103,7 @@
             createTable(users);
         }
         
-        window.onload = getAllUsers("asc-userId");
+        window.onload = getAllUsers('asc-userId');
         
         function createTable(users){      
             // delete old table
@@ -163,7 +163,7 @@
                 // column7
                 const column7 = document.createElement("th");
                 if(user.role === 'EMPLOYEE'){
-                    column7.innerHTML = `<div class="updateUserRole">${user.role}<button onclick='changeRole(${user.id})'>Change Role</button></div>`;
+                    column7.innerHTML = `<div class="updateUserRole">${user.role}<button onclick='changeRole(${user.id},${2})'>Change Role</button></div>`;
                 }else if(user.role === 'FINANCE_MANAGER'){
                     column7.innerHTML = user.role;
                 }else{
@@ -176,13 +176,14 @@
         }
 
         // update account start
-        async function updateAccount(id){
+        async function updateAccount(id, roleId){
             let response = await fetch("http://localhost:8080/api/admin",
                 {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
-                        "id": id
+                        "id": id,
+                        "roleId": roleId,
                     }
                 }
             );
@@ -194,8 +195,8 @@
             return response;
         }
 
-        function changeRole(id){
-            updateAccount(id);
+        function changeRole(id, roleId){
+            updateAccount(id, roleId);
             setTimeout(function() { window.location.reload(); }, 3000); // reloads page, ajax would be better
         }
     </script>
