@@ -34,7 +34,7 @@
             
             <h2>All Reimbursements</h2>
             <div class="menu">
-                <button id="sort-filter">Filter & Sort<i id="dropIcon" class="fa-solid fa-sort-down"></i></button>
+                <button id="sort-filter">Filter & Sort<i id="dropIcon" class="fa-solid fa-angle-down"></i></button>
                 <button id="addReimbursement" onclick="location.href = '../AddReimbursement/index.html'" ><i class="fa-solid fa-plus"></i>Add Reimbursement</button>
             </div>
             <div class="sort-filter-dropdown">
@@ -238,6 +238,7 @@
         function createTable(reimbursements){
             // delete old table
             const table = document.getElementById('table');
+            table.classList.remove("nothing");
             table.innerHTML = "";
 
             // add new table

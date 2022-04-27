@@ -27,13 +27,14 @@
         </div>
         <nav>
             <p id="userRole"></p>
+            <span onclick="location.href='../Admin/index.html'">System Users</span>
             <span onclick="location.href='../Settings/index.html'">Settings</span>
             <span id="logout">Logout</span>
         </nav>
         <section class="main-page">
             <h2>All Reimbursements</h2>
             <div class="menu">
-                <button id="sort-filter">Filter & Sort<i id="dropIcon" class="fa-solid fa-sort-down"></i></button>
+                <button id="sort-filter">Filter & Sort<i id="dropIcon" class="fa-solid fa-angle-down"></i></button>
             </div>
             <div class="sort-filter-dropdown">
                 <div class="filter">
@@ -224,8 +225,13 @@
 
             filterMenu.style.display = 'none';
             dropdownIcon.style.transform = "rotate(360deg)";
- 
-            createTable(reimbursements);
+
+            if(reimbursements.length === 0 ){
+                table.innerHTML = "No Reimbursements";
+                table.classList.add("nothing");
+            }else{
+                createTable(reimbursements);
+            }
         }
 
         function GetReimbursementsByResolver(){
@@ -258,9 +264,9 @@
         }      
         
         function createTable(reimbursements){
-            
             // delete old table
             const table = document.getElementById('table');
+            table.classList.remove("nothing");
             table.innerHTML = "";
 
             const titleRow = document.createElement('tr');

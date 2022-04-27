@@ -59,7 +59,7 @@ public class SortServlet extends HttpServlet {
             String json = mapper.writeValueAsString(AllReimbursements);
             resp.getWriter().print(json);
             resp.setStatus(200);
-        }else{
+        } else{
             resp.setStatus(400);
         }
     }

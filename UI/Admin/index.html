@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Reimbursement System | Settings</title>
+    <!-- notification package-->
+    <script src="../scripts/index.js"></script> 
+    <!-- description -->
+    <meta name="description" content="The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL.">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../assets/iconmonstr-banknote-15-240.png" type="image/x-icon">
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" href="../Styles/Style.css">
+</head>
+<body>
+    <div class="main">
+        <div class="main-header">
+            <h2>Employee Reimbursement System</h2>
+            <span><p id="username"></p><i class="fa fa-user-circle" aria-hidden="true" onclick="toggleNavbar()"></i></span>
+        </div>
+        <nav>
+            <p id="userRole"></p>
+            <span id="systemUsers" onclick="location.href='../Admin/index.html'">System's Users</span>
+            <span onclick="location.href='../Settings/index.html'">Settings</span>
+            <span id="logout">Logout</span>
+        </nav>
+
+        <section class="admin">
+            <div class="breadcrumb">
+                <a href="../Manager/index.html">Home /</a>
+                <span>Admin</span>
+            </div>
+            <h2>All Users</h2>
+            <div class="menu">
+                <button id="sort-filter">Filter & Sort<i id="dropIcon" class="fa-solid fa-angle-down"></i></button>
+            </div>
+            <div class="sort-filter-dropdown">
+                <div class="filter">
+                    <h3>Filter</h3>
+                    <div class="options">
+                        <div class="filter-status">
+                            <p>User Type</p>
+                            <button onclick="getAllUsers('filter-financeManager')">Finance Manager</button>
+                            <button onclick="getAllUsers('filter-employee')">Employee</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="sort">
+                    <h3>Sort</h3>
+                    <div class="options">
+                        <div class="sort-id">
+                            <p>Id</p>
+                            <button onclick="getAllUsers('asc-userId')">Id<i class="fa-solid fa-arrow-down-1-9"></i></button>
+                            <button onclick="getAllUsers('desc-userId')">Id<i class="fa-solid fa-arrow-down-9-1"></i></button>
+                        </div>
+                        <div class="sort-name">
+                            <p>First Name</p>
+                            <button onclick="getAllUsers('asc-firstname')">Name<i class="fa-solid fa-arrow-down-a-z"></i></button>
+                            <button onclick="getAllUsers('desc-firstname')">Name<i class="fa-solid fa-arrow-down-z-a"></i></button>
+                        </div>
+                        <div class="sort-name">
+                            <p>Last Name</p>
+                            <button onclick="getAllUsers('asc-lastname')">Name<i class="fa-solid fa-arrow-down-a-z"></i></button>
+                            <button onclick="getAllUsers('desc-lastname')">Name<i class="fa-solid fa-arrow-down-z-a"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table id="table">
+            </table>
+        </section>
+    </div>
+
+    <footer>
+        <h2>ERSystems</h2>
+        <span class="copyright">Copyright &copy; <script>document.write(new Date().getFullYear())</script>, ERSystems Inc.</span>
+    </footer>
+    
+    <!-- BackEnd JavaScript -->
+    <script>  
+        async function getAllUsers(sortOrFilter){
+            let response = await fetch("http://localhost:8080/api/admin",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "mode": sortOrFilter
+                }
+            }
+            );
+            let json = await response.json();
+            let users = json;
+
+            filterMenu.style.display = 'none';
+            dropdownIcon.style.transform = "rotate(360deg)";
+
+            createTable(users);
+        }
+        
+        window.onload = getAllUsers("asc-userId");
+        
+        function createTable(users){      
+            // delete old table
+            const table = document.getElementById('table');
+            table.innerHTML = "";
+
+            const titleRow = document.createElement('tr');
+            titleRow.classList.add("categories")
+            const column1 = document.createElement("th");
+            column1.innerHTML = "Id";
+            titleRow.appendChild(column1);
+            const column2 = document.createElement("th");
+            column2.innerHTML = "First Name";
+            titleRow.appendChild(column2);
+            const column3 = document.createElement("th");
+            column3.innerHTML = "Last Name";
+            titleRow.appendChild(column3);
+            const column4 = document.createElement("th");
+            column4.innerHTML = "Username";
+            titleRow.appendChild(column4);
+            const column5 = document.createElement("th");
+            column5.innerHTML = "Email";
+            titleRow.appendChild(column5);
+            const column6 = document.createElement("th");
+            column6.innerHTML = "Phone";
+            titleRow.appendChild(column6);
+            const column7 = document.createElement("th");
+            column7.innerHTML = "Role";
+            titleRow.appendChild(column7);
+            table.appendChild(titleRow);
+            users.forEach(function (user) {
+                const userRow = document.createElement("tr");
+                // column 1
+                const column1 = document.createElement("th");
+                column1.innerHTML = user.id;
+                userRow.appendChild(column1);
+                // column 2
+                const column2 = document.createElement("th");
+                column2.innerHTML = user.first_name;
+                userRow.appendChild(column2);
+                // column 3
+                const column3 = document.createElement("th");
+                column3.innerHTML = user.last_name;
+                userRow.appendChild(column3);
+                // column 4
+                const column4 = document.createElement("th");
+                column4.innerHTML = user.username;
+                userRow.appendChild(column4);
+                // column 5
+                const column5 = document.createElement("th");
+                column5.innerHTML = user.email;
+                userRow.appendChild(column5);
+                // column6
+                const column6 = document.createElement("th");
+                column6.innerHTML = user.phone;
+                userRow.appendChild(column6);
+                // column7
+                const column7 = document.createElement("th");
+                if(user.role === 'EMPLOYEE'){
+                    column7.innerHTML = `<div class="updateUserRole">${user.role}<button onclick='changeRole(${user.id})'>Change Role</button></div>`;
+                }else if(user.role === 'FINANCE_MANAGER'){
+                    column7.innerHTML = user.role;
+                }else{
+                    column7.innerHTML = "error";
+                }
+                userRow.appendChild(column7);
+
+                table.appendChild(userRow);
+            });
+        }
+
+        // update account start
+        async function updateAccount(id){
+            let response = await fetch("http://localhost:8080/api/admin",
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "id": id
+                    }
+                }
+            );
+            if(response.status !== 201){
+                notifier.alert("Error changing role");
+            }else{
+                notifier.success("User's role change successfully!");
+            }
+            return response;
+        }
+
+        function changeRole(id){
+            updateAccount(id);
+            setTimeout(function() { window.location.reload(); }, 3000); // reloads page, ajax would be better
+        }
+    </script>
+    <!-- FrontEnd JavaScript -->
+    <script>
+        // Notifier Package
+        var notifier = new AWN();
+       
+       // navbar toggle
+        function toggleNavbar() {
+            const nav = document.querySelector('nav');
+            if(getComputedStyle(nav).display === "none"){
+                nav.style.display = "flex";
+            }else{
+                nav.style.display = "none";
+            }
+        }
+
+        // logout
+        const logoutBtn = document.getElementById('logout');
+        logoutBtn.addEventListener('click', ()=>{
+            localStorage.removeItem('user');
+            window.location.href = "../index.html";
+        });
+        
+        // filter and sort javascript 
+        const filterMenu = document.querySelector(".sort-filter-dropdown");
+        const dropdownIcon = document.getElementById("dropIcon");
+        filterDropdownBtn = document.getElementById('sort-filter');
+        filterDropdownBtn.addEventListener('click', ()=>{
+            if(getComputedStyle(filterMenu).display === 'none'){
+                filterMenu.style.display = 'flex';
+                dropdownIcon.style.transform = "rotate(180deg)";
+            }else{
+                filterMenu.style.display = 'none';
+                dropdownIcon.style.transform = "rotate(360deg)";
+            }
+        });
+        
+        // Retrieve the user object from storage
+        var retrievedObject = localStorage.getItem('user');
+        var info =  JSON.parse(retrievedObject);
+        
+        // Display the username on the nav bar
+        const username = document.getElementById('username');
+        username.innerHTML = info.username;
+        // role on nav menu
+        const userRole = document.getElementById('userRole');
+        userRole.textContent = info.role;
+        // system users nav
+        const SystemUsersNav = document.getElementById('systemUsers');
+        if(info.role !== "FINANCE_MANAGER"){
+            SystemUsersNav.style.display = "none";
+        }
+
+    </script>
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -227,7 +227,238 @@ public class UserDAO {
 
     public List<User> getAllUsers(){
         List<User> AllUsers = new LinkedList<>();
-        String sql = "SELECT * FROM ers_users";
+        String sql = "SELECT * FROM ers_users ORDER BY ers_users_id ASC";
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("ers_users_id"));
+                user.setUsername(rs.getString("ers_username"));
+                user.setPassword(rs.getString("ers_password"));
+                user.setFirst_name(rs.getString("user_first_name"));
+                user.setLast_name(rs.getString("user_last_name"));
+                user.setEmail(rs.getString("user_email"));
+                user.setPhone(rs.getString("user_phone"));
+                int roleId = rs.getInt("user_role_id");
+                if(roleId == 1){
+                    user.setRole(Role.EMPLOYEE);
+                }else if (roleId == 2){
+                    user.setRole(Role.FINANCE_MANAGER);
+                }
+
+                AllUsers.add(user);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return AllUsers;
+    }
+
+    public List<User> getAllUsersIdDESC(){
+        List<User> AllUsers = new LinkedList<>();
+        String sql = "SELECT * FROM ers_users ORDER BY ers_users_id DESC";
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("ers_users_id"));
+                user.setUsername(rs.getString("ers_username"));
+                user.setPassword(rs.getString("ers_password"));
+                user.setFirst_name(rs.getString("user_first_name"));
+                user.setLast_name(rs.getString("user_last_name"));
+                user.setEmail(rs.getString("user_email"));
+                user.setPhone(rs.getString("user_phone"));
+                int roleId = rs.getInt("user_role_id");
+                if(roleId == 1){
+                    user.setRole(Role.EMPLOYEE);
+                }else if (roleId == 2){
+                    user.setRole(Role.FINANCE_MANAGER);
+                }
+
+                AllUsers.add(user);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return AllUsers;
+    }
+
+    public List<User> getAllUsersFirstnameASC(){
+        List<User> AllUsers = new LinkedList<>();
+        String sql = "SELECT * FROM ers_users ORDER BY user_first_name ASC";
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("ers_users_id"));
+                user.setUsername(rs.getString("ers_username"));
+                user.setPassword(rs.getString("ers_password"));
+                user.setFirst_name(rs.getString("user_first_name"));
+                user.setLast_name(rs.getString("user_last_name"));
+                user.setEmail(rs.getString("user_email"));
+                user.setPhone(rs.getString("user_phone"));
+                int roleId = rs.getInt("user_role_id");
+                if(roleId == 1){
+                    user.setRole(Role.EMPLOYEE);
+                }else if (roleId == 2){
+                    user.setRole(Role.FINANCE_MANAGER);
+                }
+
+                AllUsers.add(user);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return AllUsers;
+    }
+
+    public List<User> getAllUsersFirstnameDESC(){
+        List<User> AllUsers = new LinkedList<>();
+        String sql = "SELECT * FROM ers_users ORDER BY user_first_name DESC";
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("ers_users_id"));
+                user.setUsername(rs.getString("ers_username"));
+                user.setPassword(rs.getString("ers_password"));
+                user.setFirst_name(rs.getString("user_first_name"));
+                user.setLast_name(rs.getString("user_last_name"));
+                user.setEmail(rs.getString("user_email"));
+                user.setPhone(rs.getString("user_phone"));
+                int roleId = rs.getInt("user_role_id");
+                if(roleId == 1){
+                    user.setRole(Role.EMPLOYEE);
+                }else if (roleId == 2){
+                    user.setRole(Role.FINANCE_MANAGER);
+                }
+
+                AllUsers.add(user);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return AllUsers;
+    }
+
+    public List<User> getAllUsersLastnameASC(){
+        List<User> AllUsers = new LinkedList<>();
+        String sql = "SELECT * FROM ers_users ORDER BY user_last_name ASC";
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("ers_users_id"));
+                user.setUsername(rs.getString("ers_username"));
+                user.setPassword(rs.getString("ers_password"));
+                user.setFirst_name(rs.getString("user_first_name"));
+                user.setLast_name(rs.getString("user_last_name"));
+                user.setEmail(rs.getString("user_email"));
+                user.setPhone(rs.getString("user_phone"));
+                int roleId = rs.getInt("user_role_id");
+                if(roleId == 1){
+                    user.setRole(Role.EMPLOYEE);
+                }else if (roleId == 2){
+                    user.setRole(Role.FINANCE_MANAGER);
+                }
+
+                AllUsers.add(user);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return AllUsers;
+    }
+
+    public List<User> getAllUsersLastnameDESC(){
+        List<User> AllUsers = new LinkedList<>();
+        String sql = "SELECT * FROM ers_users ORDER BY user_last_name DESC";
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("ers_users_id"));
+                user.setUsername(rs.getString("ers_username"));
+                user.setPassword(rs.getString("ers_password"));
+                user.setFirst_name(rs.getString("user_first_name"));
+                user.setLast_name(rs.getString("user_last_name"));
+                user.setEmail(rs.getString("user_email"));
+                user.setPhone(rs.getString("user_phone"));
+                int roleId = rs.getInt("user_role_id");
+                if(roleId == 1){
+                    user.setRole(Role.EMPLOYEE);
+                }else if (roleId == 2){
+                    user.setRole(Role.FINANCE_MANAGER);
+                }
+
+                AllUsers.add(user);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return AllUsers;
+    }
+
+    public List<User> getAllEmployees(){
+        List<User> AllUsers = new LinkedList<>();
+        String sql = "SELECT * FROM ers_users WHERE user_role_id = 1";
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("ers_users_id"));
+                user.setUsername(rs.getString("ers_username"));
+                user.setPassword(rs.getString("ers_password"));
+                user.setFirst_name(rs.getString("user_first_name"));
+                user.setLast_name(rs.getString("user_last_name"));
+                user.setEmail(rs.getString("user_email"));
+                user.setPhone(rs.getString("user_phone"));
+                int roleId = rs.getInt("user_role_id");
+                if(roleId == 1){
+                    user.setRole(Role.EMPLOYEE);
+                }else if (roleId == 2){
+                    user.setRole(Role.FINANCE_MANAGER);
+                }
+
+                AllUsers.add(user);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return AllUsers;
+    }
+
+    public List<User> getAllFinanceManagers(){
+        List<User> AllUsers = new LinkedList<>();
+        String sql = "SELECT * FROM ers_users WHERE user_role_id = 2";
         try{
             Connection conn = ConnectionFactory.getConnection();  // get the connection
             PreparedStatement pstmt = null;
@@ -278,23 +509,46 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
+    public void updateUserRole2(User user){
+        String sql = "UPDATE ers_users SET ers_username = ?, user_first_name = ?, user_last_name = ?, ers_password = ?, user_email = ?, user_phone = ?, user_role_id = ? WHERE ers_users_id = ?";
+        try{
+            PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getFirst_name());
+            pstmt.setString(3, user.getLast_name());
+            pstmt.setString(4, user.getPassword());
+            pstmt.setString(5, user.getEmail());
+            pstmt.setString(6, user.getPhone());
+            pstmt.setInt(7, 2);
+            pstmt.setInt(8, user.getId());
+            pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Updates the userRole
      * @param user
      */
     public void updateUserRole(User user){
-        String sql = "UPDATE ers_users SET user_role_id = ? WHERE id = ?";
+        String sql = "UPDATE ers_users SET user_role_id = 2 WHERE id = ?";
         try {
             PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
-            String role = String.valueOf(user.getRole());
-            if(role == "Employee"){
-                pstmt.setInt(1, 1);
-            }else if (role == "Financial Manager"){
-                pstmt.setInt(1, 2);
-            }
-            pstmt.setInt(2, user.getId());
+            pstmt.setInt(1, user.getId());
 
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateUserRole2(int id){
+        String sql = "UPDATE ers_users SET user_role_id = 2 WHERE ers_users_id = ?";
+        try {
+            PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {

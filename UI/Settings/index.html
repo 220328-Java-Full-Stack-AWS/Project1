@@ -25,14 +25,16 @@
             <span><p id="username"></p><i class="fa fa-user-circle" aria-hidden="true" onclick="toggleNavbar()"></i></span>
         </div>
         <nav>
-            <p>Employee</p>
+            <p id="userRole"></p>
+            <span id="systemUsers" onclick="location.href='../Admin/index.html'">System's Users</span>
             <span onclick="location.href='../Settings/index.html'">Settings</span>
             <span id="logout">Logout</span>
         </nav>
 
         <section class="settings">
             <div class="breadcrumb">
-                <a href="../User/index.html">Home /</a>
+                <a id="managerHome" href="../Manager/index.html">Home /</a>
+                <a id="userHome" href="../User/index.html">Home /</a>
                 <span>Settings</span>
             </div>
             <h2>Settings</h2>
@@ -77,6 +79,7 @@
                     </div>
                 </div>
                 <div class="submit">
+                    <button id="cancelForManager" onclick="location.href ='../Manager/index.html'">Cancel</button>
                     <button id="cancel" onclick="location.href ='../User/index.html'">Cancel</button>
                     <button id="submit">Submit</button>
                 </div>
@@ -210,41 +213,6 @@
         var data =  JSON.parse(userObject); 
         window.onload = getUser(data.id);
         
-        // // submit button 
-        // document.getElementById('submit').addEventListener('click', ()=>{
-        //     // dom elements
-        //     var email = document.getElementById("email").textContent;
-        //     var firstName = document.getElementById("firstName").textContent;
-        //     var lastName = document.getElementById("lastName").textContent;
-        //     var phone = document.getElementById("phone").textContent;
-        //     var oldPassword = document.getElementById("oldPassword").value;
-        //     var password = document.getElementById("password").value;
-        //     var confirmPassword = document.getElementById("confirmPassword").value;
-        //     // email regex
-        //     var validEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        //     // phone regex
-        //     var validPhoneRegex = /(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4})(\s?(([E|e]xt[:|.|]?)|x|X)(\s?\d+))?/g;
-
-        //     if(email === "" || firstName === "" || lastName === "" || username === "" || phone === "" ){
-        //         notifier.alert("Please don't leave blanks");
-        //     }else if(firstName.length < 2){
-        //         notifier.alert("Please enter a valid first name");
-        //     }else if(lastName.length < 2){
-        //         notifier.alert("Please enter a valid last name");
-        //     }else if(!email.match(validEmailRegex)){
-        //         notifier.alert("Please enter a valid email");
-        //     }else if(!phone.match(validPhoneRegex)){
-        //         notifier.alert("Please enter a valid phone number");
-        //     }else if(confirmPassword !== password){
-        //         notifier.alert("Passwords did not match");
-        //     }else if(password !== "" && password.length < 8){
-        //         notifier.alert("Please make a stronger password");
-        //     }else{
-        //         notifier.success("Update success");   
-        //     }
-        // });          
-        // // submit btn complete
-
         // delete Account
         const deletePrompt = document.querySelector('.confirmDelete');
         const deleteBtn = document.getElementById('deleteBtn');
@@ -315,6 +283,25 @@
         // Display the username on the nav bar
         const username = document.getElementById('username');
         username.innerHTML = info.username;
+        // role on nav menu
+        const userRole = document.getElementById('userRole');
+        userRole.textContent = info.role;
+        const SystemUsersNav = document.getElementById('systemUsers');
+        if(info.role !== "FINANCE_MANAGER"){
+            SystemUsersNav.style.display = "none";
+        }   
+        
+        const cancelBtnForManager = document.getElementById('cancelForManager');
+        const cancelBtnForUser = document.getElementById('cancel');
+        const breadCrumbForManager = document.getElementById('managerHome');
+        const breadCrumbForUser = document.getElementById('userHome');
+        if(info.role === "FINANCE_MANAGER"){
+            cancelBtnForUser.style.display = "none";
+            breadCrumbForUser.style.display = "none";
+        }else{
+            cancelBtnForManager.style.display = "none";
+            breadCrumbForManager.style.display = "none";
+        }
     </script>
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>

@@ -61,6 +61,10 @@ public class UserService {
 		dao.update(user);
 	}
 
+	public void updateUserRole(int id){
+		dao.updateUserRole2(id);
+	}
+
 
 	/**
 	 * Get a user by their id.

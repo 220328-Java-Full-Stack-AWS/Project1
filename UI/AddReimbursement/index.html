@@ -25,7 +25,8 @@
             <span><p id="username"></p><i class="fa fa-user-circle" aria-hidden="true" onclick="toggleNavbar()"></i></span>
         </div>
         <nav>
-            <p>Employee</p>
+            <p id="userRole"></p>
+            <span id="systemUsers" onclick="location.href='../Admin/index.html'">System's Users</span>
             <span>Settings</span>
             <span id="logout">Logout</span>
         </nav>
@@ -174,6 +175,15 @@
         var info =  JSON.parse(retrievedObject);
         const username = document.getElementById('username');
         username.innerHTML = info.username;
+        // role on nav menu
+        const userRole = document.getElementById('userRole');
+        userRole.textContent = info.role;  
+        // system users nav
+        const SystemUsersNav = document.getElementById('systemUsers');
+        if(info.role !== "FINANCE_MANAGER"){
+            SystemUsersNav.style.display = "none";
+        }
+
     </script>
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>

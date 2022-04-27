@@ -132,6 +132,17 @@
         <servlet-class>com.revature.servlets.ReimbursementServlet</servlet-class>
     </servlet>
 
+    <!--Admin-->
+    <servlet-mapping>
+        <servlet-name>adminServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>adminServlet</servlet-name>
+        <servlet-class>com.revature.servlets.AdminServlet</servlet-class>
+    </servlet>
+
     <!-- CORS FILTER -->
     <filter>
         <filter-name>CorsFilter</filter-name>
