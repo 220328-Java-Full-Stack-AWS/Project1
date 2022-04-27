@@ -509,7 +509,7 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
-    
+
     public void updateUserRole2(int id, int role){
         String sql = "UPDATE ers_users SET user_role_id = ? WHERE ers_users_id = ?";
         try {

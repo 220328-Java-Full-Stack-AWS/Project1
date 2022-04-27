@@ -27,6 +27,7 @@
         </div>
         <nav>
             <p id="userRole"></p>
+            <span id="systemUsers" onclick="location.href='../Admin/index.html'">Users</span>
             <span onclick="location.href='../Settings/index.html'">Settings</span>
             <span id="logout">Logout</span>
         </nav>
@@ -90,10 +91,36 @@
     </footer>    
     <!-- API -->
     <script>
-        const api_url = "http://localhost:8080/api/reimbursements/user";
+        //get user data
+        async function getUser(id) {
+            let response = await fetch("http://localhost:8080/api/user",
+            {
+                method: "GET",
+                headers: {     
+                    "Content-Type": "application/json",
+                    "id": id
+                },
+            }
+            );
+            let json = await response.json();
+            
+            // Display the username on the nav bar
+            const username = document.getElementById('username');
+            username.innerHTML = json.username;
+            const userRole = document.getElementById('userRole');
+            userRole.innerHTML = json.role;
+            const adminPage = document.getElementById('systemUsers');
+            if(json.role === "EMPLOYEE"){
+                adminPage.style.display = 'none';
+            }
+        }
+        // Retrieve the user object from storage
+        var userObject = localStorage.getItem('user');
+        var data =  JSON.parse(userObject); 
+        window.onload = getUser(data.id);
 
-        async function getReimbursement(url, id){
-            let response = await fetch(url,
+        async function getReimbursement(id){
+            let response = await fetch("http://localhost:8080/api/reimbursements/user",
             {
                 method: "GET",
                 headers: {
@@ -119,15 +146,8 @@
         // Retrieve the object from storage
         var retrievedObject = localStorage.getItem('user');
         var info =  JSON.parse(retrievedObject);
-        
-        // Display the username on the nav bar
-        const username = document.getElementById('username');
-        username.innerHTML = info.username;
-        // role on nav menu
-        const userRole = document.getElementById('userRole');
-        userRole.textContent = info.role;
-        
-        window.onload = getReimbursement(api_url, info.id);
+                
+        window.onload = getReimbursement(info.id);
 
         // delete feature
         async function deleteReimbursementById(id){

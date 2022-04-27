@@ -111,6 +111,7 @@
             }else{
                 notifier.success("Account updated successfully");
             }
+            setTimeout(function() { window.location.reload(); }, 5000);   
             return response;
         }
         
@@ -126,6 +127,28 @@
             }
             );
             let json = await response.json();
+            
+            // Display the username on the nav bar
+            const username = document.getElementById('username');
+            username.innerHTML = json.username;
+            const userRole = document.getElementById('userRole');
+            userRole.innerHTML = json.role;
+            const adminPage = document.getElementById('systemUsers');
+            if(json.role === "EMPLOYEE"){
+                adminPage.style.display = 'none';
+            }
+            
+            const cancelBtnForManager = document.getElementById('cancelForManager');
+            const cancelBtnForUser = document.getElementById('cancel');
+            const breadCrumbForManager = document.getElementById('managerHome');
+            const breadCrumbForUser = document.getElementById('userHome');
+            if(json.role === "FINANCE_MANAGER"){
+                cancelBtnForUser.style.display = "none";
+                breadCrumbForUser.style.display = "none";
+            }else{
+                cancelBtnForManager.style.display = "none";
+                breadCrumbForManager.style.display = "none";
+            }
             
             // dom elements
             const usernameText = document.getElementById("userName");
@@ -200,7 +223,8 @@
                                 "phone": phone,
                                 "role": "EMPLOYEE"
                             }
-                            updateAccount(account);                            
+                            updateAccount(account);
+                                                   
                         }
                     }
 
@@ -273,35 +297,6 @@
             localStorage.removeItem('user');
             window.location.href = "../index.html";
         });
-
-        // display data
-        
-        // Retrieve the user object from storage
-        var retrievedObject = localStorage.getItem('user');
-        var info =  JSON.parse(retrievedObject);
-        
-        // Display the username on the nav bar
-        const username = document.getElementById('username');
-        username.innerHTML = info.username;
-        // role on nav menu
-        const userRole = document.getElementById('userRole');
-        userRole.textContent = info.role;
-        const SystemUsersNav = document.getElementById('systemUsers');
-        if(info.role !== "FINANCE_MANAGER"){
-            SystemUsersNav.style.display = "none";
-        }   
-        
-        const cancelBtnForManager = document.getElementById('cancelForManager');
-        const cancelBtnForUser = document.getElementById('cancel');
-        const breadCrumbForManager = document.getElementById('managerHome');
-        const breadCrumbForUser = document.getElementById('userHome');
-        if(info.role === "FINANCE_MANAGER"){
-            cancelBtnForUser.style.display = "none";
-            breadCrumbForUser.style.display = "none";
-        }else{
-            cancelBtnForManager.style.display = "none";
-            breadCrumbForManager.style.display = "none";
-        }
     </script>
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>

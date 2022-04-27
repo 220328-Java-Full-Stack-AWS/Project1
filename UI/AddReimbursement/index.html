@@ -73,6 +73,35 @@
     
     <!-- Back End JavaScript -->
     <script>
+        //get user data
+        async function getUser(id) {
+            let response = await fetch("http://localhost:8080/api/user",
+            {
+                method: "GET",
+                headers: {     
+                    "Content-Type": "application/json",
+                    "id": id
+                },
+            }
+            );
+            let json = await response.json();
+            
+            // Display the username on the nav bar
+            const username = document.getElementById('username');
+            username.innerHTML = json.username;
+            const userRole = document.getElementById('userRole');
+            userRole.innerHTML = json.role;
+            
+            const adminPage = document.getElementById('systemUsers');
+            if(json.role === "EMPLOYEE"){
+                adminPage.style.display = 'none';
+            }
+        }
+        // Retrieve the user object from storage
+        var userObject = localStorage.getItem('user');
+        var data =  JSON.parse(userObject); 
+        window.onload = getUser(data.id);
+        
         async function newReimbursement(reimbursement){
             let response = await fetch("http://localhost:8080/api/reimbursements/user",
                 {
@@ -170,21 +199,6 @@
             localStorage.removeItem('user');
             window.location.href = "../index.html";
         });
-
-        // Retrieve the username from storage
-        var retrievedObject = localStorage.getItem('user');
-        var info =  JSON.parse(retrievedObject);
-        const username = document.getElementById('username');
-        username.innerHTML = info.username;
-        // role on nav menu
-        const userRole = document.getElementById('userRole');
-        userRole.textContent = info.role;  
-        // system users nav
-        const SystemUsersNav = document.getElementById('systemUsers');
-        if(info.role !== "FINANCE_MANAGER"){
-            SystemUsersNav.style.display = "none";
-        }
-
     </script>
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/2bee9428e0.js" crossorigin="anonymous"></script>
