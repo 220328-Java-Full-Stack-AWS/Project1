@@ -233,7 +233,7 @@
         }
 
         // Retrieve the user object from storage
-        var userObject = localStorage.getItem('user');
+        var userObject = localStorage.getItem('id');
         var data =  JSON.parse(userObject); 
         window.onload = getUser(data.id);
         
@@ -256,7 +256,7 @@
         }
 
         async function deleteAccount(){ 
-            var user = localStorage.getItem('user');
+            var user = localStorage.getItem('id');
             var data =  JSON.parse(user);
             let response = await fetch("http://localhost:8080/api/user",
             {

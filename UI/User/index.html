@@ -69,8 +69,8 @@
                         </div>
                         <div class="sort-date">
                             <p>Reimbursement Date</p>
-                            <button onclick="sort('asc-date')">Date<i class="fa-solid fa-arrow-down-1-9"></i></button>
-                            <button onclick="sort('desc-date')">Date<i class="fa-solid fa-arrow-down-9-1"></i></button>
+                            <button onclick="sort('desc-date')">New-Old</button>
+                            <button onclick="sort('asc-date')">Old-New</button>
                         </div>
                         <div class="sort-amount">
                             <p>Reimbursement Amount</p>
@@ -115,7 +115,7 @@
             }
         }
         // Retrieve the user object from storage
-        var userObject = localStorage.getItem('user');
+        var userObject = localStorage.getItem('id');
         var data =  JSON.parse(userObject); 
         window.onload = getUser(data.id);
 
@@ -144,7 +144,7 @@
  
         }
         // Retrieve the object from storage
-        var retrievedObject = localStorage.getItem('user');
+        var retrievedObject = localStorage.getItem('id');
         var info =  JSON.parse(retrievedObject);
                 
         window.onload = getReimbursement(info.id);

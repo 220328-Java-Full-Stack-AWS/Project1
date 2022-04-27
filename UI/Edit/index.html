@@ -110,7 +110,7 @@
             }
         }
         // Retrieve the user object from storage
-        var userObject = localStorage.getItem('user');
+        var userObject = localStorage.getItem('id');
         var data =  JSON.parse(userObject); 
         window.onload = getUser(data.id);
 
@@ -206,7 +206,7 @@
             }else{
                 // console.log(type);
                 // Retrieve the username from storage
-                var authorObject = localStorage.getItem('user');
+                var authorObject = localStorage.getItem('id');
                 var author =  JSON.parse(authorObject);
                 var doubleAmount = amount.replace(/\$/g, '');
 

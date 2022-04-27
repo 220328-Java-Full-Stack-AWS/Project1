@@ -108,7 +108,7 @@
             }
         }
         // Retrieve the user object from storage
-        var userObject = localStorage.getItem('user');
+        var userObject = localStorage.getItem('id');
         var data =  JSON.parse(userObject); 
         window.onload = getUser(data.id);
 
