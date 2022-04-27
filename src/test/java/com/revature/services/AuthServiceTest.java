@@ -60,5 +60,5 @@ public class AuthServiceTest {
 		User test = userService.getByEmail(GENERIC_EMPLOYEE_1.getEmail());
 		assertEquals(test.getEmail(), GENERIC_EMPLOYEE_1.getEmail());
 	}
-	
+
 }
