@@ -87,6 +87,7 @@
                 notifier.alert("Error creating new reimbursement request");
             }else{
                 notifier.success("Reimbursement added successfully!");
+                setTimeout(function() { window.location.href='../User/index.html'; }, 5000); 
             }
             return response;
         }

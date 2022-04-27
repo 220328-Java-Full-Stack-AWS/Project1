@@ -97,7 +97,8 @@
             if(response.status !== 201){
                 notifier.alert("Error Processeing!");
             }else{
-                notifier.success("Reimbursement proccess successfully");''
+                notifier.success("Reimbursement proccessed successfully");
+                setTimeout(function() { window.location.href='../Manager/index.html'; }, 4000); // reloads page, ajax would be better
             }
             return response;
         }
