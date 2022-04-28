@@ -8,6 +8,7 @@ import com.revature.models.User;
 import com.revature.repositories.ReimbursementDAO;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -137,6 +138,45 @@ public class ReimbursementService {
         List<Reimbursement> ReimbursementResolverList = reimbDAO.getByAuthor(user.getUsername());
         return ReimbursementResolverList;
     }
+
+    // sort id
+    public List<Reimbursement> employeeIdAsc(int id){
+        List<Reimbursement> result = reimbDAO.employeeSortIdAsc(id);
+        return result;
+    }
+    public List<Reimbursement> employeeIdDesc(int id){
+        List<Reimbursement> result = reimbDAO.employeeSortIdDesc(id);
+        return result;
+    }
+    // sort amount
+    public List<Reimbursement> employeeAmountAsc(int id){
+        List<Reimbursement> result = reimbDAO.employeeSortAmountAsc(id);
+        return result;
+    }
+    public List<Reimbursement> employeeAmountDesc(int id){
+        List<Reimbursement> result = reimbDAO.employeeSortAmountDesc(id);
+        return result;
+    }
+    // sort date
+    public List<Reimbursement> employeeDateAsc(int id){
+        List<Reimbursement> result = reimbDAO.employeeSortDateAsc(id);
+        return result;
+    }
+    public List<Reimbursement> employeeDateDesc(int id){
+        List<Reimbursement> result = reimbDAO.employeeSortDateDesc(id);
+        return result;
+    }
+    // filter status
+    public List<Reimbursement> employeeFilterStatus(int id, int statusId){
+        List<Reimbursement> result = reimbDAO.employeeFilterStatus(id, statusId);
+        return result;
+    }
+    // filter type
+    public List<Reimbursement> employeeFilterType(int id, int typeId){
+        List<Reimbursement> result = reimbDAO.employeeFilterType(id, typeId);
+        return result;
+    }
+
 
     /**
      * Get all reimbursement associated with the resolver's email

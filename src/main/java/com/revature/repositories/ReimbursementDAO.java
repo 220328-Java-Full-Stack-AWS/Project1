@@ -532,6 +532,477 @@ public class ReimbursementDAO {
 
     }
 
+    // sort id
+    public List<Reimbursement> employeeSortIdAsc(int id){
+        List<Reimbursement> result = new LinkedList<>();
+        String sql = "SELECT * FROM ers_reimbursement WHERE reimb_author = ? ORDER BY reimb_id ASC";
+        User author = userDao.getById(id);
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, author.getId());
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
+            // get the data from the database
+            while(rs.next()){
+                Reimbursement reimbursement = new Reimbursement();
+                // reimbursement id
+                reimbursement.setId(rs.getInt("reimb_id"));
+                // resolver
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
+                reimbursement.setResolver(resolver);
+                // author
+                reimbursement.setAuthor(author);
+                // amount
+                reimbursement.setAmount(rs.getDouble("reimb_amount"));
+                // status
+                int status = rs.getInt("reimb_status_id");
+                if(status == 1){
+                    reimbursement.setStatus(Status.PENDING);
+                }else if(status == 2){
+                    reimbursement.setStatus(Status.APPROVED);
+                }else{
+                    reimbursement.setStatus(Status.DENIED);
+                }
+                // type
+                reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // description
+                reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
+
+                // add to list
+                result.add(reimbursement);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return result;
+        }
+
+    }
+    public List<Reimbursement> employeeSortIdDesc(int id){
+        List<Reimbursement> result = new LinkedList<>();
+        String sql = "SELECT * FROM ers_reimbursement WHERE reimb_author = ? ORDER BY reimb_id DESC";
+        User author = userDao.getById(id);
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, author.getId());
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
+            // get the data from the database
+            while(rs.next()){
+                Reimbursement reimbursement = new Reimbursement();
+                // reimbursement id
+                reimbursement.setId(rs.getInt("reimb_id"));
+                // resolver
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
+                reimbursement.setResolver(resolver);
+                // author
+                reimbursement.setAuthor(author);
+                // amount
+                reimbursement.setAmount(rs.getDouble("reimb_amount"));
+                // status
+                int status = rs.getInt("reimb_status_id");
+                if(status == 1){
+                    reimbursement.setStatus(Status.PENDING);
+                }else if(status == 2){
+                    reimbursement.setStatus(Status.APPROVED);
+                }else{
+                    reimbursement.setStatus(Status.DENIED);
+                }
+                // type
+                reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // description
+                reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
+
+                // add to list
+                result.add(reimbursement);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return result;
+        }
+
+    }
+    // sort amount
+    public List<Reimbursement> employeeSortAmountAsc(int id){
+        List<Reimbursement> result = new LinkedList<>();
+        String sql = "SELECT * FROM ers_reimbursement WHERE reimb_author = ? ORDER BY reimb_amount ASC";
+        User author = userDao.getById(id);
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, author.getId());
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
+            // get the data from the database
+            while(rs.next()){
+                Reimbursement reimbursement = new Reimbursement();
+                // reimbursement id
+                reimbursement.setId(rs.getInt("reimb_id"));
+                // resolver
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
+                reimbursement.setResolver(resolver);
+                // author
+                reimbursement.setAuthor(author);
+                // amount
+                reimbursement.setAmount(rs.getDouble("reimb_amount"));
+                // status
+                int status = rs.getInt("reimb_status_id");
+                if(status == 1){
+                    reimbursement.setStatus(Status.PENDING);
+                }else if(status == 2){
+                    reimbursement.setStatus(Status.APPROVED);
+                }else{
+                    reimbursement.setStatus(Status.DENIED);
+                }
+                // type
+                reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // description
+                reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
+
+                // add to list
+                result.add(reimbursement);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return result;
+        }
+
+    }
+    public List<Reimbursement> employeeSortAmountDesc(int id){
+        List<Reimbursement> result = new LinkedList<>();
+        String sql = "SELECT * FROM ers_reimbursement WHERE reimb_author = ? ORDER BY reimb_amount DESC";
+        User author = userDao.getById(id);
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, author.getId());
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
+            // get the data from the database
+            while(rs.next()){
+                Reimbursement reimbursement = new Reimbursement();
+                // reimbursement id
+                reimbursement.setId(rs.getInt("reimb_id"));
+                // resolver
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
+                reimbursement.setResolver(resolver);
+                // author
+                reimbursement.setAuthor(author);
+                // amount
+                reimbursement.setAmount(rs.getDouble("reimb_amount"));
+                // status
+                int status = rs.getInt("reimb_status_id");
+                if(status == 1){
+                    reimbursement.setStatus(Status.PENDING);
+                }else if(status == 2){
+                    reimbursement.setStatus(Status.APPROVED);
+                }else{
+                    reimbursement.setStatus(Status.DENIED);
+                }
+                // type
+                reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // description
+                reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
+
+                // add to list
+                result.add(reimbursement);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return result;
+        }
+
+    }
+    // sort date
+    public List<Reimbursement> employeeSortDateAsc(int id){
+        List<Reimbursement> result = new LinkedList<>();
+        String sql = "SELECT * FROM ers_reimbursement WHERE reimb_author = ? ORDER BY reimb_submitted ASC";
+        User author = userDao.getById(id);
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, author.getId());
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
+            // get the data from the database
+            while(rs.next()){
+                Reimbursement reimbursement = new Reimbursement();
+                // reimbursement id
+                reimbursement.setId(rs.getInt("reimb_id"));
+                // resolver
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
+                reimbursement.setResolver(resolver);
+                // author
+                reimbursement.setAuthor(author);
+                // amount
+                reimbursement.setAmount(rs.getDouble("reimb_amount"));
+                // status
+                int status = rs.getInt("reimb_status_id");
+                if(status == 1){
+                    reimbursement.setStatus(Status.PENDING);
+                }else if(status == 2){
+                    reimbursement.setStatus(Status.APPROVED);
+                }else{
+                    reimbursement.setStatus(Status.DENIED);
+                }
+                // type
+                reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // description
+                reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
+
+                // add to list
+                result.add(reimbursement);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return result;
+        }
+
+    }
+    public List<Reimbursement> employeeSortDateDesc(int id){
+        List<Reimbursement> result = new LinkedList<>();
+        String sql = "SELECT * FROM ers_reimbursement WHERE reimb_author = ? ORDER BY reimb_submitted DESC";
+        User author = userDao.getById(id);
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, author.getId());
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
+            // get the data from the database
+            while(rs.next()){
+                Reimbursement reimbursement = new Reimbursement();
+                // reimbursement id
+                reimbursement.setId(rs.getInt("reimb_id"));
+                // resolver
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
+                reimbursement.setResolver(resolver);
+                // author
+                reimbursement.setAuthor(author);
+                // amount
+                reimbursement.setAmount(rs.getDouble("reimb_amount"));
+                // status
+                int status = rs.getInt("reimb_status_id");
+                if(status == 1){
+                    reimbursement.setStatus(Status.PENDING);
+                }else if(status == 2){
+                    reimbursement.setStatus(Status.APPROVED);
+                }else{
+                    reimbursement.setStatus(Status.DENIED);
+                }
+                // type
+                reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // description
+                reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
+
+                // add to list
+                result.add(reimbursement);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return result;
+        }
+
+    }
+    //filter
+    public List<Reimbursement> employeeFilterStatus(int id, int statusId){
+        List<Reimbursement> result = new LinkedList<>();
+        String sql = "SELECT * FROM ers_reimbursement WHERE reimb_author = ? AND reimb_status_id = ?";
+        User author = userDao.getById(id);
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, author.getId());
+            pstmt.setInt(2, statusId);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
+            // get the data from the database
+            while(rs.next()){
+                Reimbursement reimbursement = new Reimbursement();
+                // reimbursement id
+                reimbursement.setId(rs.getInt("reimb_id"));
+                // resolver
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
+                reimbursement.setResolver(resolver);
+                // author
+                reimbursement.setAuthor(author);
+                // amount
+                reimbursement.setAmount(rs.getDouble("reimb_amount"));
+                // status
+                int status = rs.getInt("reimb_status_id");
+                if(status == 1){
+                    reimbursement.setStatus(Status.PENDING);
+                }else if(status == 2){
+                    reimbursement.setStatus(Status.APPROVED);
+                }else{
+                    reimbursement.setStatus(Status.DENIED);
+                }
+                // type
+                reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // description
+                reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
+
+                // add to list
+                result.add(reimbursement);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return result;
+        }
+
+    }
+    public List<Reimbursement> employeeFilterType(int id, int typeId){
+        List<Reimbursement> result = new LinkedList<>();
+        String sql = "SELECT * FROM ers_reimbursement WHERE reimb_author = ? AND reimb_type_id = ?";
+        User author = userDao.getById(id);
+        try{
+            Connection conn = ConnectionFactory.getConnection();  // get the connection
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, author.getId());
+            pstmt.setInt(2, typeId);
+
+            ResultSet rs = pstmt.executeQuery(); // actually fire off the SQL
+
+            // get the data from the database
+            while(rs.next()){
+                Reimbursement reimbursement = new Reimbursement();
+                // reimbursement id
+                reimbursement.setId(rs.getInt("reimb_id"));
+                // resolver
+                User resolver = userDao.getById(rs.getInt("reimb_resolver"));
+                reimbursement.setResolver(resolver);
+                // author
+                reimbursement.setAuthor(author);
+                // amount
+                reimbursement.setAmount(rs.getDouble("reimb_amount"));
+                // status
+                int status = rs.getInt("reimb_status_id");
+                if(status == 1){
+                    reimbursement.setStatus(Status.PENDING);
+                }else if(status == 2){
+                    reimbursement.setStatus(Status.APPROVED);
+                }else{
+                    reimbursement.setStatus(Status.DENIED);
+                }
+                // type
+                reimbursement.setReimbursementType(rs.getInt("reimb_type_id"));
+                // description
+                reimbursement.setDescription(rs.getString("reimb_description"));
+                // submitted
+                reimbursement.setSubmitted(rs.getTimestamp("reimb_submitted"));
+                // resolved
+                reimbursement.setResolved(rs.getTimestamp("reimb_resolved"));
+                // receipt
+                reimbursement.setReceipt(rs.getString("reimb_receipt"));
+
+                // add to list
+                result.add(reimbursement);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return result;
+        }
+
+    }
+
 
     /**
      * Retrieve all reimbursements by the resolver's email

@@ -31,11 +31,88 @@ public class UserReimbursementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
-        User user = userService.getById(Integer.parseInt(req.getHeader("user_id")));
-        List<Reimbursement> AllReimbursements = service.getByAuthor(user);
-        String json = mapper.writeValueAsString(AllReimbursements);
-        resp.getWriter().print(json);
-        resp.setStatus(200);
+        int id = Integer.parseInt(req.getHeader("user-id"));
+        String mode = req.getHeader("mode");
+        if(mode.equals("id-asc")){
+            List<Reimbursement> AllReimbursements = service.employeeIdAsc(id);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if (mode.equals("id-desc")){
+            List<Reimbursement> AllReimbursements = service.employeeIdDesc(id);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("amount-asc")){
+            List<Reimbursement> AllReimbursements = service.employeeAmountAsc(id);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("amount-desc")){
+            List<Reimbursement> AllReimbursements = service.employeeAmountDesc(id);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("date-asc")){
+            List<Reimbursement> AllReimbursements = service.employeeDateAsc(id);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("date-desc")){
+            List<Reimbursement> AllReimbursements = service.employeeDateDesc(id);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("filter-pending")){
+            List<Reimbursement> AllReimbursements = service.employeeFilterStatus(id, 1);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("filter-approved")){
+            List<Reimbursement> AllReimbursements = service.employeeFilterStatus(id, 2);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("filter-denied")){
+            List<Reimbursement> AllReimbursements = service.employeeFilterStatus(id, 3);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("filter-lodging")){
+            List<Reimbursement> AllReimbursements = service.employeeFilterType(id,1);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("filter-food")){
+            List<Reimbursement> AllReimbursements = service.employeeFilterType(id,2);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        } else if(mode.equals("filter-travel")){
+            List<Reimbursement> AllReimbursements = service.employeeFilterType(id,3);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("filter-entertainment")){
+            List<Reimbursement> AllReimbursements = service.employeeFilterType(id,4);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("filter-shopping")){
+            List<Reimbursement> AllReimbursements = service.employeeFilterType(id,5);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else if(mode.equals("filter-other")){
+            List<Reimbursement> AllReimbursements = service.employeeFilterType(id,6);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }
+
+
+
+
     }
 
     // create

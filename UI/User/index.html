@@ -44,18 +44,18 @@
                     <div class="options">
                         <div class="filter-status">
                             <p>Reimbursement Status</p>
-                            <button onclick="filterStatus('pending')">Pending</button>
-                            <button onclick="filterStatus('approved')">Approved</button>
-                            <button onclick="filterStatus('denied')">Denied</button>
+                            <button onclick="filterSort('filter-pending')">Pending</button>
+                            <button onclick="filterSort('filter-approved')">Approved</button>
+                            <button onclick="filterSort('filter-denied')">Denied</button>
                         </div>
                         <div class="filter-type">
                             <p>Reimbursement Type</p>
-                            <button onclick="filterType('Lodging')">Lodging</button>
-                            <button onclick="filterType('Food')">Food</button>
-                            <button onclick="filterType('Travel')">Travel</button>
-                            <button onclick="filterType('Entertainment')">Entertainment</button>
-                            <button onclick="filterType('Shopping')">Shopping</button>
-                            <button onclick="filterType('Other')">Other</button>
+                            <button onclick="filterSort('filter-lodging')">Lodging</button>
+                            <button onclick="filterSort('filter-food')">Food</button>
+                            <button onclick="filterSort('filter-travel')">Travel</button>
+                            <button onclick="filterSort('filter-entertainment')">Entertainment</button>
+                            <button onclick="filterSort('filter-shopping')">Shopping</button>
+                            <button onclick="filterSort('filter-other')">Other</button>
                         </div>
                     </div>
                 </div>
@@ -64,18 +64,18 @@
                     <div class="options">
                         <div class="sort-id">
                             <p>Reimbursement Id</p>
-                            <button onclick="sort('asc-id')">Id<i class="fa-solid fa-arrow-down-1-9"></i></button>
-                            <button onclick="sort('desc-id')">Id<i class="fa-solid fa-arrow-down-9-1"></i></button>
+                            <button onclick="filterSort('id-asc')">Id<i class="fa-solid fa-arrow-down-1-9"></i></button>
+                            <button onclick="filterSort('id-desc')">Id<i class="fa-solid fa-arrow-down-9-1"></i></button>
                         </div>
                         <div class="sort-date">
                             <p>Reimbursement Date</p>
-                            <button onclick="sort('desc-date')">New-Old</button>
-                            <button onclick="sort('asc-date')">Old-New</button>
+                            <button onclick="filterSort('date-desc')">New-Old</button>
+                            <button onclick="filterSort('date-asc')">Old-New</button>
                         </div>
                         <div class="sort-amount">
                             <p>Reimbursement Amount</p>
-                            <button onclick="sort('asc-amount')">Amount<i class="fa-solid fa-arrow-down-1-9"></i></button>
-                            <button onclick="sort('desc-amount')">Amount<i class="fa-solid fa-arrow-down-9-1"></i></button>
+                            <button onclick="filterSort('amount-asc')">Amount<i class="fa-solid fa-arrow-down-1-9"></i></button>
+                            <button onclick="filterSort('amount-desc')">Amount<i class="fa-solid fa-arrow-down-9-1"></i></button>
                         </div>
                     </div>
                 </div>
@@ -119,13 +119,14 @@
         var data =  JSON.parse(userObject); 
         window.onload = getUser(data.id);
 
-        async function getReimbursement(id){
+        async function getReimbursement(id, mode){
             let response = await fetch("http://localhost:8080/api/reimbursements/user",
             {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "user_id": id
+                    "user-id": id,
+                    "mode": mode
                 }
             }
             );
@@ -138,7 +139,6 @@
                 table.innerHTML = "No Reimbursements";
                 table.classList.add("nothing");
             }else{
-
                 createTable(reimbursements);
             }
  
@@ -147,7 +147,7 @@
         var retrievedObject = localStorage.getItem('id');
         var info =  JSON.parse(retrievedObject);
                 
-        window.onload = getReimbursement(info.id);
+        window.onload = getReimbursement(info.id, "id-asc");
 
         // delete feature
         async function deleteReimbursementById(id){
@@ -232,15 +232,20 @@
             createTable(reimbursements);
         }
 
-                // by status
-                async function sort(sortBy){
+        // by status
+        async function filterSort(mode){
+            // Retrieve the object from storage
+            var user = localStorage.getItem('id');
+            var data =  JSON.parse(user);
+            
             let response = await fetch(
-                "http://localhost:8080/api/reimbursements/sort",
+                "http://localhost:8080/api/reimbursements/user",
                 {
                     method: 'GET',
                     headers: {
                         "Content-Type": "application/json",
-                        "sortBy": sortBy
+                        "user-id": data.id,
+                        "mode": mode
                     }
                 }
             );
@@ -251,7 +256,13 @@
             filterMenu.style.display = 'none';
             dropdownIcon.style.transform = "rotate(360deg)";
 
-            createTable(reimbursements);
+            const table = document.getElementById('table');
+            if(reimbursements.length === 0 ){
+                table.innerHTML = "No Reimbursements";
+                table.classList.add("nothing");
+            }else{
+                createTable(reimbursements);
+            }
             
         }
         
@@ -280,13 +291,13 @@
             column5.innerHTML = "Status";
             titleRow.appendChild(column5);
             const column6 = document.createElement("th");
-            column6.innerHTML = "Author";
+            column6.innerHTML = "Submitted";
             titleRow.appendChild(column6);
             const column7 = document.createElement("th");
-            column7.innerHTML = "Submitted";
+            column7.innerHTML = "Resolved";
             titleRow.appendChild(column7);
             const column8 = document.createElement("th");
-            column8.innerHTML = "Resolved";
+            column8.innerHTML = "Options";
             titleRow.appendChild(column8);
             table.appendChild(titleRow);
             reimbursements.forEach(function (reimbursement) {
