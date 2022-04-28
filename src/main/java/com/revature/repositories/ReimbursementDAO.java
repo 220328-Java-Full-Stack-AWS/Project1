@@ -1007,10 +1007,10 @@ public class ReimbursementDAO {
     /**
      * Retrieve all reimbursements by the resolver's email
      */
-    public List<Reimbursement> getByResolver(String email) {
+    public List<Reimbursement> getByResolverId(int id) {
         List<Reimbursement> result = new LinkedList<>();
         String sql = "SELECT * FROM ers_reimbursement WHERE reimb_resolver = ?";
-        User resolver = userDao.getUserByEmail(email);
+        User resolver = userDao.getById(id);
         try{
             Connection conn = ConnectionFactory.getConnection();  // get the connection
             PreparedStatement pstmt = null;

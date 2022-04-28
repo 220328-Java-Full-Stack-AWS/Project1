@@ -224,38 +224,35 @@
             createTable(reimbursements);
         }
 
-        // filter by resolver
-        async function filterResolver(email){
-            let response = await fetch(
-                "http://localhost:8080/api/reimbursements/filter/resolver",
-                {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "email": email
-                    }
+        async function getReimbursement(id,mode){
+            let response = await fetch("http://localhost:8080/api/reimbursements/user",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "user-id": id,
+                    "mode": mode
                 }
+            }
             );
             let json = await response.json();
             let reimbursements = json;
             // console.log(reimbursements);
 
-            filterMenu.style.display = 'none';
-            dropdownIcon.style.transform = "rotate(360deg)";
-
+            const table = document.getElementById('table');
             if(reimbursements.length === 0 ){
                 table.innerHTML = "No Reimbursements";
                 table.classList.add("nothing");
             }else{
                 createTable(reimbursements);
             }
+ 
         }
-
-        function GetReimbursementsByResolver(){
-            // Retrieve the object from storage
-            var resolver = localStorage.getItem('id');
-            var data =  JSON.parse(resolver);
-            filterResolver(data.email);
+        function GetReimbursementsByResolver(){ 
+            // Retrieve the user object from storage
+            var userObject = localStorage.getItem('id');
+            var data =  JSON.parse(userObject); 
+            getReimbursement( data.id,"resolver");
         }
 
         // by status

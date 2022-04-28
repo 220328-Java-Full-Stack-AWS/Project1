@@ -108,6 +108,13 @@ public class UserReimbursementServlet extends HttpServlet {
             String json = mapper.writeValueAsString(AllReimbursements);
             resp.getWriter().print(json);
             resp.setStatus(200);
+        }else if(mode.equals("resolver")){
+            List<Reimbursement> AllReimbursements = service.getByResolverId(id);
+            String json = mapper.writeValueAsString(AllReimbursements);
+            resp.getWriter().print(json);
+            resp.setStatus(200);
+        }else{
+            resp.setStatus(400);
         }
 
 

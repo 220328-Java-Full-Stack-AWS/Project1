@@ -184,7 +184,12 @@ public class ReimbursementService {
      * @return A list of all reimbursement associated with the resolver's email.
      */
     public List<Reimbursement> getByResolver(User user){
-        List<Reimbursement> ReimbursementResolverList = reimbDAO.getByResolver(user.getEmail());
+        List<Reimbursement> ReimbursementResolverList = reimbDAO.getByResolverUsername(user.getUsername());
+        return ReimbursementResolverList;
+    }
+
+    public List<Reimbursement> getByResolverId(int id){
+        List<Reimbursement> ReimbursementResolverList = reimbDAO.getByResolverId(id);
         return ReimbursementResolverList;
     }
 
