@@ -57,6 +57,34 @@ The Expense Reimbursement System (ERS) will manage the process of reimbursing em
  9. Delete account
      - As a user, you can delete your account on your own by navigating the settings page, once the account is deleted there would be no way of retrieving the account back.
 
+
+# Employee Reimbursement System(pics)
+<div>
+ <img src="./imgs/login.png" alt="drawing" style="width:500px;"/>
+ <img src="./imgs/register.png" alt="drawing" style="width:500px;"/>
+</div>
+<div>
+ <img src="./imgs/userHomePage.png" alt="drawing" style="width:500px;"/>
+ <img src="./imgs/addReimbursement.png" alt="drawing" style="width:500px;"/>
+</div>
+<div>
+ <img src="./imgs/editReimbursement.png" alt="drawing" style="width:500px;"/>
+ <img src="./imgs/processReimbursement.png" alt="drawing" style="width:500px;"/>
+</div>
+<div>
+ <img src="./imgs/editReimbursement.png" alt="drawing" style="width:500px;"/>
+ <img src="./imgs/processReimbursement.png" alt="drawing" style="width:500px;"/>
+</div>
+<div>
+ <img src="./imgs/reimbursementReceipt.png" alt="drawing" style="width:500px;"/>
+ <img src="./imgs/reimbursementFilter.png" alt="drawing" style="width:500px;"/> 
+</div>
+<div>
+ <img src="./imgs/employeeData.png" alt="drawing" style="width:500px;"/>
+ <img src="./imgs/usersPage.png" alt="drawing" style="width:500px;"/> 
+</div>
+<img src="./imgs/settings.png" alt="drawing" style="width:500px;"/>
+
 # Diagrams
 **State-chart Diagram (Reimbursement Statuses)** 
 
@@ -78,6 +106,3 @@ The Expense Reimbursement System (ERS) will manage the process of reimbursing em
 **Activity Diagram**
 
 ![](./imgs/activity.jpg)
-
-# Employee Reimbursement System(pics)
-![login](https://github.com/220328-Java-Full-Stack-AWS/Project1/blob/main/imgs/login.png)
