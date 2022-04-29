@@ -80,10 +80,10 @@ The Expense Reimbursement System (ERS) will manage the process of reimbursing em
  <img src="./imgs/reimbursementFilter.png" alt="drawing" style="width:500px;"/> 
 </div>
 <div>
- <img src="./imgs/employeeData.png" alt="drawing" style="width:500px;"/>
+ <img src="./imgs/settings.png" alt="drawing" style="width:500px;"/>
  <img src="./imgs/usersPage.png" alt="drawing" style="width:500px;"/> 
 </div>
-<img src="./imgs/settings.png" alt="drawing" style="width:500px;"/>
+ <img src="./imgs/employeeData.png" alt="drawing" style="width:500px;"/>
 
 # Diagrams
 **State-chart Diagram (Reimbursement Statuses)** 
